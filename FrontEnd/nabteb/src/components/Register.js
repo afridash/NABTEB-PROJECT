@@ -24,7 +24,7 @@ const styles = {
     color: 'green',
   },
 };
-export default class Login extends Component {
+export default class Register extends Component {
   constructor (props) {
     super(props)
       this.state = {
@@ -43,7 +43,7 @@ export default class Login extends Component {
     this.setState({loading:true})
     if (this.verifyPasswords()) {
       alert("Logging In")
-    this.setState({redirect:true})
+      this.setState({redirect:true})
     }else{
       this.setState({error:'Email/Password Cannot be Empty',loading:false})
     }
@@ -63,8 +63,8 @@ export default class Login extends Component {
                 <Paper zDepth={3}>
                   <div className='row'>
                     <form>
-                      <div className='col-sm-10 col-sm-offset-1'>
-                        <h3 className='text-center'>Login</h3>
+                      <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
+                        <h3 className='text-center'>Register</h3>
                         <br/>
                         <p style={{color:'red'}}>{this.state.error}</p>
                         <TextField
@@ -88,25 +88,31 @@ export default class Login extends Component {
                           underlineFocusStyle={{borderColor: '#16a085'}}
                           onChange = {this.handleChange}
                         />
+                        <TextField
+                          type="password"
+                          fullWidth={true}
+                          name='password'
+                          hintText="Enter Password"
+                          floatingLabelText="Password"
+                          className='text-center'
+                          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                          underlineFocusStyle={{borderColor: '#16a085'}}
+                          onChange = {this.handleChange}
+                        />
                             {this.state.loading ? <RaisedButton
                               labelStyle={{color:'white'}}
                                 buttonStyle={{backgroundColor:'#1abc9c', borderColor:'white'}}
                                 className='pull-right'
-                                label="Logging In"
+                                label="Registering..."
                               /> : <RaisedButton
                                 className='pull-right'
                                   labelStyle={{color:'white'}}
                                   buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                                  label="Login"
+                                  label="Register"
                                   type="submit"
                                   onClick={(event) =>
                                   this.handleSubmit(event)}
                                 />}
-                            <div className="pull-left">
-                              <br/>
-                              <p className="password"><Link to="/reset">Forgot Password?</Link></p>
-                              <p className="password">Or Click <Link to="/register">here</Link> to register</p>
-                            </div>
                       </div>
                       </form>
                   </div>
@@ -115,7 +121,7 @@ export default class Login extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.redirect && <Redirect to='/account/confirm' push />}
       </div>
     );
   }

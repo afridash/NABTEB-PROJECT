@@ -11,6 +11,8 @@
 
 # misc
 .DS_Store
+git add .gitignore
+git commit -m '.DS_Store banished!'
 .env.local
 .env.development.local
 .env.test.local

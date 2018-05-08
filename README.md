@@ -13,7 +13,9 @@ Hey guys, glad we've started working on this! Here's a few things you need to ge
 9. Create a database, user, and password for MySql
 10. Edit application.properties in NABTEB-PROJECT/Backend/Nabteb/src/main/resources to match local MySql details
 12. Open and run .../Backend/Nabteb with STS or NetBeans
-
+13. Create a new branch by running 'git branch -b <branchName>'
+14. Checkout newly created branch by running 'git checkout <branchName>'
+15. Edit files with your favorite editor.
 # Rules
 1. DO NOT directly update the master branch. 
 2. Branch names should contain info about feature being implemented.

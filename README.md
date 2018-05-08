@@ -26,6 +26,6 @@ Hey guys, glad we've started working on this! Here's a few things you need to ge
 8. The UI is to be predominantly developed using Material UI as shown here: https://www.material-ui.com/#/components/app-bar.
 9. Use Bootstrap for Responsiveness.
 
-# Bootstrap, and Material UI are already preinstalled so you do not have to worry about it. 
+ Bootstrap, and Material UI are already preinstalled so you do not have to worry about it. 
 
 # Happy Coding! 

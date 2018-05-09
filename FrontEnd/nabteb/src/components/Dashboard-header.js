@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import '../App.css'
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap"
 import {Link} from 'react-router-dom'
-import FileReaderInput from 'react-file-reader-input'
 const styles = {
   button:{margin: 15},
   box:{

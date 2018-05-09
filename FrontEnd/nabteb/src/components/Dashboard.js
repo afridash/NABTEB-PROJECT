@@ -16,7 +16,7 @@ export default class Dashboard extends Component {
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
         <p className='lead'>Welcome, Richard</p>
         <div className='col-sm-12'>
-          <p className='text-info text-center'>Flll out the different sections to complete registration. Biometrics must be submited through a verified registration center.</p>
+          <p className='text-info text-center'>Fill out the different sections to complete registration. Biometrics must be submited through a verified registration center.</p>
           <div className='col-sm-6'>
               <div className='panel-body'>
                 <Paper zDepth={3} rounded>
@@ -112,11 +112,14 @@ export default class Dashboard extends Component {
 
         </div>
         <div className='col-sm-12 text-center' style={{marginTop:40}}>
-          <RaisedButton
-            labelStyle={{color:'white'}}
-              buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-              label="Completed! Submit"
-            />
+          <Link to='/user/registration/confirmation'>
+            <RaisedButton
+              labelStyle={{color:'white'}}
+                buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                label="Proceed"
+              />
+          </Link>
+
         </div>
       </div>
     )

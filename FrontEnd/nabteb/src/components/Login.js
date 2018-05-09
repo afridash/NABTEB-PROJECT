@@ -38,12 +38,20 @@ export default class Login extends Component {
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
-  handleSubmit (event) {
+  async handleSubmit (event) {
     event.preventDefault()
     this.setState({loading:true})
+    var email = this.state.email
+    var password = this.state.password
     if (this.verifyPasswords()) {
-      alert("Logging In")
-      this.setState({redirect:true})
+      fetch("http://localhost:8080/login/"+email+"/"+password).then(response => response.json()).then(data => {
+        if (data[0] === "success")
+        this.setState({redirect:true})
+        else {
+          this.setState({loading:false})
+          this.setState({error:'User not found'})
+        }
+      })
     }else{
       this.setState({error:'Email/Password Cannot be Empty',loading:false})
     }

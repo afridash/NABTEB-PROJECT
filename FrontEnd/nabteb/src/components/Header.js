@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../logo.jpg'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import Footer from './Footer'
 import '../App.css';
 import {Redirect, Link} from 'react-router-dom'
-const muiTheme = getMuiTheme({
-  palette: {
-    textColor: '#424242',
-  },
-  appBar: {
-    height: 50,
-    color:'#2d6ca1',
-  },
-})
 
 export default class Header extends Component {
   constructor (props) {
@@ -23,23 +14,27 @@ export default class Header extends Component {
   }
   render() {
     return (
-       <MuiThemeProvider muiTheme={muiTheme} >
-         <div className='App'>
+       <MuiThemeProvider >
+         <div style={{marginTop:-20}}>
            {this.state.redirect && <Redirect to='/' push />}
            {this.state.searchRedirect && <Redirect to={'/search/'+this.state.search} push />}
            <div className='row hidden-xs' style={{border: '0.5px solid lightgrey', }}>
              <div className='row' style={{margin:10}}>
                <div className='col-md-6 col-sm-6'>
-                 <div>
-                   <img src={logo} alt="logo" style={{height:50, width:100}} />
-                   <span className='lead'>National Business and Technical Examinations Board</span>
+                 <div className='row'>
+                   <div className='col-sm-2'>
+                     <img src={logo} alt="logo" style={{height:50, width:100}} />
+                   </div>
+                   <div className='col-sm-10 text-center'>
+                     <p className='lead' style={{marginTop:10}}>National Business and Technical Examinations Board</p>
+                   </div>
                  </div>
                </div>
                <div className='col-md-3 col-sm-3'>
                  <div className='row'>
                    <div className='col-sm-3' style={{marginRight:-20}}>
                      <div className='pull-right'>
-                       <i className='fas fa-map-marker-alt' style={{color:'#069fba'}}></i>
+                       <i className='fas fa-map-marker-alt' style={{color:'#16a085'}}></i>
                      </div>
                    </div>
                    <div className='col-sm-9' style={{fontSize:10, lineHeight:1, lineSpace:1}}>
@@ -52,7 +47,7 @@ export default class Header extends Component {
                  <div className='row'>
                    <div className='col-sm-3 text-center'>
                      <div className='pull-right'>
-                       <i className="fas fa-copy" style={{color:'#069fba'}}></i>
+                       <i className="fas fa-copy" style={{color:'#16a085'}}></i>
                      </div>
                    </div>
                    <div className='col-sm-9' style={{marginLeft:-20}}>
@@ -64,7 +59,24 @@ export default class Header extends Component {
                  </div>
                </div>
                <div className='col-md-3 col-sm-3'>
-                 <p>SEARCH HERE</p>
+                 <div className='row'>
+                   <div className='col-sm-12'>
+                     <input type='text' className='form-control' placeholder="Search" style={{marginBottom:5}} />
+                   </div>
+                   <div className='col-sm-8'>
+                     <select className='form-control'>
+                       <option value='Everything'>Everything</option>
+                       <option value='Centers'>Centers</option>
+                       <option value="Courses">Courses</option>
+                     </select>
+                   </div>
+                   <div className='col-sm-4'>
+                     <span className='pull-right'>
+                       <button className='btn btn-danger btn-sm'>GO</button>
+                     </span>
+                   </div>
+                 </div>
+
 
 
                </div>
@@ -84,7 +96,7 @@ export default class Header extends Component {
            <div className="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
              <ul className="nav navbar-nav">
                <li onClick={()=>this.setState({selected:'home'})}> <Link  to='/' style={{color: this.state.selected === 'home' ? 'black' :'white'}}>HOME <span className="sr-only">(current)</span></Link></li>
-               <li onClick={()=>this.setState({selected:'funding'})}><Link to="/offers" style={{color:this.state.selected === 'funding' ? 'black' :'white'}}>OUR OFFER</Link></li>
+               <li onClick={()=>this.setState({selected:'funding'})}><Link to="/offers" style={{color:this.state.selected === 'funding' ? 'black' :'white'}}>OUR MANDATE</Link></li>
                <li onClick={()=>this.setState({selected:'training'})}><Link to="/examinations" style={{color:this.state.selected === 'training' ? 'black' :'white'}}>EXAMINATIONS</Link></li>
                <li onClick={()=>this.setState({selected:'market'})}><Link to="/centers" style={{color:this.state.selected === 'market' ? 'black' :'white'}}>CENTERS</Link></li>
                <li onClick={()=>this.setState({selected:'news'})}><Link to="/news" style={{color:this.state.selected === 'news' ? 'black' :'white'}}>NEWS</Link></li>
@@ -110,14 +122,21 @@ export default class Header extends Component {
      </div>
    </nav>
    <div className='row hidden-lg hidden-sm hidden-md' style={{margin:10}}>
-     <div className='col-md-6 col-sm-6'>
-       <div>
-         <img src={logo} alt="logo" style={{height:50, width:100}} />
-         <span className='lead'>National Business and Technical Examinations Board</span>
+     <div className='col-xs-12'>
+       <div className='row'>
+         <div className='col-xs-2'>
+           <img src={logo} alt="logo" style={{height:50, width:100}} />
+         </div>
+         <div className='col-xs-10 text-center'>
+           <p className='lead'>National Business and Technical Examinations Board</p>
+         </div>
        </div>
      </div>
    </div>
            {this.props.children}
+         </div>
+         <div className='col-sm-12' style={{backgroundColor:'#E0E0E0', marginTop:40}}>
+           <Footer />
          </div>
        </MuiThemeProvider>
     );

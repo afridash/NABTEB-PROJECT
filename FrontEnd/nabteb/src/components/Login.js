@@ -43,7 +43,7 @@ export default class Login extends Component {
     this.setState({loading:true})
     if (this.verifyPasswords()) {
       alert("Logging In")
-    this.setState({redirect:true})
+      this.setState({redirect:true})
     }else{
       this.setState({error:'Email/Password Cannot be Empty',loading:false})
     }

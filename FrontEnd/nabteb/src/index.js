@@ -23,6 +23,14 @@ import Materials from './components/Materials'
 import Results from './components/Results'
 import RegistrationConfirmation from './components/Registration-confirmation'
 import AccountConfirmation from './components/Account-confirmation'
+import CBODashboard from './components/CBO-Dashboard'
+import CBOPerson from './components/CBO-person'
+import CBOExaminations from './components/CBO-examinations'
+import CBOCenters from './components/CBO-centers'
+import CBOCandidates from './components/CBO-candidates'
+import CBOPayment from './components/CBO-payment'
+import CBOCenterStatus from './components/CBO-centerStatus'
+import CBOAddNew from './components/CBO-addNew'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -35,6 +43,14 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/user/exams/details"} component={ExaminationDetails} />
       <Route exact path={"/user/exams/payments"} component={ExamPayments} />
       <Route exact path={"/user/registration/confirmation"} component={RegistrationConfirmation} />
+      <Route exact path ={"/user/cbo"} component={CBODashboard}/>
+      <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>
+      <Route exact path ={"/user/cbo/examinations"} component={CBOExaminations}/>
+      <Route exact path ={"/user/centers"} component={CBOCenters}/>
+      <Route exact path ={"/user/candidates"} component={CBOCandidates}/>
+      <Route exact path ={"/user/center/payment"} component={CBOPayment}/>
+      <Route exact path ={"/user/center/status"} component={CBOCenterStatus}/>
+      <Route exact path ={"/user/center/addnew"} component={CBOAddNew}/>
 
     <Header >
     <Route exact path={"/"} component={App} />

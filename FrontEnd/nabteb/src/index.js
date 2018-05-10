@@ -47,7 +47,7 @@ ReactDOM.render(<BrowserRouter >
     <Route exact path={"/register"} component={Register} />
     <Route exact path={"/reset"} component={Reset} />
     <Route exact path={"/login"} component={Login} />
-    <Route exact path={"/account/confirm"} component={AccountConfirmation} />
+    <Route exact path={"/account/confirm/:id"} component={AccountConfirmation} />
   </Header>
 
     </Switch>

@@ -134,9 +134,10 @@ export default class Header extends Component {
      </div>
    </div>
            {this.props.children}
-         </div>
+
          <div className='col-sm-12' style={{backgroundColor:'#E0E0E0', marginTop:40}}>
            <Footer />
+         </div>
          </div>
        </MuiThemeProvider>
     );

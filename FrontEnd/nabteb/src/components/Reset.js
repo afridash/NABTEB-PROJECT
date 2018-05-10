@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Link,Redirect, } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
@@ -29,7 +29,6 @@ export default class Reset extends Component {
     super(props)
       this.state = {
         email: '',
-        password: '',
         error: '',
         redirect:false,
       }
@@ -42,13 +41,19 @@ export default class Reset extends Component {
     event.preventDefault()
     this.setState({loading:true})
     if (this.verifyPasswords()) {
-      alert("Logging In")
+      fetch("http://localhost:8080/reset_password/"+this.state.email).then(response => response.json()).then(data => {
+        if (!data['status'])
+        this.setState({redirect:true, userId:data['id'], loading:false})
+        else this.setState({error:'Email not found', loading:false})
+      }).catch(error => {
+        this.setState({error:'Email not found', loading:false})
+      })
     }else{
-      this.setState({error:'Email/Password Cannot be Empty',loading:false})
+      this.setState({error:'Email Cannot be Empty',loading:false})
     }
   }
   verifyPasswords () {
-    return this.state.email !== '' && this.state.password !== ''
+    return this.state.email !== ''
   }
   render() {
     return (
@@ -99,7 +104,7 @@ export default class Reset extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.redirect && <Redirect to={'/account/confirm/'+this.state.userId}  push />}
       </div>
     );
   }

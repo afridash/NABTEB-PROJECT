@@ -33,6 +33,7 @@ export default class AccountConfirmation extends Component {
         error: '',
         redirect:false,
       }
+      this.userId = this.props.match.params.id
   }
 
   handleChange = (event) => {
@@ -42,8 +43,15 @@ export default class AccountConfirmation extends Component {
     event.preventDefault()
     this.setState({loading:true})
     if (this.verifyPasswords()) {
-      alert("Logging In")
-      this.setState({redirect:true})
+      fetch("http://localhost:8080/verify/"+this.userId+"/"+this.state.pin).then(response => response.json()).then(data => {
+        localStorage.setItem('email', data['email'])
+        localStorage.setItem('userId', data['id'])
+        localStorage.setItem('userType', data['user_type'])
+        this.setState({redirect:true})
+      }).catch(error => {
+        this.setState({loading:false})
+        this.setState({error:'Invalid verification pin'})
+      })
     }else{
       this.setState({error:'Invalid pin',loading:false})
     }

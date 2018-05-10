@@ -45,12 +45,23 @@ export default class Login extends Component {
     var password = this.state.password
     if (this.verifyPasswords()) {
       fetch("http://localhost:8080/login/"+email+"/"+password).then(response => response.json()).then(data => {
-        if (data[0] === "success")
-        this.setState({redirect:true})
-        else {
+        if (!data['status']){
+          if (data['verified']){
+            localStorage.setItem('email', data['email'])
+            localStorage.setItem('userId', data['id'])
+            localStorage.setItem('userType', data['user_type'])
+            this.setState({redirect:true})
+          }else {
+            this.setState({loading:false})
+            this.setState({showVerify:true, userId:data['id']})
+          }
+        }else {
           this.setState({loading:false})
-          this.setState({error:'User not found'})
+          this.setState({error:'Wrong Email/Password Combination'})
         }
+      }).catch(error => {
+        this.setState({loading:false})
+        this.setState({error:'Wrong Email/Password Combination'})
       })
     }else{
       this.setState({error:'Email/Password Cannot be Empty',loading:false})
@@ -124,6 +135,7 @@ export default class Login extends Component {
             </div>
         </div>
         {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.showVerify && <Redirect to={'/account/confirm/'+this.state.userId} push />}
       </div>
     );
   }

@@ -9,12 +9,18 @@ import RaisedButton from 'material-ui/RaisedButton'
 export default class Dashboard extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      email:''
+    }
+  }
+  async componentWillMount () {
+    var email = localStorage.getItem('email')
+    this.setState({email})
   }
   showPageContent () {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
-        <p className='lead'>Welcome, Richard</p>
+        <p className='lead'>Welcome, {this.state.email}</p>
         <div className='col-sm-12'>
           <p className='text-info text-center'>Fill out the different sections to complete registration. Biometrics must be submited through a verified registration center.</p>
           <div className='col-sm-6'>

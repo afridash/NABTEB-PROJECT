@@ -76,13 +76,21 @@ export default class Dashboard extends Component {
                         <p className='text-center'>Step 2: <span style={{fontWeight:'600'}}>Examination Details</span></p>
                           <i className='text-info'>Choose your examination type, and location. Click on start to begin.</i>
                           <div className='text-center' style={{margin:10}}>
-                            <Link to='/user/exams/details'>
-                            <RaisedButton
-                              labelStyle={{color:'white'}}
-                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                                label="Start"
-                              />
-                            </Link>
+                            {this.state.finishedExaminationsDetails ?
+                              <Link to='/user/exams/details'>
+                                <RaisedButton
+                                  labelStyle={{color:'white'}}
+                                    buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                                    label="Edit"
+                                  />
+                                </Link>:
+                                <Link to='/user/exams/details'>
+                                <RaisedButton
+                                  labelStyle={{color:'white'}}
+                                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                    label="Start"
+                                  />
+                                </Link>}
                           </div>
                       </div>
                     </div>

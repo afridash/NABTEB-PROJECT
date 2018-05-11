@@ -6,24 +6,24 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Gbarane-Davd
+ * @author Gbarane-David
  */
 @Service
 public class UserExamService {
   
-List<UserExamInfo> userExamInfoList = new ArrayList<>();
+private List<UserExamInfo> userExamInfoList = new ArrayList<>();
 
 public List<UserExamInfo> getUserExamInfoList(){
    return userExamInfoList;
 }
-public void saveUserExamDetails(UserExamInfo object){
-    getUserExamInfoList().add(object);
+public UserExamInfo saveUserExamDetails(UserExamInfo object){
+    userExamInfoList.add(object);
+    return object;
 }
 public String updateUserInfo(UserExamInfo object){
-    
     String status = "failed";
     for(int i=0; i<getUserExamInfoList().size(); i++){
-        if(getUserExamInfoList().get(i).getId().equals(object.getId())){
+        if(getUserExamInfoList().get(i).getId() == (object.getId())){
             getUserExamInfoList().remove(i);
             getUserExamInfoList().add(object);
             status = "success";
@@ -31,34 +31,9 @@ public String updateUserInfo(UserExamInfo object){
     }
     return status;
 }
-public List<UserExamInfo> retrieveSpecificUser(String id){
-    
-    List<UserExamInfo> specificUser = new ArrayList<>();
-    for(int i=0; i<getUserExamInfoList().size(); i++){
-        if(getUserExamInfoList().get(i).getId().equals(id)){
-            specificUser.add(getUserExamInfoList().get(i));
-        }
-    }
-    return specificUser;
+
+public UserExamInfo retrieveSpecificUser(int id){
+    return userExamInfoList.stream().filter(u->u.getId() == id).findFirst().get();
 }
-public String deleteUserInfo(String id){
-    
-    String status = "failed";
-    for(int i=0; i<getUserExamInfoList().size(); i++){
-        if(getUserExamInfoList().get(i).getId().equals(id)){
-            getUserExamInfoList().remove(i);
-            status = "success";
-        }
-    }
-    return status;
-}
-public String deleteAllUserInfo(){
-    
-    String status = "failed";
-    for(int i=0; i<getUserExamInfoList().size(); i++){
-            getUserExamInfoList().remove(i);
-            status = "success";
-    }
-    return status;
-}
+
 }

@@ -7,7 +7,7 @@ package com.nabteb.exam;
 
 public class UserExamInfo {
     
-    private String id;
+    private int id;
     private String state;
     private String localGovernment;
     private String examCenter;
@@ -17,10 +17,10 @@ public class UserExamInfo {
 public UserExamInfo(){
     
 }
-public void setId(String id){
+public void setId(int id){
     this.id=id;
 }
-public String getId(){
+public int getId(){
     return id;
 }
 public void setState(String state){

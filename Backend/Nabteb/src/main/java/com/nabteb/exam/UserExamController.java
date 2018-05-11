@@ -24,78 +24,33 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 /**
  *
- * @author Gbarane-Davd
+ * @author Gbarane-David
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/examrest")
 public class UserExamController {
     
     @Autowired
     private UserExamService userExamService;
-    
-    @RequestMapping("/save_exam_details/{id}/{state}/{localGovernment}/{examCenter}/{examType}/{examTitle}")
-	public Map<String, Object> save_exam_details (@PathVariable String id,@PathVariable String state, @PathVariable String localGovernment, @PathVariable String examCenter,@PathVariable String examType, @PathVariable String examTitle) {
-		
-            UserExamInfo userExamInfoObject = new UserExamInfo();
-            userExamInfoObject.setId(id);
-            userExamInfoObject.setExamCenter(examCenter);
-            userExamInfoObject.setExamTitle(examTitle);
-            userExamInfoObject.setExamType(examType);
-            userExamInfoObject.setLocalGovernment(localGovernment);
-            userExamInfoObject.setState(state);
-            
-            userExamService.saveUserExamDetails(userExamInfoObject);
-            
-            Map<String, Object> reply = new HashMap<>();
-            reply.put("Status","saved");
-		return reply;
-	}
-    //This method expects a JSON MAPPED according to the structure of UserExamInfo class 
-    // as a RequestBody
-    @RequestMapping(value = "/register_exam_details/", method = POST)
-    public Map<String, Object> post( @RequestBody UserExamInfo userExamInfoObject) {
-        
-        userExamService.saveUserExamDetails(userExamInfoObject);
-        Map<String, Object> reply = new HashMap<>();
-            reply.put("Status","saved");
-		return reply;
+    //Create a new record
+    @RequestMapping(method = POST, value = "/users/exams")
+    public UserExamInfo post( @RequestBody UserExamInfo userExamInfoObject) {
+        return userExamService.saveUserExamDetails(userExamInfoObject);
     }
-    //calling the only /view_all_saved_details/ URI should simply
-    //populate all saved user exam info  records
-    @RequestMapping(value = "/view_all_saved_details/", method = GET)
+    //Get all records
+    @RequestMapping("/users/exams")
     public List<UserExamInfo> listAllSavedExamRecords() {
         return userExamService.getUserExamInfoList();
     }
-    //calling /view_specific_saved_details/{id} fetches the data of a particular user
-    @RequestMapping(value = "/view_specific_saved_details/{id}", method = GET)
-    public List<UserExamInfo> listSpecificSavedExamRecords(@PathVariable String id) {
+    //Get specific record
+    @RequestMapping("/users/exams/{id}")
+    public UserExamInfo listSpecificSavedExamRecords(@PathVariable int id) {
         return userExamService.retrieveSpecificUser(id);
     }
-    //This method expects a JSON MAPPED according to the structure of UserExamInfo class 
-    // as a RequestBody
-    @RequestMapping(value = "/update_data/", method = PUT)
+    //Update a record
+    @RequestMapping(method = PUT, value = "/users/exams/{id}")
     public Map<String, Object> put(@RequestBody UserExamInfo userExamInfoObject) {
-        
         String status = userExamService.updateUserInfo(userExamInfoObject);
-        Map<String, Object> reply = new HashMap<>();
-        reply.put("Status",status);
-        return reply;
-    }
-    //calling delete_user/{id} deletes the data of a particular user
-    @RequestMapping(value = "/delete_user/{id}")
-    public Map<String, Object> delete(@PathVariable String id) {
-        
-        String status = userExamService.deleteUserInfo(id);
-        Map<String, Object> reply = new HashMap<>();
-        reply.put("Status",status);
-        return reply;
-    }
-    //calling delete_user/ deletes all saved records
-    @RequestMapping(value = "/delete_all_user/")
-    public Map<String, Object> deleteAll() {
-        
-        String status = userExamService.deleteAllUserInfo();
         Map<String, Object> reply = new HashMap<>();
         reply.put("Status",status);
         return reply;

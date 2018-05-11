@@ -10,12 +10,25 @@ export default class Dashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      email:''
+      email:'',
+      userId:''
     }
   }
   async componentWillMount () {
-    var email = localStorage.getItem('email')
-    this.setState({email})
+    var email = await localStorage.getItem('email')
+    var userId = await localStorage.getItem('userId')
+    this.setState({email, userId})
+    this.retrieveInfo(userId)
+  }
+  retrieveInfo (userId) {
+    var url = 'http://localhost:8080/progress/'+userId
+    fetch(url).then(response => response.json()).then((user)=>{
+        if (!user['status']){
+          this.setState(user)
+        }
+        }).catch(error => {
+          this.setState({error:'Information could not be saved',loading:false})
+      })
   }
   showPageContent () {
     return (
@@ -32,6 +45,13 @@ export default class Dashboard extends Component {
                         <p className='text-center'>Step 1: <span style={{fontWeight:'600'}}>Personal Data</span></p>
                           <i className='text-info'>Submit personal data such as name, and address. Click on start to begin.</i>
                           <div className='text-center' style={{margin:10}}>
+                            {this.state.finishedPersonal ? <Link to='/user/details'>
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                                label="Edit"
+                              />
+                            </Link>:
                             <Link to='/user/details'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -39,6 +59,7 @@ export default class Dashboard extends Component {
                                 label="Start"
                               />
                             </Link>
+                          }
                           </div>
                       </div>
                     </div>

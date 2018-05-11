@@ -59,10 +59,33 @@ export default class Register extends Component {
     },
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
   }).then(response => response.json()).then((user)=>{
-    this.setState({redirect:true, userId:user['id']})
+    this.setProgressDetails(user.id)
   }).catch(error => {
     this.setState({error:'Account creation encountered an error',loading:false})
   })
+  }
+  setProgressDetails(userId) {
+    var url = 'http://localhost:8080/progress'
+    var data = {
+      id:userId,
+      finishedPersonal:false,
+      finishedExaminationsDetails:false,
+      finishedBiometrics:false,
+      finishedPayements:false,
+      submitted:false
+    }
+    fetch(url, {
+    body: JSON.stringify(data), // must match 'Content-Type' header
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  }).then(()=> {
+    this.setState({redirect:true, userId:userId})
+  }).catch(error => {
+    this.setState({error:'Error creating account',loading:false})
+  })
+
   }
   handleSubmit (event) {
     event.preventDefault()

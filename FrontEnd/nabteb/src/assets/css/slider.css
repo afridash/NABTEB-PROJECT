@@ -19,3 +19,16 @@ body { padding-top: 20px; }
 .nav-pills > li > a {
     color: #16a085;
 }
+/* IMAGE SLIDER FOR ADMIN*/
+.gallery{
+    margin-top: 100px;
+}
+.gallery-item{
+	margin-bottom: 30px;
+}
+.modal-footer{
+	text-align: center;
+}
+.pagination{
+	margin: 0;
+}

@@ -26,6 +26,27 @@ import AccountConfirmation from './components/Account-confirmation'
 import RegistrationReceipt from './components/remita/Registration-receipts'
 import ResultReceipt from './components/remita/Results-receipts'
 import MaterialsReceipt from './components/remita/Materials-receipts'
+import CBODashboard from './components/CBO-Dashboard'
+import CBOPerson from './components/CBO-person'
+import CBOExaminations from './components/CBO-examinations'
+import CBOCenters from './components/CBO-centers'
+import CBOCandidates from './components/CBO-candidates'
+import CBOPayment from './components/CBO-payment'
+import CBOCenterStatus from './components/CBO-centerStatus'
+import CBOAddNew from './components/CBO-addNew'
+import AdminDashboard from './components/Admin-dashboard'
+import AdminSeries from './components/Admin-series'
+import AdminCandidate from './components/Admin-candidate'
+import AdminDetails from './components/Admin-details'
+import AdminCenters from './components/Admin-centers'
+import AdminCenterInfo from './components/Admin-centerinfo'
+import AdminScholars from './components/Admin-scholars'
+import AdminScholarInfo from './components/Admin-scholarinfo'
+import AdminCBTC from './components/Admin-CBTC'
+import AdminMaterial from './components/Admin-Material'
+import AdminPrograms from './components/Admin-Programs'
+import AdminCourses from './components/Admin-courses'
+
 ReactDOM.render(<BrowserRouter >
   <div>
     <Switch>
@@ -37,8 +58,29 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/user/exams/details"} component={ExaminationDetails} />
       <Route exact path={"/user/exams/payments"} component={ExamPayments} />
       <Route exact path={"/user/registration/confirmation"} component={RegistrationConfirmation} />
+      <Route exact path={"/receipts/registration/:id"} component={RegistrationReceipt} />
       <Route exact path={"/receipts/results/:id"} component={ResultReceipt} />
       <Route exact path={"/receipts/materials/:id"} component={MaterialsReceipt} />
+      <Route exact path ={"/user/cbo"} component={CBODashboard}/>
+      <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>
+      <Route exact path ={"/user/cbo/examinations"} component={CBOExaminations}/>
+      <Route exact path ={"/user/centers"} component={CBOCenters}/>
+      <Route exact path ={"/user/candidates"} component={CBOCandidates}/>
+      <Route exact path ={"/user/center/payment"} component={CBOPayment}/>
+      <Route exact path ={"/user/center/status"} component={CBOCenterStatus}/>
+      <Route exact path ={"/user/center/addnew"} component={CBOAddNew}/>
+      <Route exact path ={"/user/admin/dashboard"} component={AdminDashboard}/>
+      <Route exact path ={"/user/admin/series"} component={AdminSeries}/>
+      <Route exact path ={"/user/admin/candidate"} component={AdminCandidate}/>
+      <Route exact path ={"/user/admin/details"} component={AdminDetails}/>
+      <Route exact path ={"/user/admin/centers"} component={AdminCenters}/>
+      <Route exact path ={"/user/admin/centerinfo"} component={AdminCenterInfo}/>
+      <Route exact path ={"/user/admin/Scholars"} component={AdminScholars}/>
+      <Route exact path ={"/user/admin/scholarinfo"} component={AdminScholarInfo}/>
+      <Route exact path ={"/user/admin/cbtc"} component={AdminCBTC}/>
+      <Route exact path ={"/user/admin/programs"} component={AdminPrograms}/>
+      <Route exact path ={"/user/admin/material"} component={AdminMaterial}/>
+      <Route exact path ={"/user/admin/courses"} component={AdminCourses}/>
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

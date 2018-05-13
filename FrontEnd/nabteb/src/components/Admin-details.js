@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 
-export default class RegistrationConfirmation extends Component {
+export default class AdminDetails extends Component {
   constructor (props) {
     super(props)
     this.state = {}
@@ -17,7 +17,10 @@ export default class RegistrationConfirmation extends Component {
         <Paper zDepth={2}>
           <div className='row'>
             <div className='col-sm-12'>
-              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Personal Data</p>
+              <div className='text-center'>
+                <img src={require('../images/bird.jpeg')} style={{ height:150, width:150,borderRadius:75, marginTop:15}} />
+              </div>
+              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400, marginTop:10}}>Personal Data</p>
               <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
               <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
                 <p><b>First Name: </b> John </p>
@@ -32,18 +35,6 @@ export default class RegistrationConfirmation extends Component {
                 <p><b>Phone Number: </b> 08011123434</p>
 
               </div>
-
-              <div  style={{textAlign:'right'}}>
-                <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#16a085', textAlign:'left' ,borderColor:'white'}}
-                    label="Edit"
-                    />
-                </Link>
-
-              </div>
-
               </div>
             </div>
             <div className='col-sm-12'>
@@ -55,15 +46,7 @@ export default class RegistrationConfirmation extends Component {
                 <p><b>Exam Center: </b>Uratta Tech. College Aba 01003 Technical/Commercial Aba North No.300 Uratta Road, Aba P.O Box 946 Aba</p>
                 <p><b>Exam Type: </b>National Business Certificate</p>
               </div>
-              <div  style={{textAlign:'right'}}>
-                <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#16a085', textAlign:'left' ,borderColor:'white'}}
-                    label="Edit"
-                    />
-                </Link>
-              </div>
+
               </div>
             </div>
             <div className='col-sm-12'>
@@ -87,22 +70,21 @@ export default class RegistrationConfirmation extends Component {
                 <br />
                 <br />
                 <p style={{fontSize:18}}><b>Total: </b> #11,600</p>
-                <div className='text-center'>
-                  <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                    label="Close"
-                  />
-                </Link>&nbsp;&nbsp;
 
-                </div>
               </div>
               </div>
             </div>
           </div>
         </Paper>
-
+        <div className='text-center' style={{marginTop:20}}>
+          <Link to='/user/admin/dashboard'>
+        <RaisedButton
+          labelStyle={{color:'white'}}
+          buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
+          label="Close"
+        />
+      </Link>
+    </div>
       </div>
     )
   }

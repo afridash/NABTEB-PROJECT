@@ -164,7 +164,7 @@ export default class Dashboard extends Component {
             <RaisedButton
               labelStyle={{color:'white'}}
                 buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                label="Proceed"
+                label="Submit"
               />
           </Link>
 

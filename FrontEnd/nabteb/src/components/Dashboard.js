@@ -73,39 +73,8 @@ export default class Dashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'>Step 2: <span style={{fontWeight:'600'}}>Examination Details</span></p>
-                          <i className='text-info'>Choose your examination type, and location. Click on start to begin.</i>
-                          <div className='text-center' style={{margin:10}}>
-                            {this.state.finishedExaminationsDetails ?
-                              <Link to='/user/exams/details'>
-                                <RaisedButton
-                                  labelStyle={{color:'white'}}
-                                    buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                                    label="Edit"
-                                  />
-                                </Link>:
-                                <Link to='/user/exams/details'>
-                                <RaisedButton
-                                  labelStyle={{color:'white'}}
-                                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                                    label="Start"
-                                  />
-                                </Link>}
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                </Paper>
-            </div>
-          </div>
-          <div className='col-sm-6'>
-              <div className='panel-body'>
-                <Paper zDepth={3} rounded>
-                  <div className='row'>
-                    <div className='col-sm-12'>
-                      <div style={{padding:10}}>
-                        <p className='text-center'>Step 3: <span style={{fontWeight:'600'}}>Biometric Data</span></p>
-                          <i className='text-info'>View biometric data status. Click on view to begin.</i>
+                        <p className='text-center'>Step 2: <span style={{fontWeight:'600'}}>Biometric Data</span></p>
+                          <i className='text-info'>View submitted biometric data, and info about center . Click on view to begin. </i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/biometrics'>
                             <RaisedButton
@@ -127,9 +96,51 @@ export default class Dashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
+                        <p className='text-center'>Step 3: <span style={{fontWeight:'600'}}>Examination Details</span></p>
+                          <i className='text-info'>Choose your examination type, and location.</i>
+                          {this.state.finishedPersonal &&
+                          <div className='text-center' style={{margin:10}}>
+                            {this.state.finishedExaminationsDetails ?
+                              <Link to='/user/exams/details'>
+                                <RaisedButton
+                                  labelStyle={{color:'white'}}
+                                    buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                                    label="Edit"
+                                  />
+                                </Link>:
+                                <Link to='/user/exams/details'>
+                                <RaisedButton
+                                  labelStyle={{color:'white'}}
+                                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                    label="Start"
+                                  />
+                                </Link>}
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                </Paper>
+            </div>
+          </div>
+          <div className='col-sm-6'>
+              <div className='panel-body'>
+                <Paper zDepth={3} rounded>
+                  <div className='row'>
+                    <div className='col-sm-12'>
+                      <div style={{padding:10}}>
                         <p className='text-center'>Step 4: <span style={{fontWeight:'600'}}>Payments</span></p>
                           <i className='text-info'>Make payments for selected examination. </i>
+                          {this.state.finishedExaminationsDetails &&
                           <div className='text-center' style={{margin:10}}>
+                            {this.state.finishedPayements ?
+                              <Link to='/user/exams/payments'>
+                            <RaisedButton
+                              onClick={()=>localStorage.setItem('finishedPayements', 'true')}
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                                label="View"
+                              /></Link>:
                             <Link to='/user/exams/payments'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -137,7 +148,9 @@ export default class Dashboard extends Component {
                                 label="Start"
                               />
                             </Link>
+                          }
                           </div>
+                        }
                       </div>
                     </div>
                   </div>

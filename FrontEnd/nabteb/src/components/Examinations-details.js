@@ -74,7 +74,7 @@ export default class ExaminationDetails extends Component {
             tradeValue:user.examTitle})
         }
         }).catch(error => {
-          this.setState({error:'Information could not be saved',loading:false})
+          this.setState({error:'Network error, could not retrieve info',loading:false})
       })
     fetch('http://localhost:8080/progress/'+userId).then(response => response.json()).then((user)=>{
           if (!user['status']){
@@ -226,7 +226,7 @@ export default class ExaminationDetails extends Component {
                       <MenuItem value={"National Business Certificate"} primaryText="National Business Certificate" />
                       <MenuItem value={"National Technical Certificate"} primaryText="National Technical Certificate" />
                       <MenuItem value={"Advanced National Technical Certificate"} primaryText="Advanced National Technical Certificate" />
-                      <MenuItem value={"Advanced National Business Certificate"} primaryText="Advanced National Technical Certificate" />
+                      <MenuItem value={"Advanced National Business Certificate"} primaryText="Advanced National Business Certificate" />
                       <MenuItem value={"Modular Trade Test"} primaryText="Modular Trade Test" />
                       <MenuItem value={"Common Entrance"} primaryText="Common Entrance" />
                     </SelectField>

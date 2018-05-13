@@ -23,7 +23,9 @@ import Materials from './components/Materials'
 import Results from './components/Results'
 import RegistrationConfirmation from './components/Registration-confirmation'
 import AccountConfirmation from './components/Account-confirmation'
-
+import RegistrationReceipt from './components/remita/Registration-receipts'
+import ResultReceipt from './components/remita/Results-receipts'
+import MaterialsReceipt from './components/remita/Materials-receipts'
 ReactDOM.render(<BrowserRouter >
   <div>
     <Switch>
@@ -35,7 +37,8 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/user/exams/details"} component={ExaminationDetails} />
       <Route exact path={"/user/exams/payments"} component={ExamPayments} />
       <Route exact path={"/user/registration/confirmation"} component={RegistrationConfirmation} />
-
+      <Route exact path={"/receipts/results/:id"} component={ResultReceipt} />
+      <Route exact path={"/receipts/materials/:id"} component={MaterialsReceipt} />
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

@@ -122,12 +122,15 @@ export default class Person extends Component {
         'content-type': 'application/json'
       },
       method:'PUT',
-    }).then(()=> {
+     }).then(()=> {
+       localStorage.setItem('fullName', this.state.lastName + ' ' + this.state.firstName)
+       localStorage.setItem('phoneNumber', this.state.phoneNumber)
       alert("Personal Data Successfully Updated")
       this.setState({redirect:true})
-    }).catch(error => {
-          this.setState({error:'Progress not updated',loading:false})
-      })
+     }).catch(error => {
+      this.setState({error:'Progress not updated',loading:false})
+    })
+
   }
   handleUpdate (event) {
     event.preventDefault()

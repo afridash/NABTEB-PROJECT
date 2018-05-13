@@ -4,9 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import DatePicker from 'material-ui/DatePicker';
-import MenuItem from 'material-ui/MenuItem'
 import {Link} from 'react-router-dom'
 const styles = {
   headline: {
@@ -38,7 +35,6 @@ export default class AdminMaterial extends Component {
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
-          <h3 className='text-info text-center'></h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
               <div className='panel-heading'>

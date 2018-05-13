@@ -8,29 +8,7 @@ import DashboardHeader from './Dashboard-header'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import {nigeria} from './states'
-const styles = {
-  button:{
-    float:'right',
-    margin:5,
-    padding:10
-  },
-  box:{
-      boxShadow: '5px 5px 5px #888888',
-    backgroundColor:'white',
-  },
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
-  floatingLabelFocusStyle: {
-    color: 'green',
-  },
-  customWidth: {
-    width: 600,
-  },
-};
+
 export default class ExaminationDetails extends Component {
   constructor (props) {
     super(props)

@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import '../../App.css'
-import {Link} from 'react-router-dom'
-import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import DashboardHeader from '../Dashboard-header'
 import CircularProgress from 'material-ui/CircularProgress'
 import SHA512 from "crypto-js/sha512"
 
 const getUrlParams = url => `${url}?`.split('?')[1]
-  .split('&').reduce((params, pair) =>
-    ((key, val) => key ? {...params, [key]: val} : params)
+  .split('&').reduce((params, pair) =>((key, val) => key ? {...params, [key]: val} : params)
     (...`${pair}=`.split('=').map(decodeURIComponent)), {});
 export default class RegistrationReceipt extends Component {
   constructor (props) {
@@ -36,7 +32,7 @@ export default class RegistrationReceipt extends Component {
         statuscode:data.status,
         transactionTime:data.transactiontime
       })
-      if (data.status == "00" || data.status == "01")
+      if (data.status === "00" || data.status === "01")
       this.updateProgress()
     })
   }
@@ -113,13 +109,13 @@ export default class RegistrationReceipt extends Component {
     return (
       <div>
         {(()=>{
-          if(this.state.statuscode == "00" || this.state.statuscode == "01")
+          if(this.state.statuscode === "00" || this.state.statuscode === "01")
           return (<div>
             <h2>Transaction Successful</h2>
             <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
             <p><b>Amount Paid: </b>{this.state.amount}</p>
           </div>)
-          else if (this.state.statuscode == "021")
+          else if (this.state.statuscode === "021")
           return (
             <div>
               <h2>RRR Generated Successfully</h2>

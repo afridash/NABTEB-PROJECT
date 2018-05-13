@@ -46,6 +46,11 @@ import AdminCBTC from './components/Admin-CBTC'
 import AdminMaterial from './components/Admin-Material'
 import AdminPrograms from './components/Admin-Programs'
 import AdminCourses from './components/Admin-courses'
+import AdminPayment from './components/Admin-payment'
+import AdminCandidateRegistration from './components/Admin-candidateRegistration'
+import AdminCandidateResult from './components/Admin-candidateResult'
+import AdminCandidateMaterial from './components/Admin-candidateMaterial'
+import AdminUploadResult from './components/Admin-uploadResult'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -81,6 +86,11 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/programs"} component={AdminPrograms}/>
       <Route exact path ={"/user/admin/material"} component={AdminMaterial}/>
       <Route exact path ={"/user/admin/courses"} component={AdminCourses}/>
+      <Route exact path ={"/user/admin/payment"} component={AdminPayment}/>
+      <Route exact path ={"/user/admin/candidate/registration"} component={AdminCandidateRegistration}/>
+      <Route exact path ={"/user/admin/candidate/result"} component={AdminCandidateResult}/>
+      <Route exact path ={"/user/admin/candidate/material"} component={AdminCandidateMaterial}/>
+      <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

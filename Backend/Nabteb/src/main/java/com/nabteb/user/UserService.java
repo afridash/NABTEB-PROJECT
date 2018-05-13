@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 	private List<User> users = new ArrayList <> (Arrays.asList(
-			new User(2, "Ikuromor", "Mabel", "Ogiriki","08012345576", "Female", "June 12, 2015", "Lugbe, Abuja", "John Doe","Los Angeles","07002345678", "")
+			new User(2, "Ikuromor", "Mabel", "Ogiriki","08012345576", "Female", "June 12, 2015", "Lugbe, Abuja", "John Doe","Los Angeles","07002345678", "","Bayelsa State", "Nembe")
 			)); 
 	
 	public List<User> getAllUsers () {

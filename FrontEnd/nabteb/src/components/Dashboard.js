@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
@@ -11,7 +11,8 @@ export default class Dashboard extends Component {
     super(props)
     this.state = {
       email:'',
-      userId:''
+      userId:'',
+      loading:true
     }
   }
   async componentWillMount () {
@@ -25,15 +26,107 @@ export default class Dashboard extends Component {
     fetch(url).then(response => response.json()).then((user)=>{
         if (!user['status']){
           this.setState(user)
+          this.setState({loading:false})
         }
         }).catch(error => {
           this.setState({error:'Information could not be saved',loading:false})
       })
   }
+  registerUser () {
+    this.setState({submitting:true})
+    var url = 'http://localhost:8080/users/exams/'+this.state.userId
+    fetch(url).then(response => response.json()).then((user)=>{
+        if (!user['status']){
+          this.setState({
+            examValue:user.examType,
+            seriesValue:user.series
+        })
+        this.retrieveData()
+        }
+        }).catch(error => {
+          this.setState({error:'Network error, could not retrieve info',loading:false})
+      })
+  }
+  retrieveData () {
+    var url = 'http://localhost:8080/users/'+this.state.userId
+    fetch(url).then(response => response.json()).then((user)=>{
+      if (!user['status']){
+        this.setState({fullName: user.lastName + ', ' + user.firstName + ' ' + user.middleName})
+        this.saveRegistered()
+        }
+      }).catch(error => {
+        this.setState({submitting:false})
+        alert(error)
+    })
+  }
+  saveRegistered() {
+    var data = {
+      id:this.state.userId,
+      series:this.state.seriesValue,
+      registrationDate:Date.now(),
+      fullName:this.state.fullName,
+      examType:this.state.examValue
+    }
+    var url = 'http://localhost:8080/registered/'
+    fetch(url, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'POST',
+    }).then(response => response.json()).then((user)=>{
+        this.updateProgress()
+        }).catch(error => {
+          this.setState({submitting:false})
+          alert(error)
+      })
+  }
+  updateProgress () {
+    var data = {
+      id:this.state.userId,
+      finishedPayements:this.state.finishedPayements,
+      finishedPersonal:this.state.finishedPersonal,
+      finishedBiometrics:this.state.finishedBiometrics,
+      finishedExaminationsDetails:this.state.finishedExaminationsDetails,
+      submitted:true
+    }
+    fetch("http://localhost:8080/progress/"+this.state.userId, {
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      },
+      method:'PUT',
+    }).then(()=> {
+      this.setState({redirect:true})
+    }).catch(error => {
+          this.setState({error:'Progress not updated',loading:false})
+      })
+  }
+  showSubmitted () {
+    return (
+      <div className='col-sm-12'>
+        <Paper zDepth={2}>
+          <div style={{padding:20}}>
+            <p className='text-info'>You have successfully submited your application.</p>
+            <p className='text-info'>Click View to see registration details</p>
+            <Link to='/user/registration/confirmation'>
+            <RaisedButton
+              labelStyle={{color:'white'}}
+                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                label="View"
+              />
+            </Link>
+          </div>
+        </Paper>
+
+      </div>
+    )
+  }
   showPageContent () {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
         <p className='lead'>Welcome, {this.state.email}</p>
+        {this.state.submitted ? this.showSubmitted() :
         <div className='col-sm-12'>
           <p className='text-info text-center'>Fill out the different sections to complete registration. Biometrics must be submited through a verified registration center.</p>
           <div className='col-sm-6'>
@@ -157,18 +250,28 @@ export default class Dashboard extends Component {
                 </Paper>
               </div>
           </div>
-
         </div>
-        <div className='col-sm-12 text-center' style={{marginTop:40}}>
-          <Link to='/user/registration/confirmation'>
-            <RaisedButton
+      }
+      {(()=>{
+        if (!this.state.submitted && this.state.finishedExaminationsDetails && this.state.finishedPersonal)
+        return (
+          <div className='col-sm-12 text-center' style={{marginTop:40}}>
+            {this.state.submitting ? <RaisedButton
               labelStyle={{color:'white'}}
                 buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                label="Submit"
-              />
-          </Link>
-
-        </div>
+                label="Loading..."
+              /> :
+              <RaisedButton
+                labelStyle={{color:'white'}}
+                  buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                  label="Submit"
+                  onClick={()=>this.registerUser()}
+                />
+              }
+          </div>
+        )
+      })()}
+        {this.state.redirect && <Redirect to='/user/registration/confirmation' push />}
       </div>
     )
   }

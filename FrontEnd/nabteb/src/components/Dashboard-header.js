@@ -16,13 +16,28 @@ export default class DashboardHeader extends Component {
       showProfile:false,
       email:'',
       oldPassword:'',
-      newPassword:''
+      newPassword:'',
+      userId:''
     }
   }
   async componentWillMount () {
     var email = await localStorage.getItem('email')
+    var userId = await localStorage.getItem('userId')
     if (email === null || email === undefined || !email) this.setState({redirect:true})
-    else this.setState({email})
+    else {
+      this.setState({email, userId})
+      this.retrieveData(userId)
+    }
+  }
+  retrieveData (userId) {
+    var url = 'http://localhost:8080/users/'+userId
+    fetch(url).then(response => response.json()).then((user)=>{
+      if (!user['status']){
+        this.setState(user)
+        }
+      }).catch(error => {
+        alert(error)
+    })
   }
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
@@ -49,24 +64,30 @@ export default class DashboardHeader extends Component {
             <br/>
             <div>
               <p style={{fontWeight:'600'}}>Name</p>
-              <p> Igbiriki, Richard Imorobebh</p>
+              <p> {this.state.lastName}, {this.state.firstName} {this.state.middleName}</p>
             </div>
             <div>
               <p style={{fontWeight:'600'}}>Gender</p>
-              <p> Male</p>
+              <p> {this.state.gender}</p>
+            </div>
+
+            <div>
+              <p style={{fontWeight:'600'}}>State</p>
+              <p> {this.state.state}</p>
+            </div>
+
+            <div>
+              <p style={{fontWeight:'600'}}>LGA</p>
+              <p> {this.state.lga}</p>
             </div>
 
             <div>
               <p style={{fontWeight:'600'}}>Address/Location</p>
-              <p>Azikoro Village, Yenagoa</p>
-            </div>
-            <div>
-              <p style={{fontWeight:'600'}}>State</p>
-              <p> Bayelsa</p>
+              <p>{this.state.address}</p>
             </div>
             <div>
               <p style={{fontWeight:'600'}}>Phone</p>
-              <p>+(234) 700 234 5678</p>
+              <p>{this.state.phoneNumber}</p>
             </div>
             <div>
               <p style={{fontWeight:'600'}}>Change Password</p>

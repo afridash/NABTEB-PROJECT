@@ -13,11 +13,14 @@ public class User {
 	private String kinAddress;
 	private String kinPhoneNumber;
 	private String passport;
+	private String state;
+	private String lga;
+
 	public User() {
 		
 	}
 	public User(int id, String firstName, String middleName, String lastName, String phoneNumber, String gender,
-			String dob, String address, String kinFullName, String kinAddress, String kinPhoneNumber, String passport) {
+			String dob, String address, String kinFullName, String kinAddress, String kinPhoneNumber, String passport, String state, String lga) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -30,6 +33,20 @@ public class User {
 		this.kinFullName = kinFullName;
 		this.kinAddress = kinAddress;
 		this.kinPhoneNumber = kinPhoneNumber;
+		this.lga = lga;
+		this.state = state;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getLga() {
+		return lga;
+	}
+	public void setLga(String lga) {
+		this.lga = lga;
 	}
 	public String getPassport() {
 		return passport;

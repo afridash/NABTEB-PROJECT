@@ -37,6 +37,7 @@ export default class ExaminationDetails extends Component {
     this.state = {
       stateValue: '',
       lgaValue:'',
+      seriesValue:'',
       states:[],
       locals:[],
       default:'',
@@ -71,7 +72,9 @@ export default class ExaminationDetails extends Component {
             lgaValue:user.localGovernment,
             examValue:user.examType,
             centerValue:user.examCenter,
-            tradeValue:user.examTitle})
+            tradeValue:user.examTitle,
+            seriesValue:user.series
+        })
         }
         }).catch(error => {
           this.setState({error:'Network error, could not retrieve info',loading:false})
@@ -101,6 +104,9 @@ export default class ExaminationDetails extends Component {
   handleSelectTrade = (event, index, value) => {
     this.setState({tradeValue:value})
   }
+  handleSelectSeries = (event, index, value) => {
+    this.setState({seriesValue:value})
+  }
   handleSubmit = (event) => {
     event.preventDefault()
     var data = {
@@ -109,7 +115,8 @@ export default class ExaminationDetails extends Component {
       localGovernment:this.state.lgaValue,
       examCenter:this.state.centerValue,
       examType:this.state.examValue,
-      examTitle:this.state.tradeValue
+      examTitle:this.state.tradeValue,
+      series:this.state.seriesValue
     }
     var url = 'http://localhost:8080/users/exams'
     fetch(url, {
@@ -132,7 +139,8 @@ export default class ExaminationDetails extends Component {
       localGovernment:this.state.lgaValue,
       examCenter:this.state.centerValue,
       examType:this.state.examValue,
-      examTitle:this.state.tradeValue
+      examTitle:this.state.tradeValue,
+      series:this.state.seriesValue
     }
     var url = 'http://localhost:8080/users/exams/'+this.state.userId
     fetch(url, {
@@ -204,6 +212,16 @@ export default class ExaminationDetails extends Component {
                       {this.state.locals.map((local, key)=>
                         <MenuItem key={key} value={local.name} primaryText={local.name} />
                       )}
+                    </SelectField>
+                    <SelectField
+                      value={this.state.seriesValue}
+                      onChange={this.handleSelectSeries}
+                      maxHeight={200}
+                      fullWidth
+                      >
+                      <MenuItem value={''} primaryText="Choose Exam Series" />
+                      <MenuItem value={"May/June" + new Date().getFullYear()} primaryText={"May/June " + new Date().getFullYear()} />
+                      <MenuItem value={"Nov/Dec" + new  Date().getFullYear()} primaryText={"Nov/Dec " + new  Date().getFullYear()} />
                     </SelectField>
                     <SelectField
                       value={this.state.centerValue}

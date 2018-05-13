@@ -13,44 +13,51 @@ public class UserExamInfo {
     private String examCenter;
     private String examType;
     private String examTitle;
+    private String series;
     
-public UserExamInfo(){
+    public String getSeries() {
+		return series;
+	}
+	public void setSeries(String series) {
+		this.series = series;
+	}
+	public UserExamInfo(){
     
-}
-public void setId(int id){
-    this.id=id;
-}
-public int getId(){
-    return id;
-}
-public void setState(String state){
-    this.state=state;
-}
-public String getState(){
-    return state;
-}
-public void setLocalGovernment(String localGovernment){
-    this.localGovernment=localGovernment;
-}
-public String getLocalGovernment(){
-    return localGovernment;
-}
-public void setExamCenter(String examCenter){
-    this.examCenter=examCenter;
-}
-public String getExamCenter(){
-    return examCenter;
-}
-public void setExamType(String examType){
-    this.examType=examType;
-}
-public String getExamType(){
-    return examType;
-}
-public void setExamTitle(String examTitle){
-    this.examTitle=examTitle;
-}
-public String getExamTitle(){
-    return examTitle;
-}
+	}
+	public void setId(int id){
+		this.id=id;
+	}
+	public int getId(){
+		return id;
+	}
+	public void setState(String state){
+		this.state=state;
+	}
+	public String getState(){
+		return state;
+	}
+	public void setLocalGovernment(String localGovernment){
+		this.localGovernment=localGovernment;
+	}
+	public String getLocalGovernment(){
+		return localGovernment;
+	}
+	public void setExamCenter(String examCenter){
+		this.examCenter=examCenter;
+	}
+	public String getExamCenter(){
+		return examCenter;
+	}
+	public void setExamType(String examType){
+		this.examType=examType;
+	}
+	public String getExamType(){
+		return examType;
+	}
+	public void setExamTitle(String examTitle){
+		this.examTitle=examTitle;
+	}
+	public String getExamTitle(){
+		return examTitle;
+	}
 }

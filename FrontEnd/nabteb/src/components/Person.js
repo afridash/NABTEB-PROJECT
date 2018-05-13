@@ -10,7 +10,7 @@ import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 import DatePicker from 'material-ui/DatePicker'
 import FileReaderInput from 'react-file-reader-input'
-
+import {nigeria} from './states'
 const styles = {
   headline: {
     fontSize: 24,
@@ -33,12 +33,19 @@ export default class Person extends Component {
     super(props)
     this.state = {
       gender:'',
-      userId:''
+      userId:'',
+      stateValue:'',
+      lgaValue:'',
+      states:[],
+      locals:[],
+      default:'',
     }
   }
   async componentWillMount () {
     var userId = await localStorage.getItem('userId')
-    this.setState({userId})
+    var states = []
+    nigeria.forEach((st)=>{states.push(st.state.name)})
+    this.setState({userId, states})
     this.retrieveInfo(userId)
   }
   retrieveInfo (userId) {
@@ -46,7 +53,7 @@ export default class Person extends Component {
     fetch(url).then(response => response.json()).then((user)=>{
         if (!user['status']){
           this.setState(user)
-          this.setState({dob: new Date(user.dob), uploaded:true, profilePicture:user.passport})
+          this.setState({dob: new Date(user.dob), uploaded:true, profilePicture:user.passport, stateValue:user.state, lgaValue:user.lga, default:user.lga})
         }
         }).catch(error => {
           this.setState({error:'Information could not be saved',loading:false})
@@ -62,6 +69,13 @@ export default class Person extends Component {
   }
   handleSelect = (event, index, value) => {
     this.setState({gender:value, selectedIndex:index})
+  }
+  handleSelectState = (event, index, value) => {
+    var state = nigeria.filter((current)=> current.state.id === index)
+    this.setState({stateValue:value, stateIndex:index, locals:state[0].state.locals, lgaValue:'', default:''})
+  }
+  handleSelectLGA = (event, index, value) => {
+    this.setState({lgaValue:value})
   }
   handleFile = (e, results) => {
     results.forEach(result => {
@@ -93,6 +107,8 @@ export default class Person extends Component {
       kinAddress:this.state.kinAddress,
       kinPhoneNumber:this.state.kinPhoneNumber,
       passport:this.state.profilePicture,
+      state:this.state.stateValue,
+      lga:this.state.lgaValue
     }
     var url = 'http://localhost:8080/users'
     fetch(url, {
@@ -146,7 +162,9 @@ export default class Person extends Component {
       kinFullName:this.state.kinFullName,
       kinAddress:this.state.kinAddress,
       kinPhoneNumber:this.state.kinPhoneNumber,
-      passport:this.state.profilePicture
+      passport:this.state.profilePicture,
+      state:this.state.stateValue,
+      lga:this.state.lgaValue
     }
     var url = 'http://localhost:8080/users/'+this.state.userId
     fetch(url, {
@@ -231,11 +249,37 @@ export default class Person extends Component {
                     maxHeight={200}
                     >
                       <MenuItem value=''  primaryText={'Choose Gender'} />
-                      <MenuItem value='male'  primaryText='Male' />
-                      <MenuItem value='female'  primaryText='Female' />
+                      <MenuItem value='Male'  primaryText='Male' />
+                      <MenuItem value='Female'  primaryText='Female' />
                     </SelectField>
                     <DatePicker value={this.state.dob} onChange={this.handleDateChanged} fullWidth hintText="Date of Birth" container="inline" />
-                    <TextField
+                    <SelectField
+                      value={this.state.stateValue}
+                      onChange={this.handleSelectState}
+                      maxHeight={200}
+                      fullWidth
+                      >
+                    <MenuItem value={''} primaryText="Choose State" />
+                    {this.state.states.map((name, key)=>
+                      <MenuItem key={key} value={name} primaryText={name} />
+                    )}
+                  </SelectField>
+                  <SelectField
+                    value={this.state.lgaValue}
+                    onChange={this.handleSelectLGA}
+                    maxHeight={200}
+                    fullWidth
+                    >
+                      {this.state.default !=='' ?
+                      <MenuItem value={this.state.default} primaryText={this.state.default} />
+                      :
+                      <MenuItem value={this.state.default} primaryText="Choose LGA" />}
+
+                    {this.state.locals.map((local, key)=>
+                      <MenuItem key={key} value={local.name} primaryText={local.name} />
+                    )}
+                  </SelectField>
+                  <TextField
                     type='text'
                     hintText="Address"
                     fullWidth={true}

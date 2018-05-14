@@ -32,6 +32,7 @@ export default class AccountConfirmation extends Component {
         pin: '',
         error: '',
         redirect:false,
+        url:'',
       }
       this.userId = this.props.match.params.id
   }
@@ -47,7 +48,14 @@ export default class AccountConfirmation extends Component {
         localStorage.setItem('email', data['email'])
         localStorage.setItem('userId', data['id'])
         localStorage.setItem('userType', data['user_type'])
-        this.setState({redirect:true})
+        var url = ''
+        if (data.user_type === "candidate")
+        url = "/dashboard"
+        else if (data.user_type === "center_owner")
+        url = "/user/cbo"
+        else url = "/user/admin/dashboard"
+
+        this.setState({redirect:true, url})
       }).catch(error => {
         this.setState({loading:false})
         this.setState({error:'Invalid verification pin'})
@@ -112,7 +120,7 @@ export default class AccountConfirmation extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.redirect && <Redirect to={this.state.url} push />}
       </div>
     );
   }

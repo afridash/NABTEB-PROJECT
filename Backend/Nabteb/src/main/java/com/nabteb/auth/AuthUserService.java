@@ -39,10 +39,10 @@ public class AuthUserService {
 	private EmailService emailService;
 	
 	private List<AuthUser> users = new ArrayList <> (Arrays.asList(
-			new AuthUser(1, "imorobebh@gmail.com", "12345678", "candidate","today", false, "123456"),
-			new AuthUser(2, "richard@gmail.com", "12345678", "candidate","today", true, "12345"),
-			new AuthUser(3, "imoris@gmail.com", "12345678", "candidate","today", false, "12345"),
-			new AuthUser(4, "user@gmail.com", "12345678", "center_owner","today", true, "12345")
+			new AuthUser(1, "candidate@localhost", "12345678", "candidate","today", false, "12345"),
+			new AuthUser(2, "admin@localhost", "12345678", "admin","today", true, "12345"),
+			new AuthUser(3, "owner@localhost", "12345678", "center_owner","today", false, "12345"),
+			new AuthUser(4, "scholar@localhost", "12345678", "scholar","today", true, "12345")
 			)); 
 	public AuthUser login (String email, String password) {
 		//Find user based on email 

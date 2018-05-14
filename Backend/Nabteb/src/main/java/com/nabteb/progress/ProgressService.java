@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProgressService {
 	private List<Progress> users = new ArrayList <> (Arrays.asList(
-			new Progress(2, false,false,false,false,false),
+			new Progress(3, false,false,false,false,false),
 			new Progress(1, false,false,false,false,false)
 			));
 	

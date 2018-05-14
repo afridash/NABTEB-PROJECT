@@ -62,8 +62,8 @@ export default class Results extends Component {
             <div className='col-sm-12 '>
               <div style={{padding:10}}>
                 <ul>
-                  <li><p>Make payment for pin (Online/Bank)</p></li>
-                  <li><p>View results a max of five (5) times</p></li>
+                  <li><p>Make a payment of <b>One Thousand (1,000) Naira</b> for PIN</p></li>
+                  <li><p>View results a max of five (5) times per PIN</p></li>
                 </ul>
                 <div className='text-center'>
                   <form id="result_form" action="http://www.remitademo.net/remita/ecomm/init.reg" target="_blank" ame="SubmitRemitaForm" method="POST">

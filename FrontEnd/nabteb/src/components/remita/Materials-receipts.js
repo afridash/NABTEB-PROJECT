@@ -35,7 +35,7 @@ export default class MaterialsReceipt extends Component {
         statuscode:data.status,
         transactionTime:data.transactiontime
       })
-      if (data.status === "00" || data.status === "01")
+      if (data.status === "00" || data.status === "01" || data.status === "021")
       this.savePaymentDetails()
     })
   }
@@ -91,7 +91,7 @@ export default class MaterialsReceipt extends Component {
           return (
             <div>
               <h2>RRR Generated Successfully</h2>
-              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}></p>
+              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
             </div>
           )
           else return (

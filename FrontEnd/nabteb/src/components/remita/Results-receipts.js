@@ -35,7 +35,7 @@ export default class ResultReceipt extends Component {
         statuscode:data.status,
         transactionTime:data.transactiontime
       })
-      if (data.status === "00" || data.status === "01")
+      if (data.status === "00" || data.status === "01" || data.status === "021")
       this.savePaymentDetails()
     })
   }
@@ -50,7 +50,7 @@ export default class ResultReceipt extends Component {
       status:this.state.statuscode,
       views:0
     }
-    fetch("http://localhost:8080/results/fees", {
+    fetch("http://localhost:8080/result/fees", {
       body: JSON.stringify(data),
       headers: {
         'content-type': 'application/json'
@@ -92,7 +92,7 @@ export default class ResultReceipt extends Component {
           return (
             <div>
               <h2>RRR Generated Successfully</h2>
-              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}></p>
+              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
             </div>
           )
           else return (

@@ -52,7 +52,7 @@ export default class RegistrationConfirmation extends Component {
     //Get user payment Information
     var url = 'http://localhost:8080/registration/fees/'+userId
     fetch(url).then(response => response.json()).then((fees)=>{
-        if (fees.length > 0) this.setState({referenceNumber:fees.referenceNumber, orderId:fees.orderId, transactionTime:fees.transactionTime, amtPaid:fees.amount, transactionStatus:fees.status, message:fees.message, loading:false})
+        if (fees.orderId !== null && fees.orderId !== undefined) this.setState({referenceNumber:fees.referenceNumber, orderId:fees.orderId, transactionTime:fees.transactionTime, amtPaid:fees.amount, transactionStatus:fees.status, message:fees.message, loading:false})
         else this.setState({loading:false})
         }).catch(error => {
           this.setState({error:'Error loading information details',loading:false})

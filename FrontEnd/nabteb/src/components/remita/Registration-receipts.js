@@ -32,7 +32,7 @@ export default class RegistrationReceipt extends Component {
         statuscode:data.status,
         transactionTime:data.transactiontime
       })
-      if (data.status === "00" || data.status === "01")
+      if (data.status == "00" || data.status == "01" || data.status == "021")
       this.updateProgress()
     })
   }
@@ -109,17 +109,17 @@ export default class RegistrationReceipt extends Component {
     return (
       <div>
         {(()=>{
-          if(this.state.statuscode === "00" || this.state.statuscode === "01")
+          if(this.state.statuscode == "00" || this.state.statuscode == "01")
           return (<div>
             <h2>Transaction Successful</h2>
             <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
             <p><b>Amount Paid: </b>{this.state.amount}</p>
           </div>)
-          else if (this.state.statuscode === "021")
+          else if (this.state.statuscode == "021")
           return (
             <div>
               <h2>RRR Generated Successfully</h2>
-              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}></p>
+              <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
             </div>
           )
           else return (

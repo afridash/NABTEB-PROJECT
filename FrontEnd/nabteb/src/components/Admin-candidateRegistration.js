@@ -93,7 +93,7 @@ export default class AdminCandidateRegistration extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

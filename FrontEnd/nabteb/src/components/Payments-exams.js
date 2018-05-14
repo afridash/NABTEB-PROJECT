@@ -166,7 +166,7 @@ export default class ExamPayments extends Component {
   showPaymentAPI () {
     return (
       <div className='text-center'>
-        <form target="_blank" id='registration_form' action="http://www.remitademo.net/remita/ecomm/init.reg" name="SubmitRemitaForm" method="POST">
+        <form id='registration_form' action="http://www.remitademo.net/remita/ecomm/init.reg" name="SubmitRemitaForm" method="POST">
        <input name="merchantId" value={this.state.merchantId} type="hidden"/>
        <input name="serviceTypeId" value={this.state.serviceTypeId} type="hidden"/>
        <input name="orderId" value={this.state.orderId} type="hidden"/>

@@ -155,21 +155,27 @@ export default class DashboardHeader extends Component {
                 </div>
                 <div className='col-sm-5 text-center'>
                     <div className='row'>
+                      {!this.props.materials &&
                       <Link style={{textDecoration:'none', color:'white'}} to='/user/materials' className='col-sm-3'>
                         <img src={require('../images/connect-icon.svg')} style={{height:20, width:20}} />
                         <h5 >Materials</h5>
                       </Link>
+                    }
+                    {!this.props.materials &&
                       <Link style={{textDecoration:'none', color:'white'}} to='/user/results' className='col-sm-3'>
                         <img src={require('../images/report.svg')} style={{height:20, width:20, color:'red' }}  />
                         <h5 >Results</h5>
                       </Link>
+                    }
+                    {!this.props.materials &&
                       <div onClick={()=>this.setState({showProfile:!this.state.showProfile,})} className='col-sm-3' >
                         <Link to='#' style={{textDecoration:'none', color:'white'}} className='column'>
                           <img src={require('../images/profile-view.svg')} style={{height:20, width:20}}  />
                         <h5>Profile</h5>
                       </Link>
                       </div>
-                      <div className='col-sm-3'>
+                    }
+                      <div className='col-sm-3 pull-right'>
                         <h5 style={{color:'white', cursor:'pointer'}} onClick={()=>this.logOut()}>Logout</h5>
                       </div>
                   </div>

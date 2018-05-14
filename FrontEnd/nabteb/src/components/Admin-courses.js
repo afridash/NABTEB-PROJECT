@@ -4,9 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import DatePicker from 'material-ui/DatePicker';
-import MenuItem from 'material-ui/MenuItem'
 import {Link} from 'react-router-dom'
 const styles = {
   headline: {
@@ -152,7 +149,7 @@ export default class AdminCourses extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

@@ -23,6 +23,9 @@ import Materials from './components/Materials'
 import Results from './components/Results'
 import RegistrationConfirmation from './components/Registration-confirmation'
 import AccountConfirmation from './components/Account-confirmation'
+import RegistrationReceipt from './components/remita/Registration-receipts'
+import ResultReceipt from './components/remita/Results-receipts'
+import MaterialsReceipt from './components/remita/Materials-receipts'
 import CBODashboard from './components/CBO-Dashboard'
 import CBOPerson from './components/CBO-person'
 import CBOExaminations from './components/CBO-examinations'
@@ -60,6 +63,9 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/user/exams/details"} component={ExaminationDetails} />
       <Route exact path={"/user/exams/payments"} component={ExamPayments} />
       <Route exact path={"/user/registration/confirmation"} component={RegistrationConfirmation} />
+      <Route exact path={"/receipts/registration/:id"} component={RegistrationReceipt} />
+      <Route exact path={"/receipts/results/:id"} component={ResultReceipt} />
+      <Route exact path={"/receipts/materials/:id"} component={MaterialsReceipt} />
       <Route exact path ={"/user/cbo"} component={CBODashboard}/>
       <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>
       <Route exact path ={"/user/cbo/examinations"} component={CBOExaminations}/>
@@ -85,9 +91,6 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/candidate/result"} component={AdminCandidateResult}/>
       <Route exact path ={"/user/admin/candidate/material"} component={AdminCandidateMaterial}/>
       <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
-
-
-
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />
@@ -99,7 +102,7 @@ ReactDOM.render(<BrowserRouter >
     <Route exact path={"/register"} component={Register} />
     <Route exact path={"/reset"} component={Reset} />
     <Route exact path={"/login"} component={Login} />
-    <Route exact path={"/account/confirm"} component={AccountConfirmation} />
+    <Route exact path={"/account/confirm/:id"} component={AccountConfirmation} />
   </Header>
 
     </Switch>

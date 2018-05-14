@@ -41,9 +41,6 @@ export default class AdminSeries extends Component {
           <h3 className='text-info text-center'>Examinations Series</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
-              <div className='panel-heading'>
-                <div className='panel-title' style={{fontSize:18}}>List of Exam Series</div>
-              </div>
               <div className='panel-body'>
                 <ul>
                   <table class="table table-striped">
@@ -63,9 +60,8 @@ export default class AdminSeries extends Component {
                           <Link to='#'>
                           <RaisedButton
                             labelStyle={{color:'white'}}
-                              buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                              label="Edit"
-                              onClick={()=>this.setState({addNew:!this.state.addNew})}
+                              buttonStyle={{backgroundColor:'#e74c3c', borderColor:'white'}}
+                              label="Close Registration"
                             />
                           </Link>
                         </td>
@@ -79,8 +75,7 @@ export default class AdminSeries extends Component {
                           <RaisedButton
                             labelStyle={{color:'white'}}
                               buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                              label="Edit"
-                              onClick={()=>this.setState({addNew:!this.state.addNew})}
+                              label="Open Registration"
                             />
                           </Link>
                         </td>
@@ -94,8 +89,7 @@ export default class AdminSeries extends Component {
                           <RaisedButton
                             labelStyle={{color:'white'}}
                               buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                              label="Edit"
-                              onClick={()=>this.setState({addNew:!this.state.addNew})}
+                              label="Open Registration"
                             />
                           </Link>
                         </td>
@@ -173,7 +167,7 @@ export default class AdminSeries extends Component {
             <Link to='/user/admin/dashboard'>
             <RaisedButton
               labelStyle={{color:'white'}}
-              buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
+              buttonStyle={{backgroundColor:'#e74c3c', borderColor:'white'}}
               label="Close"
             />
           </Link>&nbsp;&nbsp;

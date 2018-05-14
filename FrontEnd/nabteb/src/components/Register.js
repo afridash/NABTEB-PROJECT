@@ -3,6 +3,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Link,Redirect, } from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import '../App.css';
 const styles = {
   button:{
@@ -32,24 +34,80 @@ export default class Register extends Component {
         password: '',
         error: '',
         redirect:false,
+        selected:''
       }
   }
 
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
+  createUser () {
+    var url = 'http://localhost:8080/users/create'
+    var data = {
+      id:0,
+      email:this.state.email,
+      password:this.state.password,
+      user_type:this.state.selected,
+      created_at: Date.now(),
+      verified:false,
+      pin:''
+    }
+    fetch(url, {
+    body: JSON.stringify(data), // must match 'Content-Type' header
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  }).then(response => response.json()).then((user)=>{
+    this.setProgressDetails(user.id)
+  }).catch(error => {
+    this.setState({error:'Account creation encountered an error',loading:false})
+  })
+  }
+  setProgressDetails(userId) {
+    var url = 'http://localhost:8080/progress'
+    var data = {
+      id:userId,
+      finishedPersonal:false,
+      finishedExaminationsDetails:false,
+      finishedBiometrics:false,
+      finishedPayements:false,
+      submitted:false
+    }
+    fetch(url, {
+    body: JSON.stringify(data), // must match 'Content-Type' header
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  }).then(()=> {
+    this.setState({redirect:true, userId:userId})
+  }).catch(error => {
+    this.setState({error:'Error creating account',loading:false})
+  })
+
+  }
   handleSubmit (event) {
     event.preventDefault()
     this.setState({loading:true})
-    if (this.verifyPasswords()) {
-      alert("Logging In")
-      this.setState({redirect:true})
+    if (this.verifyInputs()) {
+      if (this.verifyPasswords()){
+        this.createUser()
+      }else{
+        this.setState({error:'Passwords do not match',loading:false})
+      }
     }else{
-      this.setState({error:'Email/Password Cannot be Empty',loading:false})
+      this.setState({error:'All fields are required',loading:false})
     }
   }
+  verifyInputs () {
+    return this.state.email !== '' && this.state.password !== '' && this.passwordConfirm !=='' && this.state.selected !== ''
+  }
   verifyPasswords () {
-    return this.state.email !== '' && this.state.password !== ''
+    return this.state.password === this.state.passwordConfirm
+  }
+  handleSelect = (event, index, value) => {
+    this.setState({selected:value, selectedIndex:index})
   }
   render() {
     return (
@@ -91,14 +149,27 @@ export default class Register extends Component {
                         <TextField
                           type="password"
                           fullWidth={true}
-                          name='password'
+                          name='passwordConfirm'
                           hintText="Enter Password"
-                          floatingLabelText="Password"
+                          floatingLabelText="Confirm Password"
                           className='text-center'
                           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                           underlineFocusStyle={{borderColor: '#16a085'}}
                           onChange = {this.handleChange}
                         />
+                        <SelectField
+                          value={this.state.selected}
+                          onChange={this.handleSelect}
+                          fullWidth
+                          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                          name='selected'
+                          maxHeight={200}
+                          >
+                            <MenuItem value=''  primaryText={'Choose Account Type'} />
+                            <MenuItem value='candidate'  primaryText='Candidate' />
+                            <MenuItem value='scholar'  primaryText='Associate Scholar' />
+                            <MenuItem value='center_owner'  primaryText='Center Owner' />
+                          </SelectField>
                             {this.state.loading ? <RaisedButton
                               labelStyle={{color:'white'}}
                                 buttonStyle={{backgroundColor:'#1abc9c', borderColor:'white'}}
@@ -121,7 +192,7 @@ export default class Register extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/account/confirm' push />}
+        {this.state.redirect && <Redirect to={'/account/confirm/'+this.state.userId} push />}
       </div>
     );
   }

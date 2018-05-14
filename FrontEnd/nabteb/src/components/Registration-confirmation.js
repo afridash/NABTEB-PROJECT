@@ -5,104 +5,148 @@ import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
+import getSymbolFromCurrency from 'currency-symbol-map/'
+import CircularProgress from 'material-ui/CircularProgress'
 
 export default class RegistrationConfirmation extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      userId:'',
+      currency:'',
+      amtPaid:0,
+      loading:true,
+    }
+  }
+  async componentWillMount () {
+    var userId = await localStorage.getItem('userId')
+    var currency = getSymbolFromCurrency('NGN')
+    this.setState({userId, currency})
+    this.retrievePersonalData(userId)
+    this.retrieveExamInfo (userId)
+    this.retrievePaymentInfo(userId)
+  }
+  retrievePersonalData (userId) {
+    var url = 'http://localhost:8080/users/'+userId
+    fetch(url).then(response => response.json()).then((user)=>{
+        if (!user['status']){
+          this.setState(user)
+          var month = new Date(user.dob).getMonth() + 1
+          var year = new Date(user.dob).getFullYear()
+          var day = new Date(user.dob).getDate()
+          var dob = day + "/"+month+"/"+year
+          this.setState({profilePicture:user.passport, dob:dob})
+        }
+        }).catch(error => {
+          this.setState({error:'Encountered an error retrieving information',loading:false})
+      })
+  }
+  retrieveExamInfo (userId) {
+    //Get exam details for pricing list
+    var url = 'http://localhost:8080/users/exams/'+userId
+    fetch(url).then(response => response.json()).then((user)=>{
+      this.setState(user)
+    })
+  }
+  retrievePaymentInfo (userId) {
+    //Get user payment Information
+    var url = 'http://localhost:8080/registration/fees/'+userId
+    fetch(url).then(response => response.json()).then((fees)=>{
+        if (fees.orderId !== null && fees.orderId !== undefined) this.setState({referenceNumber:fees.referenceNumber, orderId:fees.orderId, transactionTime:fees.transactionTime, amtPaid:fees.amount, transactionStatus:fees.status, message:fees.message, loading:false})
+        else this.setState({loading:false})
+        }).catch(error => {
+          this.setState({error:'Error loading information details',loading:false})
+      })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showPage () {
+    return (
+      <Paper zDepth={2}>
+        <div className='row'>
+          <div className='col-sm-12'>
+            <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Personal Data</p>
+            <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
+              <div className='text-center'>
+                <img src={this.state.profilePicture} className='img-thumbnail' style={{width:100, height:100}} />
+              </div>
+            <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
+              <p><b>First Name: </b> {this.state.firstName} </p>
+              <p><b>Middle Name: </b> {this.state.middleName}</p>
+              <p><b>Surname: </b>{this.state.lastName}</p>
+              <p><b>Gender: </b>{this.state.gender}</p>
+              <p><b>D.O.B: </b>{this.state.dob}</p>
+              <p><b>Phone Number: </b> {this.state.phoneNumber}</p>
+              <p><b>State: </b>{this.state.state}</p>
+              <p><b>LGA: </b>{this.state.lga}</p>
+              <p><b>Address: </b>{this.state.address}</p>
+              <p style={{textAlign:'center', fontSize:22}}><b>Next of Kin</b></p>
+              <p><b>Full Name: </b> {this.state.kinFullName} </p>
+              <p><b>Address: </b>{this.state.kinAddress}</p>
+              <p><b>Phone Number: </b> {this.state.kinPhoneNumber}</p>
+            </div>
+            </div>
+          </div>
+          <div className='col-sm-12'>
+            <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Examination Details</p>
+            <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
+            <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
+              <p><b>State: </b> {this.state.state} </p>
+              <p><b>Local government: </b> {this.state.localGovernment}</p>
+              <p><b>Exam Center: </b>{this.state.examCenter}</p>
+              <p><b>Exam Type: </b>{this.state.examType}</p>
+              <p><b>Exam Title: </b>{this.state.examTitle}</p>
+            </div>
+            </div>
+          </div>
+          <div className='col-sm-12'>
+            <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Biometric Data</p>
+            <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
+            <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
+              <p><b>Biometric Status:</b> <span className='text-success'>Submitted</span></p>
+              <p><b>Submitted At:</b> FitFarm Plc</p>
+              <p><b>Time uploaded:</b> Wednesday, January 2017 5pm</p>
+            </div>
+
+            </div>
+          </div>
+          <div className='col-sm-12'>
+            <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Payments</p>
+            <div style={{margin: 20, padding:10}}>
+            <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
+              <p><b>Transaction Status: </b> {this.state.message}</p>
+              <p><b>Transaction Amount: </b>{this.state.currency} {this.state.amtPaid.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</p>
+              <p><b>OrderId: </b> {this.state.orderId}</p>
+              <p><b>Remita Retrieval Reference: </b> {this.state.referenceNumber}</p>
+              <div className='text-center'>
+                <Link to='/dashboard'>
+                <RaisedButton
+                  labelStyle={{color:'white'}}
+                  buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                  label="Close"
+                />
+              </Link>&nbsp;&nbsp;
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </Paper>
+
+    )
   }
   showPageContent () {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
-        <Paper zDepth={2}>
-          <div className='row'>
-            <div className='col-sm-12'>
-              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Personal Data</p>
-              <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
-              <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
-                <p><b>First Name: </b> John </p>
-                <p><b>Middle Name: </b> Micheal</p>
-                <p><b>Surname: </b>Doe</p>
-                <p><b>Phone Number: </b> 08011123434</p>
-                <p><b>Gender: </b>Male</p>
-                <p><b>Address: </b>No1. Aguiyi Ironsi Road, Off Setraco Estate, Benin City, Nigeria</p>
-                <p style={{textAlign:'center', fontSize:22}}><b>Next of Kin</b></p>
-                <p><b>Full Name: </b> Daniel Raymond Doe </p>
-                <p><b>Address: </b>Plot 2, Jaycee Avenue, Niger State</p>
-                <p><b>Phone Number: </b> 08011123434</p>
-
-              </div>
-
-              <div  style={{textAlign:'right'}}>
-                <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#16a085', textAlign:'left' ,borderColor:'white'}}
-                    label="Edit"
-                    />
-                </Link>
-
-              </div>
-
-              </div>
-            </div>
-            <div className='col-sm-12'>
-              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Examination Details</p>
-              <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
-              <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
-                <p><b>State: </b> Aba </p>
-                <p><b>Local government: </b> Asaba LGA</p>
-                <p><b>Exam Center: </b>Uratta Tech. College Aba 01003 Technical/Commercial Aba North No.300 Uratta Road, Aba P.O Box 946 Aba</p>
-                <p><b>Exam Type: </b>National Business Certificate</p>
-              </div>
-              <div  style={{textAlign:'right'}}>
-                <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#16a085', textAlign:'left' ,borderColor:'white'}}
-                    label="Edit"
-                    />
-                </Link>
-              </div>
-              </div>
-            </div>
-            <div className='col-sm-12'>
-              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Biometric Data</p>
-              <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
-              <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
-                <p><b>Biometric Status:</b> <span className='text-success'>Submitted</span></p>
-                <p><b>Submitted At:</b> FitFarm Plc</p>
-                <p><b>Time uploaded:</b> Wednesday, January 2017 5pm</p>
-              </div>
-
-              </div>
-            </div>
-            <div className='col-sm-12'>
-              <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Payments</p>
-              <div style={{margin: 20, padding:10}}>
-              <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
-                <p><b>Selected Examination: </b> NTC (#10,000)</p>
-                <p><b>Registration Pin/Services: </b> #1,500</p>
-                <p><b>Gateway: </b> #100</p>
-                <br />
-                <br />
-                <p style={{fontSize:18}}><b>Total: </b> #11,600</p>
-                <div className='text-center'>
-                  <Link to='/dashboard'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                    label="Submit"
-                  />
-                </Link>&nbsp;&nbsp;
-
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </Paper>
-
+        {this.state.loading ? this.showSpinner() : this.showPage()}
       </div>
     )
   }

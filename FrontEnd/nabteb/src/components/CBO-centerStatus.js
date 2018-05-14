@@ -63,7 +63,7 @@ export default class CBOCenterStatus extends Component {
                                 <td>1</td>
                                 <td>John Doe</td>
                                 <td>Progress Commercial College, Oruruala Oguduasa. 01004 Commercial Isuikwato Along Akara to Aba on Major Road. Box 76, Ovim Oguduassa Isuikwolato</td>
-                                
+
                               <td>
                                 <Link to='/user/center/addnew'>
                               <RaisedButton
@@ -117,7 +117,7 @@ export default class CBOCenterStatus extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

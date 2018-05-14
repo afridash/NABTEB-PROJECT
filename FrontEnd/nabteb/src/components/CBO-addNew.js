@@ -24,9 +24,6 @@ export default class CBOAddNew extends Component {
           <h3 className='text-info text-center'>Add New</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
-              <div className='panel-heading'>
-                <div className='panel-title' text-center style={{fontSize:18}}>List of Exam Centers</div>
-              </div>
               <div className='panel-body '>
                 <div className='col-sm-6 col-sm-offset-3'>
                   <SelectField
@@ -120,7 +117,7 @@ export default class CBOAddNew extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

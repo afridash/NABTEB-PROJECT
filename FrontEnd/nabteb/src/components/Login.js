@@ -34,7 +34,6 @@ export default class Login extends Component {
         redirect:false,
       }
   }
-
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -45,12 +44,30 @@ export default class Login extends Component {
     var password = this.state.password
     if (this.verifyPasswords()) {
       fetch("http://localhost:8080/login/"+email+"/"+password).then(response => response.json()).then(data => {
-        if (data[0] === "success")
-        this.setState({redirect:true})
-        else {
+        if (!data['status']){
+          if (data['verified']){
+            localStorage.setItem('email', data['email'])
+            localStorage.setItem('userId', data['id'])
+            localStorage.setItem('userType', data['user_type'])
+            var url = ''
+            if (data.user_type === "candidate")
+            url = "/dashboard"
+            else if (data.user_type === "center_owner")
+            url = "/user/cbo"
+            else url = "/user/admin/dashboard"
+
+            this.setState({redirect:true, url:url})
+          }else {
+            this.setState({loading:false})
+            this.setState({showVerify:true, userId:data['id']})
+          }
+        }else {
           this.setState({loading:false})
-          this.setState({error:'User not found'})
+          this.setState({error:'Wrong Email/Password Combination'})
         }
+      }).catch(error => {
+        this.setState({loading:false})
+        this.setState({error:'Wrong Email/Password Combination'})
       })
     }else{
       this.setState({error:'Email/Password Cannot be Empty',loading:false})
@@ -123,7 +140,8 @@ export default class Login extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.redirect && <Redirect to={this.state.url} push />}
+        {this.state.showVerify && <Redirect to={'/account/confirm/'+this.state.userId} push />}
       </div>
     );
   }

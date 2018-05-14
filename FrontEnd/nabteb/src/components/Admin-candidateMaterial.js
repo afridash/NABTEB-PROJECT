@@ -3,19 +3,8 @@ import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router-dom'
-const styles = {
-headline: {
-  fontSize: 24,
-  paddingTop: 16,
-  fontFamily:'Times New Roman',
-  marginBottom: 12,
-  textAlign:'center',
-  fontWeight: 400,
-},
-};
 export default class AdminCandidateMaterial extends Component {
   constructor (props) {
     super(props)
@@ -104,7 +93,7 @@ export default class AdminCandidateMaterial extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

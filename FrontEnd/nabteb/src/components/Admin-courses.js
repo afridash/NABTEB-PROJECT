@@ -100,12 +100,14 @@ export default class AdminCourses extends Component {
                     </tbody>
                   </table>
                 </ul>
+
                 <div className='text-center'>
                   <Link to='#'>
                   <RaisedButton
+                    //add the upload option
                     labelStyle={{color:'white'}}
-                    buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                    label="Add new"
+                    buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                    label="Upload"
                     onClick={()=>this.setState({addNew:!this.state.addNew})}
                   />
                 </Link>
@@ -126,7 +128,7 @@ export default class AdminCourses extends Component {
                   <RaisedButton
                     labelStyle={{color:'white'}}
                     buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                    label="Add"
+                    label="Save"
                     />
                 </div>
                 </div>

@@ -39,6 +39,7 @@ export default class Person extends Component {
       states:[],
       locals:[],
       default:'',
+      url:''
     }
   }
   async componentWillMount () {
@@ -47,6 +48,13 @@ export default class Person extends Component {
     nigeria.forEach((st)=>{states.push(st.state.name)})
     this.setState({userId, states})
     this.retrieveInfo(userId)
+    var url = ""
+    if (this.props.owner)
+      url="/user/cbo"
+    else
+      url="/dashboard"
+
+      this.setState({url:url})
   }
   retrieveInfo (userId) {
     var url = 'http://localhost:8080/users/'+userId
@@ -346,7 +354,7 @@ export default class Person extends Component {
                         />
                       }
                       &nbsp;&nbsp;
-                      <Link to='/dashboard'>
+                      <Link to={this.state.url}>
                       <RaisedButton
                         labelStyle={{color:'white'}}
                         buttonStyle={{backgroundColor:'#e74c3c', borderColor:'white'}}
@@ -358,7 +366,7 @@ export default class Person extends Component {
               </form>
             </div>
           </div>
-          {this.state.redirect && <Redirect to={'/dashboard'} push />}
+          {this.state.redirect && <Redirect to={this.state.url} push />}
         </Paper>
       </div>
     )

@@ -9,7 +9,25 @@ import RaisedButton from 'material-ui/RaisedButton'
 export default class CBODashboard extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      userId:''
+    }
+  }
+  async componentWillMount () {
+    var userId = await localStorage.getItem('userId')
+    this.setState({userId})
+    this.retrieveInfo(userId)
+  }
+  retrieveInfo (userId) {
+    var url = 'http://localhost:8080/progress/'+userId
+    fetch(url).then(response => response.json()).then((user)=>{
+        if (!user['status']){
+          this.setState(user)
+          this.setState({loading:false})
+        }
+        }).catch(error => {
+          this.setState({error:'Information could not be saved',loading:false})
+      })
   }
   showPageContent () {
     return (
@@ -22,9 +40,16 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'>Step 1: <span style={{fontWeight:'600'}}>Personal Data</span></p>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Personal Data</span></p>
                           <i className='text-info'>Submit personal data such as name, and address. Click on start to begin.</i>
                           <div className='text-center' style={{margin:10}}>
+                            {this.state.finishedPersonal ? <Link to='/user/cbo/details'>
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                                label="Edit"
+                              />
+                            </Link>:
                             <Link to='/user/cbo/details'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -32,6 +57,7 @@ export default class CBODashboard extends Component {
                                 label="Start"
                               />
                             </Link>
+                          }
                           </div>
                       </div>
                     </div>

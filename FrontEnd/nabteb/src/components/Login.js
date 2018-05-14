@@ -34,7 +34,6 @@ export default class Login extends Component {
         redirect:false,
       }
   }
-
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -50,7 +49,14 @@ export default class Login extends Component {
             localStorage.setItem('email', data['email'])
             localStorage.setItem('userId', data['id'])
             localStorage.setItem('userType', data['user_type'])
-            this.setState({redirect:true})
+            var url = ''
+            if (data.user_type === "candidate")
+            url = "/dashboard"
+            else if (data.user_type === "center_owner")
+            url = "/user/cbo"
+            else url = "/user/admin/dashboard"
+
+            this.setState({redirect:true, url:url})
           }else {
             this.setState({loading:false})
             this.setState({showVerify:true, userId:data['id']})
@@ -134,7 +140,7 @@ export default class Login extends Component {
               </div>
             </div>
         </div>
-        {this.state.redirect && <Redirect to='/dashboard' push />}
+        {this.state.redirect && <Redirect to={this.state.url} push />}
         {this.state.showVerify && <Redirect to={'/account/confirm/'+this.state.userId} push />}
       </div>
     );

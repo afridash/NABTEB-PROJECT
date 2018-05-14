@@ -1,5 +1,6 @@
 package com.nabteb.auth;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import freemarker.core.ParseException;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,7 +32,7 @@ public class AuthUserController {
 	return userService.verifyPin(id, pin);
 	}
 	@RequestMapping(method=RequestMethod.POST, value="/users/create")
-	public AuthUser createUser(@RequestBody AuthUser user) {
+	public AuthUser createUser(@RequestBody AuthUser user) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		return userService.createUser(user);
 	}
 	@RequestMapping("/reset_password/{email}")

@@ -51,6 +51,7 @@ import AdminCandidateRegistration from './components/Admin-candidateRegistration
 import AdminCandidateResult from './components/Admin-candidateResult'
 import AdminCandidateMaterial from './components/Admin-candidateMaterial'
 import AdminUploadResult from './components/Admin-uploadResult'
+import AdminResultSeries from './components/Admin-ResultSeries'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -91,6 +92,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/candidate/result"} component={AdminCandidateResult}/>
       <Route exact path ={"/user/admin/candidate/material"} component={AdminCandidateMaterial}/>
       <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
+      <Route exact path ={"/user/admin/result/series"} component={AdminResultSeries}/>
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

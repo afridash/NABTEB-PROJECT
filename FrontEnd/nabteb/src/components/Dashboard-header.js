@@ -26,7 +26,10 @@ export default class DashboardHeader extends Component {
     if (email === null || email === undefined || !email) this.setState({redirect:true})
     else {
       this.setState({email, userId})
-      this.retrieveData(userId)
+      if (!this.props.materials) {
+        this.retrieveData(userId)
+      }
+
     }
   }
   retrieveData (userId) {

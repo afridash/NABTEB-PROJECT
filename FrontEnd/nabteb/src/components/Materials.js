@@ -25,8 +25,8 @@ export default class Materials extends Component {
     this.retrieveInfo(userId)
     this.setPaymentDetails(userId)
   }
-  setPaymentDetails () {
-    var responseUrl = "http://localhost:3000/receipts/materials/"+this.state.userId
+  setPaymentDetails (userId) {
+    var responseUrl = "http://localhost:3000/receipts/materials/"+userId
     var merchantId = "2547916"
     var serviceTypeId = "4430731"
     var orderId = (Date.now()).toString()
@@ -47,7 +47,7 @@ export default class Materials extends Component {
     var url = 'http://localhost:8080/users/'+userId
     fetch(url).then(response => response.json()).then((user)=>{
         if (!user['status']){
-          this.setState({phoneNumber:user.phoneNumber, email:this.state.email, fullName:user.lastName + ' ' + user.firstName})
+          this.setState({phoneNumber:user.phoneNumber, fullName:user.lastName + ' ' + user.firstName})
         }
         }).catch(error => {
           this.setState({error:'Information could not be saved',loading:false})

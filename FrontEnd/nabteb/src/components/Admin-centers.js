@@ -56,7 +56,7 @@ export default class AdminCenters extends Component {
                               <tbody>
                                 <tr>
                                   <td>1</td>
-                                  <td><Link to='/user/admin/centerinfo' style={{color:'black'}}>John Doe</Link></td>
+                                  <td>John Doe</td>
                                   <td>Progress Commercial College, Oruruala Oguduasa. Isuikwato Along Akara to Aba on Major Road</td>
                                   <td>Box 76</td>
                                   <td>Commercial</td>
@@ -67,7 +67,7 @@ export default class AdminCenters extends Component {
                                 </tr>
                                 <tr>
                                   <td>2</td>
-                                  <td><Link to='/user/admin/centerinfo' style={{color:'black'}}>Ibrahim Suleman</Link></td>
+                                  <td>Ibrahim Suleman</td>
                                   <td>Lilac Comp. Voc. School, Ukaegbu Road, Ogbor Hill</td>
                                   <td>Box 3239</td>
                                   <td>Commercial</td>
@@ -83,7 +83,65 @@ export default class AdminCenters extends Component {
                         </Tab>
                         <Tab label="Pending" style={{backgroundColor:'#16a085'}}>
                           <div>
-                            <h2 style={styles.headline}>No Pending Centers yet! :)</h2>
+                            <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+                              <thead>
+                                <tr>
+                                  <th>S/N</th>
+                                  <th>Name</th>
+                                  <th>Location Address</th>
+                                  <th>Postal Address</th>
+                                  <th>Type of school</th>
+                                  <th>Local Government</th>
+                                  <th>State</th>
+                                  <th>Center Number</th>
+                                  <th>Type</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>1</td>
+                                  <td>John Doe</td>
+                                  <td>Progress Commercial College, Oruruala Oguduasa. Isuikwato Along Akara to Aba on Major Road</td>
+                                  <td>Box 76</td>
+                                  <td>Commercial</td>
+                                  <td>Ovim Oguduassa Isuikwolato</td>
+                                  <td>Aba</td>
+                                  <td>01004</td>
+                                   <td>CBTC</td>
+                                   <td>
+                                     <Link to='/user/admin/centerinfo'>
+                                         <RaisedButton
+                                           labelStyle={{color:'white'}}
+                                           buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                           label="View"
+                                         />
+                                   </Link>
+                                   </td>
+                                </tr>
+                                <tr>
+                                  <td>2</td>
+                                  <td>Ibrahim Suleman</td>
+                                  <td>Lilac Comp. Voc. School, Ukaegbu Road, Ogbor Hill</td>
+                                  <td>Box 3239</td>
+                                  <td>Commercial</td>
+                                  <td>Aba North 13c</td>
+                                  <td>Aba</td>
+                                  <td>01005</td>
+                                   <td>PC</td>
+                                   <td>
+                                     <Link to='/user/admin/centerinfo'>
+                                         <RaisedButton
+                                           labelStyle={{color:'white'}}
+                                           buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                           label="View"
+                                         />
+                                   </Link>
+                                   </td>
+                                </tr>
+
+                              </tbody>
+                            </table>
                           </div>
                         </Tab>
                 </Tabs>
@@ -100,14 +158,13 @@ export default class AdminCenters extends Component {
             </div>
           </Paper>
               <div className='text-center'>
-
-            <Link to='/user/admin/dashboard'>
-          <RaisedButton
-            labelStyle={{color:'white'}}
-            buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
-            label="Close"
-          />
-        </Link>
+                <Link to='/user/admin/dashboard'>
+                    <RaisedButton
+                      labelStyle={{color:'white'}}
+                      buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
+                      label="Close"
+                    />
+              </Link>
           </div>
 
         </div>

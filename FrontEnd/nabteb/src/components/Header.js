@@ -3,6 +3,7 @@ import logo from '../logo.jpg'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Footer from './Footer'
 import '../App.css';
+import '../assets/css/footer.css'
 import {Redirect, Link} from 'react-router-dom'
 
 export default class Header extends Component {
@@ -134,10 +135,6 @@ export default class Header extends Component {
      </div>
    </div>
            {this.props.children}
-
-         <div className='col-sm-12' style={{backgroundColor:'#E0E0E0', marginTop:40}}>
-           <Footer />
-         </div>
          </div>
        </MuiThemeProvider>
     );

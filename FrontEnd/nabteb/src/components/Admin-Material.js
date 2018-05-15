@@ -54,13 +54,20 @@ export default class AdminMaterial extends Component {
                     <tbody>
                       <tr>
                         <td>1.</td>
-                        <td><Link to ='/user/admin/courses' style={{color:'black'}}>Agricultural Equipment and Implement Mechanic Works</Link></td>
+                        <td>Agricultural Equipment and Implement Mechanic Works</td>
                         <td>
                           <Link to='#'>
                           <RaisedButton
                             labelStyle={{color:'white'}}
                               buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
                               label="Delete"
+                            />
+                          </Link> &nbsp; &nbsp; &nbsp;
+                          <Link to='/user/admin/courses'>
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                              buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                              label="View"
                             />
                           </Link>
                         </td>
@@ -76,6 +83,13 @@ export default class AdminMaterial extends Component {
                               buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
                               label="Delete"
                             />
+                          </Link> &nbsp; &nbsp; &nbsp;
+                          <Link to='/user/admin/courses'>
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                              buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                              label="View"
+                            />
                           </Link>
                         </td>
 
@@ -90,7 +104,14 @@ export default class AdminMaterial extends Component {
                               buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
                               label="Delete"
                             />
-                          </Link>
+                          </Link> &nbsp; &nbsp; &nbsp;
+                          <Link to='/user/admin/courses'>
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                              buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                              label="View"
+                            />
+                          </Link> 
                         </td>
                       </tr>
                     </tbody>

@@ -16,7 +16,7 @@ export default class AdminCandidateMaterial extends Component {
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
-          <h3 className='text-info text-center'>Payments</h3>
+          <h3 className='text-info text-center'></h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
               <div className='panel-heading'>
@@ -26,7 +26,7 @@ export default class AdminCandidateMaterial extends Component {
               </div>
               <div className='panel-body'>
                  <Tabs>
-                        <Tab label="Centers" style={{backgroundColor:'#16a085'}}>
+                        <Tab label="Materials" style={{backgroundColor:'#16a085', fontSize:18}}>
                           <ol style={{fontSize:20, fontFamily:'Times New Roman'}}>
                             <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
                               <thead>
@@ -60,17 +60,6 @@ export default class AdminCandidateMaterial extends Component {
                               </tbody>
                             </table>
                           </ol>
-                        </Tab>
-                        <Tab label="Candidates" style={{backgroundColor:'#16a085'}}>
-                          <div className='panel-body'>
-                              <ol style={{fontSize:22, fontFamily:'Times New Roman'}}>
-                                <ul>
-                                    <li><Link to ='/user/admin/candidate/registration'>Registration</Link></li>
-                                    <li><Link to ='/user/admin/candidate/result'>Results</Link></li>
-                                    <li><Link to ='/user/admin/candidate/material'>Materials</Link></li>
-                                </ul>
-                              </ol>
-                          </div>
                         </Tab>
                 </Tabs>
 

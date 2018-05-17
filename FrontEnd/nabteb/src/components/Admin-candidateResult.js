@@ -5,12 +5,73 @@ import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router-dom'
+import CircularProgress from 'material-ui/CircularProgress'
+import moment from 'moment'
+import getSymbolFromCurrency from 'currency-symbol-map/'
 export default class AdminCandidateResult extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      fees:[],
+      loading:true,
+      currency:getSymbolFromCurrency('NGN'),
+      total:0
+    }
   }
-
+  componentWillMount () {
+    var tempFees=[]
+    fetch("http://localhost:8080/result/fees").then(response =>response.json()).then(fees => {
+      fees.forEach((fee)=> {
+        fetch("http://localhost:8080/users/"+fee.id).then(response => response.json()).then(user=> {
+          tempFees.push({referenceNumber:fee.referenceNumber, amount:fee.amount, transactionTime:fee.transactionTime, name:user.lastName + ", " + user.firstName, phoneNumber:user.phoneNumber})
+          this.setState({fees:tempFees, loading:false, total:this.state.total + fee.amount})
+        })
+      })
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showTable () {
+    return (
+      <div>
+        <p style={{padding:10}} className='pull-right lead'>Total: {this.state.currency}{this.state.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</p>
+        <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+          <thead>
+            <tr>
+              <th>S/N</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Transaction Date</th>
+              <th>Remital Retrival Reference </th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.fees.map((fee, key)=>
+              <tr key={key}>
+                <td>{key+1}</td>
+                <td>{fee.name}</td>
+                <td>{fee.phoneNumber}</td>
+                <td>{moment(fee.transactionTime).format('LL')}</td>
+                <td>{fee.referenceNumber}</td>
+                <td>{this.state.currency}{fee.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
@@ -24,40 +85,8 @@ export default class AdminCandidateResult extends Component {
               </div>
               <div className='panel-body'>
                  <Tabs>
-                        <Tab label="Result" style={{backgroundColor:'#16a085', fontSize:18}}>
-                          <ol style={{fontSize:20, fontFamily:'Times New Roman'}}>
-                            <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                              <thead>
-                                <tr>
-                                  <th>S/N</th>
-                                  <th>Name</th>
-                                  <th>Transaction Date</th>
-                                  <th>Transaction Time</th>
-                                  <th>Remital Retrival Reference </th>
-                                  <th>Amount</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>John Doe</td>
-                                  <td>April Wed 21, 2018</td>
-                                  <td> 11:56pm</td>
-                                  <td>203043</td>
-                                  <td>#1,000</td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Ibrahim Suleman</td>
-                                  <td>October Sat 30, 2018 </td>
-                                  <td>03:32pm</td>
-                                  <td>702315</td>
-                                  <td>#1,000</td>
-                                </tr>
-
-                              </tbody>
-                            </table>
-                          </ol>
+                        <Tab label={"Result Payments"} style={{backgroundColor:'#16a085', fontSize:18}}>
+                          {this.state.loading ? this.showSpinner() : this.showTable()}
                         </Tab>
 
                 </Tabs>

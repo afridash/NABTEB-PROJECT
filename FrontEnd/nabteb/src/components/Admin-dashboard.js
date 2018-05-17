@@ -95,7 +95,7 @@ export default class AdminDashboard extends Component {
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Materials</span></p>
-                          <i className='text-info'>Add examination Materials for programs for students .Click on View to begin.</i>
+                          <i className='text-info'>Add examination Materials for programs for students. Click on View to begin.</i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/admin/programs'>
                             <RaisedButton
@@ -144,7 +144,7 @@ export default class AdminDashboard extends Component {
                   <div className='col-sm-12'>
                     <div style={{padding:10}}>
                       <p className='text-center'><span style={{fontWeight:'600'}}>Payments</span></p>
-                        <i className='text-info'>View payments from both centers and candidates .Click on View to begin.</i>
+                        <i className='text-info'>View payments from both centers and candidates. Click on View to begin.</i>
                         <div className='text-center' style={{margin:10}}>
                           <Link to='/user/admin/payment'>
                           <RaisedButton

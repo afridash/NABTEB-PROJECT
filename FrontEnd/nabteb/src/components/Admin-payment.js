@@ -1,18 +1,77 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router-dom'
+import getSymbolFromCurrency from 'currency-symbol-map/'
+import moment from 'moment'
 export default class AdminPayment extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      fees:[],
+      loading:true,
+      currency:getSymbolFromCurrency('NGN'),
+      total:0,
+    }
   }
+  componentWillMount () {
+    fetch("http://localhost:8080/centers/fees").then(response =>response.json()).then(fees => {
+      var tempFees=[]
+      var total = 0
+      fees.forEach((fee)=> {
+        total += fee.amount
+        tempFees.push(fee)
+      })
+      this.setState({fees:tempFees, loading:false, total})
+    })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showTable () {
+    return (
+      <div>
+        <p style={{padding:10}} className='pull-right lead'>Total: {this.state.currency}{this.state.total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</p>
+        <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+          <thead>
+            <tr>
+              <th>S/N</th>
+              <th>Center Owner</th>
+              <th>Center Name</th>
+              <th>Center Address</th>
+              <th>Remita Retrieval Reference</th>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.fees.map((fee, key)=>
+              <tr key={key}>
+                <td>{key+1}</td>
+                <td>John Doe</td>
+                <td>Progress Commercial College</td>
+                <td>Oruruala Oguduasa.</td>
+                <td>{fee.referenceNumber}</td>
+                <td>{moment(fee.transactionTime).format('LL')}</td>
+                <td>{this.state.currency}{fee.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-
-
+    )
+  }
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
@@ -27,56 +86,15 @@ export default class AdminPayment extends Component {
               <div className='panel-body'>
                  <Tabs>
                         <Tab label="Centers" style={{backgroundColor:'#16a085'}}>
-                          <ol style={{fontSize:20, fontFamily:'Times New Roman'}}>
-                            <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                              <thead>
-                                <tr>
-                                  <th>S/N</th>
-                                  <th>Name</th>
-                                  <th>Location Address</th>
-                                  <th>Postal Address</th>
-                                  <th>Type of school</th>
-                                  <th>Local Government</th>
-                                  <th>State</th>
-                                  <th>Center Number</th>
-                                  <th>Type</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>John Doe</td>
-                                  <td>Progress Commercial College, Oruruala Oguduasa. Isuikwato Along Akara to Aba on Major Road</td>
-                                  <td>Box 76</td>
-                                  <td>Commercial</td>
-                                  <td>Ovim Oguduassa Isuikwolato</td>
-                                  <td>Aba</td>
-                                  <td>01004</td>
-                                   <td>CBTC</td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Ibrahim Suleman</td>
-                                  <td>Lilac Comp. Voc. School, Ukaegbu Road, Ogbor Hill</td>
-                                  <td>Box 3239</td>
-                                  <td>Commercial</td>
-                                  <td>Aba North 13c</td>
-                                  <td>Aba</td>
-                                  <td>01005</td>
-                                   <td>PC</td>
-                                </tr>
-
-                              </tbody>
-                            </table>
-                          </ol>
+                          {this.state.loading ? this.showSpinner() : this.showTable()}
                         </Tab>
                         <Tab label="Candidates" style={{backgroundColor:'#16a085'}}>
                           <div className='panel-body'>
                               <ol style={{fontSize:22, fontFamily:'Times New Roman'}}>
                                 <ul>
-                                    <li><Link to ='/user/admin/candidate/registration'>Registration</Link></li>
-                                    <li><Link to ='/user/admin/candidate/result'>Results</Link></li>
-                                    <li><Link to ='/user/admin/candidate/material'>Materials</Link></li>
+                                    <li><Link to ='/user/admin/payments/registrations'>Registration</Link></li>
+                                    <li><Link to ='/user/admin/payments/results'>Results</Link></li>
+                                    <li><Link to ='/user/admin/payments/materials'>Materials</Link></li>
                                 </ul>
                               </ol>
                           </div>

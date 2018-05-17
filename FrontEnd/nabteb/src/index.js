@@ -51,6 +51,7 @@ import AdminCandidateRegistration from './components/Admin-candidateRegistration
 import AdminCandidateResult from './components/Admin-candidateResult'
 import AdminCandidateMaterial from './components/Admin-candidateMaterial'
 import AdminUploadResult from './components/Admin-uploadResult'
+import CentersReceipt from './components/remita/Center-payments-receipt'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -66,6 +67,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/receipts/registration/:id"} component={RegistrationReceipt} />
       <Route exact path={"/receipts/results/:id"} component={ResultReceipt} />
       <Route exact path={"/receipts/materials/:id"} component={MaterialsReceipt} />
+      <Route exact path={"/receipts/centers/:id"} component={CentersReceipt} />
       <Route exact path ={"/user/cbo"} component={CBODashboard}/>
       <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>
       <Route exact path ={"/user/cbo/examinations"} component={CBOExaminations}/>
@@ -87,9 +89,9 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/material"} component={AdminMaterial}/>
       <Route exact path ={"/user/admin/courses"} component={AdminCourses}/>
       <Route exact path ={"/user/admin/payment"} component={AdminPayment}/>
-      <Route exact path ={"/user/admin/candidate/registration"} component={AdminCandidateRegistration}/>
-      <Route exact path ={"/user/admin/candidate/result"} component={AdminCandidateResult}/>
-      <Route exact path ={"/user/admin/candidate/material"} component={AdminCandidateMaterial}/>
+      <Route exact path ={"/user/admin/payments/registrations"} component={AdminCandidateRegistration}/>
+      <Route exact path ={"/user/admin/payments/results"} component={AdminCandidateResult}/>
+      <Route exact path ={"/user/admin/payments/materials"} component={AdminCandidateMaterial}/>
       <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
     <Header >
     <Route exact path={"/"} component={App} />

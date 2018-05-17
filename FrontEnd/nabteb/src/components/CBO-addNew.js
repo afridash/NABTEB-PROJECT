@@ -6,7 +6,10 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import {Link} from 'react-router-dom'
+import {nigeria} from './states'
+import FileReaderInput from 'react-file-reader-input'
 const styles = {
   floatingLabelFocusStyle: {
     color: '#16a085',
@@ -15,9 +18,51 @@ const styles = {
 export default class CBOAddNew extends Component {
   constructor (props) {
     super(props)
-    this.state = {value: 1};
+    this.state = {
+      value: "",
+      states:[],
+      locals:[],
+      uploadedImages:[],
+      stateValue: '',
+      lgaValue:'',
+      default:'',
+      centerValue:'',
+    }
+    this.uploadedImages = []
+  }
+  async componentWillMount () {
+    var userId = await localStorage.getItem('userId')
+    var states = []
+    nigeria.forEach((st)=>{states.push(st.state.name)})
+    this.setState({states, userId})
+  }
+  handleSelectState = (event, index, value) => {
+    var state = nigeria.filter((current)=> current.state.id === index)
+    this.setState({stateValue:value, stateIndex:index, locals:state[0].state.locals, default:'', lgaValue:''})
+  }
+  handleSelectLGA = (event, index, value) => {
+    this.setState({lgaValue:value})
+  }
+  handleSelectCenter = (event, index, value) => {
+    this.setState({centerValue:value})
   }
   handleChange = (event, index, value) => this.setState({value});
+  handleTextChange = (event) => {
+    this.setState({[event.target.name]: event.target.value})
+  }
+  handleFile = (e, results) => {
+    var total = 1
+    results.forEach(result => {
+      if (total <= 4){
+        const [e, file] = result; //Retrieve the picture that was selected
+        if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg'){
+          this.uploadedImages.push({attachment:e.target.result, mime:file.type, name:file.name})
+          this.setState({uploadedImages:this.uploadedImages, startUpload:true})
+          total++;
+        }
+      }
+    })
+  }
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
@@ -27,21 +72,42 @@ export default class CBOAddNew extends Component {
               <div className='panel-body '>
                 <div className='col-sm-6 col-sm-offset-3'>
                   <SelectField
-                  value={this.state.value}
-                  onChange={this.handleChange}
+                    value={this.state.stateValue}
+                    onChange={this.handleSelectState}
+                    maxHeight={200}
+                    fullWidth
+                    >
+                  <MenuItem value={''} primaryText="Choose State" />
+                  {this.state.states.map((name, key)=>
+                    <MenuItem key={key} value={name} primaryText={name} />
+                  )}
+                </SelectField>
+                <SelectField
+                  value={this.state.lgaValue}
+                  onChange={this.handleSelectLGA}
                   maxHeight={200}
                   fullWidth
                   >
-                <MenuItem value={1} primaryText="Choose a State" />
-                <MenuItem value={2} primaryText="Lagos" />
-                <MenuItem value={3} primaryText="Calabar" />
-                <MenuItem value={4} primaryText="Imo" />
-                <MenuItem value={5} primaryText="Nasarawa" />
-                <MenuItem value={6} primaryText="Kano" />
-                <MenuItem value={7} primaryText="Imo" />
-                <MenuItem value={8} primaryText="Kogi" />
-                <MenuItem value={9} primaryText="Bayelsa" />
-                <MenuItem value={10} primaryText="Benue" />
+                    {this.state.default !=='' ?
+                    <MenuItem value={this.state.default} primaryText={this.state.default} />
+                    :
+                    <MenuItem value={this.state.default} primaryText="Choose LGA" />}
+
+                  {this.state.locals.map((local, key)=>
+                    <MenuItem key={key} value={local.name} primaryText={local.name} />
+                  )}
+                </SelectField>
+              <SelectField
+                value={this.state.centerValue}
+                onChange={this.handleSelectCenter}
+                maxHeight={200}
+                fullWidth
+                >
+                <MenuItem value={""} primaryText="Choose Type" />
+                <MenuItem value={"Registration"} primaryText="Registration Center" />
+                <MenuItem value={"Examination"} primaryText="Examination Center" />
+                <MenuItem value={"Practical"} primaryText="Practical Center" />
+                <MenuItem value={"CBT"} primaryText="CBT Center" />
               </SelectField>
               <SelectField
                 value={this.state.value}
@@ -49,53 +115,55 @@ export default class CBOAddNew extends Component {
                 maxHeight={200}
                 fullWidth
                 >
-                <MenuItem value={1} primaryText="Choose your local government" />
-                <MenuItem value={2} primaryText="Nembe" />
-                <MenuItem value={3} primaryText="Ijaw" />
-              </SelectField>
-              <SelectField
-                value={this.state.value}
-                onChange={this.handleChange}
-                maxHeight={200}
-                fullWidth
-                >
-                <MenuItem value={1} primaryText="Choose type of school" />
-                <MenuItem value={2} primaryText="Commercial" />
-                <MenuItem value={3} primaryText="Technical" />
+                <MenuItem value={""} primaryText="Choose Specialization" />
+                <MenuItem value={"Commercial"} primaryText="Commercial" />
+                <MenuItem value={"Technical"} primaryText="Technical" />
               </SelectField>
               <TextField
               type='text'
               hintText="Center Name"
               fullWidth={true}
-              name='Center Name'
+              name='centerName'
               floatingLabelText="Center Name"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={{borderColor: '#16a085'}}
+              onChange={this.handleTextChange}
               />
               <TextField
               type='text'
-              hintText="Location Address"
+              hintText="Street Address"
               fullWidth={true}
-              name='Location Address'
-              floatingLabelText="Location Address"
+              name='address'
+              floatingLabelText="Street Address"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={{borderColor: '#16a085'}}
+              onChange={this.handleTextChange}
               />
-
               <TextField
               type='text'
               hintText="Postal Address"
               fullWidth={true}
-              name='Postal Address'
+              name='pcode'
               floatingLabelText="Postal Address"
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               underlineFocusStyle={{borderColor: '#16a085'}}
+              onChange={this.handleTextChange}
               />
+              <FileReaderInput multiple={true} as="url" id="my-file-input"
+                onChange={this.handleFile}>
+                <FlatButton
+                  label="Choose images (max 4)"
+                  buttonStyle={{backgroundColor:'#2980b9'}}
+                 />
+              </FileReaderInput>
                 </div>
+                {this.state.uploadedImages.map((image)=>
+                  <img src={image.attachment} style={{height:100, width:100, margin:5}} />
+                )}
               </div>
             </div>
           </Paper>
-          <div className='text-center'>
+          <div className='text-center' style={{margin:20}}>
             <Link to='/user/center/payment'>
             <RaisedButton
               labelStyle={{color:'white'}}
@@ -107,8 +175,8 @@ export default class CBOAddNew extends Component {
             <Link to='/user/center/status'>
             <RaisedButton
               labelStyle={{color:'white'}}
-                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                label="Pay Later"
+                buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                label="Save"
               />
             </Link>
           </div>

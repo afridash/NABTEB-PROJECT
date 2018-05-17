@@ -123,7 +123,7 @@ export default class AdminDashboard extends Component {
                       <p className='text-center'><span style={{fontWeight:'600'}}>Result</span></p>
                         <i className='text-info'>Upload student's examination result here. Click Start to begin </i>
                         <div className='text-center' style={{margin:10}}>
-                          <Link to='/user/admin/series'>
+                          <Link to='/user/admin/result/series'>
                           <RaisedButton
                             labelStyle={{color:'white'}}
                               buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}

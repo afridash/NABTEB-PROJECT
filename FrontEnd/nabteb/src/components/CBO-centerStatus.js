@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
@@ -19,11 +20,106 @@ headline: {
 export default class CBOCenterStatus extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      pending:[],
+      approved:[],
+      loading:true,
+      email:'',
+      userId:''
+    }
   }
-
-
-
+  async componentWillMount () {
+    var userId = await localStorage.getItem('userId')
+    var email = await localStorage.getItem('email')
+    this.setState({userId, email})
+    this.retrieveCenters(userId)
+  }
+  retrieveCenters (userId) {
+    fetch("http://localhost:8080/centers/owners/"+userId).then(response => response.json()).then(centers => {
+      var pending = []
+      var approved = []
+      centers.forEach((center)=> {
+        if (center.status === 'pending') {
+          pending.push(center)
+        }else if (center.status === 'approved'){
+          approved.push(center)
+        }
+      })
+      this.setState({pending, approved, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showPendingTable () {
+    return (
+      <table className="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Center Name</th>
+            <th>Center Address</th>
+            <th>Center Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.pending.length === 0 && <p className='lead text-warning'>No Submitted Centers Found</p>}
+          {this.state.pending.map((center, key)=>{
+            return (
+              <tr key={key}>
+                <td>1</td>
+                <td>{center.ownerName}</td>
+                <td>{center.centerName}</td>
+                <td>{center.location}</td>
+                <td>{center.centerType}</td>
+              </tr>
+            )
+          }
+          )}
+        </tbody>
+      </table>
+    )
+  }
+  showApprovedTable () {
+    return (
+      <table className="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Center Name</th>
+            <th>Center Address</th>
+            <th>Center Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.approved.length === 0 && <p className='lead text-warning'>No Approved Centers Found</p>}
+          {this.state.approved.map((center, key)=>{
+            return (
+              <tr key={key}>
+                <td>1</td>
+                <td>{center.ownerName}</td>
+                <td>{center.centerName}</td>
+                <td>{center.location}</td>
+                <td>{center.centerType}</td>
+              </tr>
+            )
+          }
+          )}
+        </tbody>
+      </table>
+    )
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
@@ -36,52 +132,10 @@ export default class CBOCenterStatus extends Component {
               <div className='panel-body'>
                  <Tabs>
                         <Tab label="Approved" style={{backgroundColor:'#16a085'}}>
-                          <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                            <thead>
-                              <tr>
-                                <th>S/N</th>
-                                <th>Name</th>
-                                <th>Exam Center</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>John Doe</td>
-                                <td>Progress Commercial College, Oruruala Oguduasa. 01004 Commercial Isuikwato Along Akara to Aba on Major Road. Box 76, Ovim Oguduassa Isuikwolato</td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Ibrahim Suleman</td>
-                                <td>Lilac Comp. Voc. School, Aba 01005 Commercial. Aba North 13c Ukaegbu Road, Ogbor Hill, Aba.  Box 3239, Aba. 082-223167</td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          {this.state.loading ? this.showSpinner() : this.showApprovedTable()}
                         </Tab>
                         <Tab label="Pending" style={{backgroundColor:'#16a085'}}>
-                          <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                            <thead>
-                              <tr>
-                                <th>S/N</th>
-                                <th>Name</th>
-                                <th>Exam Center</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>John Doe</td>
-                                <td>Progress Commercial College, Oruruala Oguduasa. 01004 Commercial Isuikwato Along Akara to Aba on Major Road. Box 76, Ovim Oguduassa Isuikwolato</td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>Ibrahim Suleman</td>
-                                <td>Lilac Comp. Voc. School, Aba 01005 Commercial. Aba North 13c Ukaegbu Road, Ogbor Hill, Aba.  Box 3239, Aba. 082-223167</td>
-                                <td>
-                            </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          {this.state.loading ? this.showSpinner() : this.showPendingTable()}
                         </Tab>
             </Tabs>
               </div>

@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DashboardHeader from '../Dashboard-header'
 import CircularProgress from 'material-ui/CircularProgress'
 import SHA512 from "crypto-js/sha512"
-
+import getSymbolFromCurrency from 'currency-symbol-map/'
 const getUrlParams = url => `${url}?`.split('?')[1]
   .split('&').reduce((params, pair) =>
     ((key, val) => key ? {...params, [key]: val} : params)
@@ -18,7 +18,8 @@ export default class MaterialsReceipt extends Component {
     this.state = {
       orderID:'',
       userId:'',
-      loading:true
+      loading:true,
+      currency:getSymbolFromCurrency("NGN")
     }
   }
   async componentWillMount () {
@@ -85,7 +86,7 @@ export default class MaterialsReceipt extends Component {
           return (<div>
             <h2>Transaction Successful</h2>
             <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
-            <p><b>Amount Paid: </b>{this.state.amount}</p>
+            <p><b>Amount Paid: </b>{this.state.currency}{this.state.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</p>
           </div>)
           else if (this.state.statuscode === "021")
           return (

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
@@ -19,11 +20,129 @@ headline: {
 export default class AdminCenters extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      pending:[],
+      approved:[],
+      loading:true
+    }
   }
-
-
-
+  componentWillMount () {
+    this.retrieveCenters()
+  }
+  retrieveCenters () {
+    fetch("http://localhost:8080/centers").then(response => response.json()).then(centers => {
+      console.log(centers)
+      var pending = []
+      var approved = []
+      centers.forEach((center)=> {
+        if (center.status === 'pending') {
+          pending.push(center)
+        }else if (center.status === 'approved'){
+          approved.push(center)
+        }
+      })
+      this.setState({pending, approved, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showApprovedTable () {
+    return (
+      <div>
+        {this.state.approved.length > 0  ?
+      <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Location Address</th>
+            <th>Postal Address</th>
+            <th>Type of school</th>
+            <th>State</th>
+            <th>Local Government</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.approved.map((center, key)=> {
+            return (
+              <tr key={key}>
+                <td>{key+1}</td>
+                <td>{center.ownerName}</td>
+                <td>{center.location}</td>
+                <td>{center.postalAddress}</td>
+                <td>{center.specialization}</td>
+                <td>{center.state}</td>
+                <td>{center.localGovernment}</td>
+                 <td>{center.centerType}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table> : <p className='lead text-info text-center'>No Approved Centers</p>
+    }
+      </div>
+    )
+  }
+  showPendingTable () {
+    return (
+      <div>
+        {this.state.pending.length > 0 ?
+        <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+          <thead>
+            <tr>
+              <th>S/N</th>
+              <th>Name</th>
+              <th>Location Address</th>
+              <th>Postal Address</th>
+              <th>Type of school</th>
+              <th>State</th>
+              <th>Local Government</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.pending.map((center, key)=> {
+              return (
+                <tr key={key}>
+                  <td>{key+1}</td>
+                  <td>{center.ownerName}</td>
+                  <td>{center.location}</td>
+                  <td>{center.postalAddress}</td>
+                  <td>{center.specialization}</td>
+                  <td>{center.state}</td>
+                  <td>{center.localGovernment}</td>
+                   <td>{center.centerType}</td>
+                   <td>
+                     <Link to={'/user/admin/centerinfo/'+center.id}>
+                         <RaisedButton
+                           labelStyle={{color:'white'}}
+                           buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                           label="View"
+                         />
+                   </Link>
+                   </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table> :
+        <p className='lead text-info text-center'>No Pending Centers</p>
+      }
+      </div>
+    )
+  }
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
@@ -38,113 +157,13 @@ export default class AdminCenters extends Component {
               <div className='panel-body'>
                  <Tabs>
                         <Tab label="Approved" style={{backgroundColor:'#16a085'}}>
-                          <ol style={{fontSize:20, fontFamily:'Times New Roman'}}>
-                            <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                              <thead>
-                                <tr>
-                                  <th>S/N</th>
-                                  <th>Name</th>
-                                  <th>Location Address</th>
-                                  <th>Postal Address</th>
-                                  <th>Type of school</th>
-                                  <th>Local Government</th>
-                                  <th>State</th>
-                                  <th>Center Number</th>
-                                  <th>Type</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>John Doe</td>
-                                  <td>Progress Commercial College, Oruruala Oguduasa. Isuikwato Along Akara to Aba on Major Road</td>
-                                  <td>Box 76</td>
-                                  <td>Commercial</td>
-                                  <td>Ovim Oguduassa Isuikwolato</td>
-                                  <td>Aba</td>
-                                  <td>01004</td>
-                                   <td>CBTC</td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Ibrahim Suleman</td>
-                                  <td>Lilac Comp. Voc. School, Ukaegbu Road, Ogbor Hill</td>
-                                  <td>Box 3239</td>
-                                  <td>Commercial</td>
-                                  <td>Aba North 13c</td>
-                                  <td>Aba</td>
-                                  <td>01005</td>
-                                   <td>PC</td>
-                                </tr>
-
-                              </tbody>
-                            </table>
-                          </ol>
+                          {this.state.loading ? this.showSpinner() : this.showApprovedTable()}
                         </Tab>
                         <Tab label="Pending" style={{backgroundColor:'#16a085'}}>
-                          <div>
-                            <table class="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                              <thead>
-                                <tr>
-                                  <th>S/N</th>
-                                  <th>Name</th>
-                                  <th>Location Address</th>
-                                  <th>Postal Address</th>
-                                  <th>Type of school</th>
-                                  <th>Local Government</th>
-                                  <th>State</th>
-                                  <th>Center Number</th>
-                                  <th>Type</th>
-                                  <th>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>John Doe</td>
-                                  <td>Progress Commercial College, Oruruala Oguduasa. Isuikwato Along Akara to Aba on Major Road</td>
-                                  <td>Box 76</td>
-                                  <td>Commercial</td>
-                                  <td>Ovim Oguduassa Isuikwolato</td>
-                                  <td>Aba</td>
-                                  <td>01004</td>
-                                   <td>CBTC</td>
-                                   <td>
-                                     <Link to='/user/admin/centerinfo'>
-                                         <RaisedButton
-                                           labelStyle={{color:'white'}}
-                                           buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                                           label="View"
-                                         />
-                                   </Link>
-                                   </td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Ibrahim Suleman</td>
-                                  <td>Lilac Comp. Voc. School, Ukaegbu Road, Ogbor Hill</td>
-                                  <td>Box 3239</td>
-                                  <td>Commercial</td>
-                                  <td>Aba North 13c</td>
-                                  <td>Aba</td>
-                                  <td>01005</td>
-                                   <td>PC</td>
-                                   <td>
-                                     <Link to='/user/admin/centerinfo'>
-                                         <RaisedButton
-                                           labelStyle={{color:'white'}}
-                                           buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                                           label="View"
-                                         />
-                                   </Link>
-                                   </td>
-                                </tr>
-
-                              </tbody>
-                            </table>
-                          </div>
+                          {this.state.loading ? this.showSpinner() : this.showPendingTable()}
                         </Tab>
                 </Tabs>
+                {this.state.pending > 50 &&
                       <div className="bs-example text-center">
                         <ul className="pagination">
                             <li><a href="#">&laquo;Previous</a></li>
@@ -153,7 +172,7 @@ export default class AdminCenters extends Component {
                             <li><a href="#">3</a></li>
                             <li><a href="#">Next&raquo;</a></li>
                         </ul>
-                     </div>
+                     </div> }
               </div>
             </div>
           </Paper>

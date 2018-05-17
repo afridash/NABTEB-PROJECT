@@ -3,6 +3,7 @@ import '../App.css'
 import {Link} from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import SHA512 from "crypto-js/sha512"
@@ -13,7 +14,9 @@ export default class CBOPayment extends Component {
     this.state = {
       userId:'',
       email:'',
-      currency:''
+      currency:'',
+      centers:[],
+      loading:true,
     }
   }
   async componentWillMount () {
@@ -23,6 +26,7 @@ export default class CBOPayment extends Component {
     this.setState({userId, email, currency})
     this.retrieveInfo(userId)
     this.setPaymentDetails(userId)
+    this.retrieveCenters(userId)
   }
   setPaymentDetails (userId) {
     var responseUrl = "http://localhost:3000/receipts/centers/"
@@ -53,8 +57,82 @@ export default class CBOPayment extends Component {
           this.setState({error:'Information could not be saved',loading:false})
       })
   }
-  showPageContent () {
+  retrieveCenters (userId) {
+    fetch("http://localhost:8080/centers/owners/"+userId).then(response => response.json()).then(centers => {
+      var temp = []
+      centers.forEach((center)=> {
+        if (center.status === 'submitted') {
+          temp.push(center)
+        }
+      })
+      this.setState({centers:temp, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showTable () {
     let {apiKey, merchantId, orderId, serviceTypeId, total} = this.state
+    return (
+      <table className="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Center Name</th>
+            <th>Center Address</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.centers.length === 0 && <p className='lead text-warning'>No Centers Found</p>}
+          {this.state.centers.map((center, key)=>{
+            let {responseUrl} = this.state
+            responseUrl = responseUrl+center.id
+            var hash = SHA512(merchantId+serviceTypeId+orderId+total+responseUrl+apiKey).toString()
+            return (
+              <tr key={key}>
+                <td>1</td>
+                <td>{center.ownerName}</td>
+                <td>{center.centerName}</td>
+                <td>{center.location}</td>
+              <td>
+               <form id="result_form" action="http://www.remitademo.net/remita/ecomm/init.reg" target="_blank" ame="SubmitRemitaForm" method="POST">
+                 <input name="merchantId" value={merchantId} type="hidden"/>
+                 <input name="serviceTypeId" value={serviceTypeId} type="hidden"/>
+                 <input name="orderId" value={orderId} type="hidden"/>
+                 <input name="hash" value={hash} type="hidden"/>
+                 <input name="payerName" value={this.state.fullName} type="hidden"/>
+                 <input name="payerEmail" value={this.state.email} type="hidden" />
+                 <input name="payerPhone" value={this.state.phoneNumber} type="hidden" />
+                 <input name="amt" value={this.state.total} type="hidden" />
+                 <input name="responseurl" value={responseUrl} type="hidden" />
+                 <RaisedButton
+                   labelStyle={{color:'white'}}
+                   buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                   label="Pay"
+                   type ="submit"
+                 />
+              </form>
+                </td>
+              </tr>
+            )
+          }
+          )}
+        </tbody>
+      </table>
+    )
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showPageContent () {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
         <Paper zDepth={1}>
@@ -62,69 +140,7 @@ export default class CBOPayment extends Component {
             <div className='col-sm-12'>
               <h3 className='lead text-center text-info'>Centers</h3>
               <div style={{padding:10}}>
-                <table className="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
-                  <thead>
-                    <tr>
-                      <th>S/N</th>
-                      <th>Name</th>
-                      <th>Center Name</th>
-                      <th>Center Address</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>{this.state.fullName}</td>
-                      <td>Progress Commercial College </td>
-                      <td>Oruruala Oguduasa. 01004 Commercial Isuikwato Along Akara to Aba on Major Road.</td>
-                    <td>
-                     <form id="result_form" action="http://www.remitademo.net/remita/ecomm/init.reg" target="_blank" ame="SubmitRemitaForm" method="POST">
-                       <input name="merchantId" value={merchantId} type="hidden"/>
-                       <input name="serviceTypeId" value={serviceTypeId} type="hidden"/>
-                       <input name="orderId" value={orderId} type="hidden"/>
-                       <input name="hash" value={(SHA512(merchantId+serviceTypeId+orderId+total+this.state.responseUrl+"1"+apiKey).toString())} type="hidden"/>
-                       <input name="payerName" value={this.state.fullName} type="hidden"/>
-                       <input name="payerEmail" value={this.state.email} type="hidden" />
-                       <input name="payerPhone" value={this.state.phoneNumber} type="hidden" />
-                       <input name="amt" value={this.state.total} type="hidden" />
-                       <input name="responseurl" value={this.state.responseUrl+"1"} type="hidden" />
-                       <RaisedButton
-                         labelStyle={{color:'white'}}
-                         buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                         label="Pay"
-                         type ="submit"
-                       />
-                    </form>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Ibrahim Suleman</td>
-                      <td>Lilac Comp. Voc. School</td>
-                      <td>Aba 01005 Commercial. Aba North 13c Ukaegbu Road, Ogbor Hill, Aba.</td>
-                      <td>
-                        <form id="result_form" action="http://www.remitademo.net/remita/ecomm/init.reg" target="_blank" ame="SubmitRemitaForm" method="POST">
-                       <input name="merchantId" value={merchantId} type="hidden"/>
-                       <input name="serviceTypeId" value={serviceTypeId} type="hidden"/>
-                       <input name="orderId" value={orderId} type="hidden"/>
-                       <input name="hash" value={(SHA512(merchantId+serviceTypeId+orderId+total+this.state.responseUrl+"2"+apiKey).toString())} type="hidden"/>
-                       <input name="payerName" value={this.state.fullName} type="hidden"/>
-                       <input name="payerEmail" value={this.state.email} type="hidden" />
-                       <input name="payerPhone" value={this.state.phoneNumber} type="hidden" />
-                       <input name="amt" value={this.state.total} type="hidden" />
-                       <input name="responseurl" value={this.state.responseUrl+"2"} type="hidden" />
-                       <RaisedButton
-                         labelStyle={{color:'white'}}
-                         buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                         label="Pay"
-                         type ="submit"
-                       />
-                       </form>
-                  </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {this.state.loading ? this.showSpinner() : this.showTable()}
                 <h3 className='lead text-center text-info'>Charges</h3>
                 <table className="table table-striped"  style={{fontFamily:"Times New Roman", fontSize:18}}>
                   <thead>

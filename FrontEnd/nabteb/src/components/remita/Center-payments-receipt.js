@@ -3,6 +3,7 @@ import '../../App.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import CircularProgress from 'material-ui/CircularProgress'
 import SHA512 from "crypto-js/sha512"
+import getSymbolFromCurrency from 'currency-symbol-map/'
 
 const getUrlParams = url => `${url}?`.split('?')[1]
   .split('&').reduce((params, pair) =>((key, val) => key ? {...params, [key]: val} : params)
@@ -10,16 +11,17 @@ const getUrlParams = url => `${url}?`.split('?')[1]
 export default class CentersReceipt extends Component {
   constructor (props) {
     super(props)
-    this.userId = this.props.match.params.id
+    this.centerId = this.props.match.params.id
     this.state = {
       orderID:'',
-      userId:'',
-      loading:true
+      centerId:'',
+      loading:true,
+      currency:getSymbolFromCurrency("NGN")
     }
   }
   async componentWillMount () {
     var params = getUrlParams(window.location.search)
-    this.setState({orderId:params.orderID, userId:this.userId, rrr:params['RRR']})
+    this.setState({orderId:params.orderID, centerId:this.centerId, rrr:params['RRR']})
     var apiKey = "1946"
     var hash = (SHA512(params['RRR'].toString()+apiKey+"2547916").toString())
     var proxyURL = 'https://cors-anywhere.herokuapp.com'
@@ -37,7 +39,7 @@ export default class CentersReceipt extends Component {
   }
   savePaymentDetails () {
     var data = {
-      id:this.userId,
+      id:this.centerId,
       orderId:this.state.orderId,
       transactionTime:this.state.transactionTime,
       referenceNumber:this.state.rrr,
@@ -52,10 +54,17 @@ export default class CentersReceipt extends Component {
       },
       method:'POST',
     }).then(()=> {
-      this.setState({loading:false})
+      this.updateStatus()
     }).catch(error => {
 
       })
+  }
+  updateStatus () {
+    fetch("http://localhost:8080/centers/"+this.centerId+"/update/pending").then(()=> {
+      this.setState({loading:false})
+    }).catch(error => {
+
+    })
   }
   showPageContent () {
     return (
@@ -82,7 +91,7 @@ export default class CentersReceipt extends Component {
           return (<div>
             <h2>Transaction Successful</h2>
             <p><b>Remita Retrieval Reference: </b>{this.state.rrr}</p>
-            <p><b>Amount Paid: </b>{this.state.amount}</p>
+            <p><b>Amount Paid: </b>{this.state.currency}{this.state.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</p>
           </div>)
           else if (this.state.statuscode == "021")
           return (

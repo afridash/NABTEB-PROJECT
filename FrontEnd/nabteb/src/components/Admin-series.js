@@ -43,35 +43,71 @@ export default class AdminSeries extends Component {
             <div className='panel panel-default'>
               <div className='panel-body'>
                 <ul>
-                  <ol style={{fontSize:22, fontFamily:'Times New Roman', lineHeight:3}}>
+                  {/* <ol style={{fontSize:22, fontFamily:'Times New Roman', lineHeight:3}}>
+
                         <li><Link to ='/user/admin/candidate'>November/December 2017</Link></li>
                         <li><Link to ='/user/admin/candidate'>May/June 2017</Link></li>
                         <li><Link to ='/user/admin/candidate'>November/December 2016</Link></li>
-                  </ol>
-                  {/* <table class="table table-striped">
+                  </ol> */}
+                  <table class="table table-striped">
                     <thead>
                       <tr>
                         <th>S/N</th>
                         <th>Date of Series</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td>1.</td>
-                        <td ><Link to='' style={{color:'black'}}></Link></td>
-
+                        <td ><Link to='/user/admin/candidate' style={{color:'black'}}>November/December 2017 </Link></td>
+                        <td>
+                        <RaisedButton
+                          labelStyle={{color:'white'}}
+                          buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
+                          label="Close Registration"
+                        /> &nbsp; &nbsp;
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                            buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                            label="Edit"
+                            />
+                      </td>
                       </tr>
                       <tr>
                         <td>2.</td>
-                        <td><Link to='/user/admin/candidate' style={{color:'black'}}></Link></td>
-
+                        <td><Link to='/user/admin/candidate' style={{color:'black'}}>May/June 2017</Link></td>
+                        <td>
+                        <RaisedButton
+                          labelStyle={{color:'white'}}
+                          buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                          label="Open Registration"
+                        /> &nbsp; &nbsp; &nbsp;
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                            buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                            label="Edit"
+                            />
+                      </td>
                       </tr>
                       <tr>
                         <td>3.</td>
-                        <td><Link to='/user/admin/candidate' style={{color:'black'}}>  </Link></td>
+                        <td><Link to='/user/admin/candidate' style={{color:'black'}}>November/December 2016  </Link></td>
+                        <td>
+                        <RaisedButton
+                          labelStyle={{color:'white'}}
+                          buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                          label="Open Registration"
+                        /> &nbsp; &nbsp; &nbsp;
+                          <RaisedButton
+                            labelStyle={{color:'white'}}
+                            buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
+                            label="Edit"
+                            />
+                      </td>
                       </tr>
                     </tbody>
-                  </table> */}
+                  </table>
                 </ul>
                 <div className="bs-example text-center">
                   <ul className="pagination">
@@ -142,7 +178,7 @@ export default class AdminSeries extends Component {
             <Link to='/user/admin/dashboard'>
             <RaisedButton
               labelStyle={{color:'white'}}
-              buttonStyle={{backgroundColor:'#e74c3c', borderColor:'white'}}
+              buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}
               label="Close"
             />
           </Link>&nbsp;&nbsp;

@@ -28,6 +28,7 @@ export default class AdminCandidateRegistration extends Component {
           this.setState({fees:tempFees, loading:false, total:this.state.total + fee.amount})
         })
       })
+      if (fees.length === 0) this.setState({loading:false})
     }).catch(error => {
       alert(error)
       this.setState({loading:false})

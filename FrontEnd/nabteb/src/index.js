@@ -52,6 +52,7 @@ import AdminCandidateResult from './components/Admin-candidateResult'
 import AdminCandidateMaterial from './components/Admin-candidateMaterial'
 import AdminUploadResult from './components/Admin-uploadResult'
 import CentersReceipt from './components/remita/Center-payments-receipt'
+import AdminResultSeries from './components/Admin-ResultSeries'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -81,7 +82,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/candidate"} component={AdminCandidate}/>
       <Route exact path ={"/user/admin/details"} component={AdminDetails}/>
       <Route exact path ={"/user/admin/centers"} component={AdminCenters}/>
-      <Route exact path ={"/user/admin/centerinfo"} component={AdminCenterInfo}/>
+      <Route exact path ={"/user/admin/centerinfo/:id"} component={AdminCenterInfo}/>
       <Route exact path ={"/user/admin/Scholars"} component={AdminScholars}/>
       <Route exact path ={"/user/admin/scholarinfo"} component={AdminScholarInfo}/>
       <Route exact path ={"/user/admin/cbtc"} component={AdminCBTC}/>
@@ -93,6 +94,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/payments/results"} component={AdminCandidateResult}/>
       <Route exact path ={"/user/admin/payments/materials"} component={AdminCandidateMaterial}/>
       <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
+      <Route exact path ={"/user/admin/result/series"} component={AdminResultSeries}/>
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

@@ -23,10 +23,19 @@ export default class AdminPayment extends Component {
       var tempFees=[]
       var total = 0
       fees.forEach((fee)=> {
-        total += fee.amount
-        tempFees.push(fee)
+          total += fee.amount
+        fetch("http://localhost:8080/centers/"+fee.id).then(response => response.json()).then(center => {
+          tempFees.push({referenceNumber:fee.referenceNumber,
+            transactionTime:fee.transactionTime,
+            amount:fee.amount,
+            ownerName:center.ownerName,
+            centerName:center.centerName,
+            address:center.location})
+          this.setState({fees:tempFees, loading:false, total})
+        }).catch(error => {
+          alert(error)
+        })
       })
-      this.setState({fees:tempFees, loading:false, total})
     })
   }
   showSpinner () {
@@ -58,9 +67,9 @@ export default class AdminPayment extends Component {
             {this.state.fees.map((fee, key)=>
               <tr key={key}>
                 <td>{key+1}</td>
-                <td>John Doe</td>
-                <td>Progress Commercial College</td>
-                <td>Oruruala Oguduasa.</td>
+                <td>{fee.ownerName}</td>
+                <td>{fee.centerName}</td>
+                <td>{fee.address}</td>
                 <td>{fee.referenceNumber}</td>
                 <td>{moment(fee.transactionTime).format('LL')}</td>
                 <td>{this.state.currency}{fee.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>

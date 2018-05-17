@@ -29,6 +29,7 @@ export default class CBOCandidates extends Component {
                         <th>Exam Center</th>
                         <th>Exam Title</th>
                         <th>Exam Code</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,15 @@ export default class CBOCandidates extends Component {
                         <td>Plot 20, Garki estate, Garki, Abuja</td>
                         <td>Business Law</td>
                         <td>BUS150</td>
+                        <td>
+                          <Link to='/user/cbo/candidateinfo'>
+                              <RaisedButton
+                                labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="View"
+                              />
+                        </Link>
+                        </td>
                       </tr>
                       <tr>
                         <td>2</td>
@@ -47,6 +57,15 @@ export default class CBOCandidates extends Component {
                         <td>Plot 100,road 2, block 40 Wuse II, Abuja</td>
                         <td>Applied Engineering</td>
                         <td>APT200</td>
+                        <td>
+                          <Link to='/user/admin/details'>
+                              <RaisedButton
+                                labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="View"
+                              />
+                         </Link>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

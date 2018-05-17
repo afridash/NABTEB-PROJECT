@@ -34,6 +34,7 @@ import CBOCandidates from './components/CBO-candidates'
 import CBOPayment from './components/CBO-payment'
 import CBOCenterStatus from './components/CBO-centerStatus'
 import CBOAddNew from './components/CBO-addNew'
+import CBOCandidateInfo from './components/Cbo-candidateinfo'
 import AdminDashboard from './components/Admin-dashboard'
 import AdminSeries from './components/Admin-series'
 import AdminCandidate from './components/Admin-candidate'
@@ -52,6 +53,7 @@ import AdminCandidateResult from './components/Admin-candidateResult'
 import AdminCandidateMaterial from './components/Admin-candidateMaterial'
 import AdminUploadResult from './components/Admin-uploadResult'
 import AdminResultSeries from './components/Admin-ResultSeries'
+
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -75,6 +77,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/center/payment"} component={CBOPayment}/>
       <Route exact path ={"/user/center/status"} component={CBOCenterStatus}/>
       <Route exact path ={"/user/center/addnew"} component={CBOAddNew}/>
+      <Route exact path ={"/user/cbo/candidateinfo"} component={CBOCandidateInfo}/>
       <Route exact path ={"/user/admin/dashboard"} component={AdminDashboard}/>
       <Route exact path ={"/user/admin/series"} component={AdminSeries}/>
       <Route exact path ={"/user/admin/candidate"} component={AdminCandidate}/>
@@ -93,6 +96,8 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/candidate/material"} component={AdminCandidateMaterial}/>
       <Route exact path ={"/user/admin/candidate/upload"} component={AdminUploadResult}/>
       <Route exact path ={"/user/admin/result/series"} component={AdminResultSeries}/>
+
+
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />

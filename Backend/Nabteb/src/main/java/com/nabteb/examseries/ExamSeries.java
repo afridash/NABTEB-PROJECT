@@ -12,7 +12,7 @@ package com.nabteb.examseries;
 public class ExamSeries {
     private int id;
     private int userid;
-    private int createdAt;
+    private String createdAt;
     private boolean isOpen;
     private String name;
     private String createdBy;
@@ -22,7 +22,7 @@ public class ExamSeries {
 
     }
     
-    public ExamSeries(int id, int userid, int createdAt, boolean isOpen, String name, String createdBy){
+    public ExamSeries(int id, int userid, String createdAt, boolean isOpen, String name, String createdBy){
         super();
         
         this.id = id;
@@ -54,10 +54,10 @@ public class ExamSeries {
 	this.createdBy = createdBy;
     }
     
-    public int getCreatedAt() {
+    public String getCreatedAt() {
 	return createdAt;
     }
-    public void setCreatedAt(int createdAt) {
+    public void setCreatedAt(String createdAt) {
 	this.createdAt = createdAt;
     }
     

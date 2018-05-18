@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 public class ExamSeriesService {
     private final List<ExamSeries> examseries = new ArrayList <> (Arrays.asList(
-			new ExamSeries(1, 2, 3, false, "May-June 2018", "mabel")
+			new ExamSeries(1, 2, "3", false, "May-June 2018", "mabel")
 			)); 
 	
 	public List<ExamSeries> getAllExams () {
@@ -40,8 +40,7 @@ public class ExamSeriesService {
         public ExamSeries deleteExam(ExamSeries exam, int id) {
 		ExamSeries y = examseries.stream().filter(u->u.getId() == id).findFirst().get();
 		int index = examseries.indexOf(y);
-		//examseries.set(index, exam);
-                examseries.remove(index);
+         examseries.remove(index);
 		return exam;
 	}
 }

@@ -6,6 +6,7 @@ import DashboardHeader from './Dashboard-header'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import {Link} from 'react-router-dom'
 const styles = {
 headline: {
@@ -127,28 +128,30 @@ export default class CBOCenterStatus extends Component {
           <Paper zDepth={1}>
             <div className='panel panel-default'>
               <div className='panel-heading'>
-                <div className='text-info text-center' text-center style={{fontSize:24}}>Examinations Centers</div>
+                <div className='text-info text-center' text-center style={{fontSize:24}}>Examinations Centers
+                  <Link to='/user/center/addnew' className='pull-right'>
+                  <FlatButton
+                    labelStyle={{color:'#b71c1c'}}
+                    label="Add New"
+                  />
+                </Link>
+              </div>
               </div>
               <div className='panel-body'>
+
                  <Tabs>
-                        <Tab label="Approved" style={{backgroundColor:'#16a085'}}>
-                          {this.state.loading ? this.showSpinner() : this.showApprovedTable()}
-                        </Tab>
-                        <Tab label="Pending" style={{backgroundColor:'#16a085'}}>
-                          {this.state.loading ? this.showSpinner() : this.showPendingTable()}
-                        </Tab>
+                   <Tab label="Approved" style={{backgroundColor:'#16a085'}}>
+                      {this.state.loading ? this.showSpinner() : this.showApprovedTable()}
+                  </Tab>
+                  <Tab label="Pending" style={{backgroundColor:'#16a085'}}>
+                    {this.state.loading ? this.showSpinner() : this.showPendingTable()}
+                  </Tab>
             </Tabs>
               </div>
             </div>
           </Paper>
               <div className='text-center'>
-                <Link to='/user/center/addnew'>
-              <RaisedButton
-                labelStyle={{color:'white'}}
-                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                label="Add New"
-              />
-            </Link>&nbsp; &nbsp;
+                &nbsp; &nbsp;
             <Link to='/user/cbo'>
           <RaisedButton
             labelStyle={{color:'white'}}

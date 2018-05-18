@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import Dialog from 'material-ui/Dialog'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import DatePicker from 'material-ui/DatePicker';
@@ -29,26 +31,55 @@ export default class AdminSeries extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected:''
+      selectedSeries:'',
+      selectedYear:'',
+      series:[]
     }
   }
-  handleSelect = (event, index, value) => {
-    this.setState({selected:value, selectedIndex:index})
+  componentWillMount () {
+    var nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).getFullYear()
+    this.setState({currentYear: new Date().getFullYear(), nextYear:nextYear})
+  }
+  handleSelectSeries = (event, index, value) => {
+    this.setState({selectedSeries:value})
+  }
+  handleSelectYear = (event, index, value) => {
+    this.setState({selectedYear:value})
+  }
+  handleOpen = () => {
+    this.setState({open: true});
+  }
+
+  handleClose = () => {
+    this.setState({open: false});
   }
   showPageContent(){
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+      <FlatButton
+        label="Save"
+        primary={true}
+        onClick={this.handleClose}
+      />,
+    ];
       return (
         <div className="col-sm-10 col-sm-offset-1">
           <h3 className='text-info text-center'>Examinations Series</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
               <div className='panel-body'>
-                <ul>
-                  {/* <ol style={{fontSize:22, fontFamily:'Times New Roman', lineHeight:3}}>
-
-                        <li><Link to ='/user/admin/candidate'>November/December 2017</Link></li>
-                        <li><Link to ='/user/admin/candidate'>May/June 2017</Link></li>
-                        <li><Link to ='/user/admin/candidate'>November/December 2016</Link></li>
-                  </ol> */}
+                <div className='pull-right' style={{margin:10}}>
+                  <RaisedButton
+                    labelStyle={{color:'white'}}
+                      buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                      label="Add New"
+                      onClick={this.handleOpen}
+                    />
+                </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -108,68 +139,54 @@ export default class AdminSeries extends Component {
                       </tr>
                     </tbody>
                   </table>
-                </ul>
-                <div className="bs-example text-center">
-                  <ul className="pagination">
-                      <li><a href="#">&laquo;Previous</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">Next&raquo;</a></li>
-                  </ul>
-              </div>
-                <div className='text-center' style={{margin:10}}>
-                  <Link to='#'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                      buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                      label="Add New"
-                      onClick={()=>this.setState({addNew:!this.state.addNew})}
-                    />
-                  </Link>&nbsp; &nbsp;
-
-                </div>
-                {this.state.addNew && <div className='col-sm-12'>
-                  <div className='col-sm-8 col-sm-offset-2'>
-                    <SelectField
-                      value={this.state.selected}
-                      onChange={this.handleSelect}
-                      fullWidth
-                      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                      name='selected'
-                      maxHeight={200}
-                      >
-                        <MenuItem value=''  primaryText={'Choose Series'} />
-                        <MenuItem value='May'  primaryText='May/June' />
-                        <MenuItem value='Nov'  primaryText='November/December' />
-                        <MenuItem value='Modular'  primaryText='Modular Trade Test' />
-                        <MenuItem value='Common'  primaryText='Common Entrance' />
-                      </SelectField>
-                      <div>
+                  {this.state.series.length > 50 &&
+                    <div className="bs-example text-center">
+                      <ul className="pagination">
+                          <li><a href="#">&laquo;Previous</a></li>
+                          <li><a href="#">1</a></li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li><a href="#">Next&raquo;</a></li>
+                      </ul>
+                    </div>
+                  }
+                <Dialog
+                  title="New Series"
+                  actions={actions}
+                  modal={true}
+                  open={this.state.open}
+                  >
+                    <div className='col-sm-12'>
+                      <div className='col-sm-10 col-sm-offset-1'>
                         <SelectField
-                          value={this.state.selected}
-                          onChange={this.handleSelect}
+                          value={this.state.selectedSeries}
+                          onChange={this.handleSelectSeries}
                           fullWidth
                           floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                          name='selected'
                           maxHeight={200}
                           >
-                            <MenuItem value=''  primaryText={'Select a year'} />
-                            <MenuItem value='2017'  primaryText='2017' />
-                            <MenuItem value='2016'  primaryText='2016' />
-                            <MenuItem value='2015'  primaryText='2015' />
-                            <MenuItem value='2014'  primaryText='2014' />
+                            <MenuItem value=''  primaryText={'Choose Series'} />
+                            <MenuItem value='May/June'  primaryText='May/June' />
+                            <MenuItem value='Nov/Dec'  primaryText='Nov/Dec' />
+                            <MenuItem value='Modular Trade Test'  primaryText='Modular Trade Test' />
+                            <MenuItem value='Common Entrance'  primaryText='Common Entrance' />
                           </SelectField>
+                          <div>
+                            <SelectField
+                              value={this.state.selectedYear}
+                              onChange={this.handleSelectYear}
+                              fullWidth
+                              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                              maxHeight={200}
+                              >
+                                <MenuItem value=''  primaryText={'Select a year'} />
+                                <MenuItem value={this.state.nextYear}  primaryText={this.state.nextYear} />
+                                <MenuItem value={this.state.currentYear}  primaryText={this.state.currentYear} />
+                              </SelectField>
+                          </div>
                       </div>
-                  <div style={{margin:10}}>
-                    <RaisedButton
-                      labelStyle={{color:'white'}}
-                      buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                      label="Add"
-                      />
-                  </div>
-                  </div>
-                </div>}
+                    </div>
+                </Dialog>
               </div>
 
             </div>
@@ -188,7 +205,7 @@ export default class AdminSeries extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

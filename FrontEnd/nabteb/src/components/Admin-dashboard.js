@@ -45,7 +45,7 @@ export default class AdminDashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'><span style={{fontWeight:'600'}}>Examination Centers</span></p>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Centers</span></p>
                           <i className='text-info'>Approve and reject examination centers. Click View to begin </i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/admin/centers'>

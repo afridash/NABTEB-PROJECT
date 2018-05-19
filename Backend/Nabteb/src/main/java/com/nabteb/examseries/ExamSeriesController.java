@@ -32,12 +32,12 @@ public class ExamSeriesController {
     private ExamSeriesService examSeriesService;
     //Create a new exam series
     @RequestMapping(method=RequestMethod.POST, value="/examseries/create")
-    public ExamSeries createExamSeries(@RequestBody ExamSeries exam) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+    public ExamSeries createExamSeries(@RequestBody ExamSeries exam) {
 	return examSeriesService.createExam(exam);
     }
     //Delete a specific exam series 
     @RequestMapping(method=RequestMethod.DELETE, value="/examseries/delete/{id}")
-    public ExamSeries deleteExamSeries(@RequestBody ExamSeries exam, @PathVariable int id) throws TemplateNotFoundException, TemplateException, MalformedTemplateNameException, ParseException, IOException {
+    public ExamSeries deleteExamSeries(@RequestBody ExamSeries exam, @PathVariable int id) {
         return examSeriesService.deleteExam(exam, id);
     }
     //Get a list of all exam series available
@@ -52,7 +52,7 @@ public class ExamSeriesController {
     }
     //Update a specific exam series
     @RequestMapping(method=RequestMethod.PUT, value = "/examseries/{id}")
-    public ExamSeries updateExamSeries(@RequestBody ExamSeries exam, @PathVariable int id) throws TemplateNotFoundException, TemplateException, MalformedTemplateNameException, ParseException, IOException {
+    public ExamSeries updateExamSeries(@RequestBody ExamSeries exam, @PathVariable int id) {
         return examSeriesService.updateExam(exam, id);
     }
 }

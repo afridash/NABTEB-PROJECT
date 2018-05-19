@@ -53,6 +53,7 @@ import AdminCandidateMaterial from './components/Admin-candidateMaterial'
 import AdminUploadResult from './components/Admin-uploadResult'
 import CentersReceipt from './components/remita/Center-payments-receipt'
 import AdminResultSeries from './components/Admin-ResultSeries'
+import AdminResultCenters from './components/Admin-ResultCenters'
 
 ReactDOM.render(<BrowserRouter >
   <div>
@@ -72,16 +73,17 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/cbo"} component={CBODashboard}/>
       <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>
       <Route exact path ={"/user/cbo/examinations"} component={CBOExaminations}/>
-      <Route exact path ={"/user/centers"} component={CBOCenters}/>
-      <Route exact path ={"/user/candidates"} component={CBOCandidates}/>
+      <Route exact path ={"/user/centers/:id"} component={CBOCenters}/>
+      <Route exact path ={"/user/candidates/:series/:center"} component={CBOCandidates}/>
       <Route exact path ={"/user/center/payment"} component={CBOPayment}/>
       <Route exact path ={"/user/center/status"} component={CBOCenterStatus}/>
       <Route exact path ={"/user/center/addnew"} component={CBOAddNew}/>
       <Route exact path ={"/user/admin/dashboard"} component={AdminDashboard}/>
       <Route exact path ={"/user/admin/series"} component={AdminSeries}/>
-      <Route exact path ={"/user/admin/candidate"} component={AdminCandidate}/>
+      <Route exact path ={"/user/admin/candidate/:series/:center"} component={AdminCandidate}/>
       <Route exact path ={"/user/admin/details"} component={AdminDetails}/>
       <Route exact path ={"/user/admin/centers"} component={AdminCenters}/>
+      <Route exact path ={"/user/admin/centers/:id"} component={AdminResultCenters}/>
       <Route exact path ={"/user/admin/centerinfo/:id"} component={AdminCenterInfo}/>
       <Route exact path ={"/user/admin/Scholars"} component={AdminScholars}/>
       <Route exact path ={"/user/admin/scholarinfo"} component={AdminScholarInfo}/>

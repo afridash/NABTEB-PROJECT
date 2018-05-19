@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
@@ -29,11 +30,44 @@ export default class AdminSeries extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      selected:''
+      series:[],
+      loading:true
     }
   }
-  handleSelect = (event, index, value) => {
-    this.setState({selected:value, selectedIndex:index})
+  componentWillMount () {
+    this.retrieveSeries()
+  }
+  retrieveSeries () {
+    fetch("http://localhost:8080/examseries").then(response => response.json()).then(series => {
+      var temp = []
+      series.forEach((s)=>{
+        temp.unshift(s)
+      })
+      this.setState({series:temp, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showList() {
+    return(
+      <div className='panel-body'>
+        <ul>
+          {this.state.series.map((s)=>
+              <li><h4><Link to={'/user/admin/centers/'+s.name.replace("/", " ")}>{s.name}</Link></h4></li>
+          )}
+        </ul>
+      </div>
+    )
   }
   showPageContent(){
       return (
@@ -41,101 +75,7 @@ export default class AdminSeries extends Component {
           <h3 className='text-info text-center'>Examinations Series</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
-              <div className='panel-body'>
-                <ul>
-                  <ol style={{fontSize:22, fontFamily:'Times New Roman', lineHeight:3}}>
-                        <li><Link to ='/user/admin/candidate'>November/December 2017</Link></li>
-                        <li><Link to ='/user/admin/candidate'>May/June 2017</Link></li>
-                        <li><Link to ='/user/admin/candidate'>November/December 2016</Link></li>
-                  </ol>
-                  {/* <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>S/N</th>
-                        <th>Date of Series</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1.</td>
-                        <td ><Link to='' style={{color:'black'}}></Link></td>
-
-                      </tr>
-                      <tr>
-                        <td>2.</td>
-                        <td><Link to='/user/admin/candidate' style={{color:'black'}}></Link></td>
-
-                      </tr>
-                      <tr>
-                        <td>3.</td>
-                        <td><Link to='/user/admin/candidate' style={{color:'black'}}>  </Link></td>
-                      </tr>
-                    </tbody>
-                  </table> */}
-                </ul>
-                <div className="bs-example text-center">
-                  <ul className="pagination">
-                      <li><a href="#">&laquo;Previous</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">Next&raquo;</a></li>
-                  </ul>
-              </div>
-                <div className='text-center' style={{margin:10}}>
-                  <Link to='#'>
-                  <RaisedButton
-                    labelStyle={{color:'white'}}
-                      buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                      label="Add New"
-                      onClick={()=>this.setState({addNew:!this.state.addNew})}
-                    />
-                  </Link>&nbsp; &nbsp;
-
-                </div>
-                {this.state.addNew && <div className='col-sm-12'>
-                  <div className='col-sm-8 col-sm-offset-2'>
-                    <SelectField
-                      value={this.state.selected}
-                      onChange={this.handleSelect}
-                      fullWidth
-                      floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                      name='selected'
-                      maxHeight={200}
-                      >
-                        <MenuItem value=''  primaryText={'Choose Series'} />
-                        <MenuItem value='May'  primaryText='May/June' />
-                        <MenuItem value='Nov'  primaryText='November/December' />
-                        <MenuItem value='Modular'  primaryText='Modular Trade Test' />
-                        <MenuItem value='Common'  primaryText='Common Entrance' />
-                      </SelectField>
-                      <div>
-                        <SelectField
-                          value={this.state.selected}
-                          onChange={this.handleSelect}
-                          fullWidth
-                          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                          name='selected'
-                          maxHeight={200}
-                          >
-                            <MenuItem value=''  primaryText={'Select a year'} />
-                            <MenuItem value='2017'  primaryText='2017' />
-                            <MenuItem value='2016'  primaryText='2016' />
-                            <MenuItem value='2015'  primaryText='2015' />
-                            <MenuItem value='2014'  primaryText='2014' />
-                          </SelectField>
-                      </div>
-                  <div style={{margin:10}}>
-                    <RaisedButton
-                      labelStyle={{color:'white'}}
-                      buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}
-                      label="Add"
-                      />
-                  </div>
-                  </div>
-                </div>}
-              </div>
-
+              {this.state.loading ? this.showSpinner() : this.showList()}
             </div>
           </Paper>
           <div className='text-center'>

@@ -69,7 +69,7 @@ export default class CBOCenterStatus extends Component {
           {this.state.pending.map((center, key)=>{
             return (
               <tr key={key}>
-                <td>1</td>
+                <td>{key+1}</td>
                 <td>{center.ownerName}</td>
                 <td>{center.centerName}</td>
                 <td>{center.location}</td>
@@ -99,7 +99,7 @@ export default class CBOCenterStatus extends Component {
           {this.state.approved.map((center, key)=>{
             return (
               <tr key={key}>
-                <td>1</td>
+                <td>{key+1}</td>
                 <td>{center.ownerName}</td>
                 <td>{center.centerName}</td>
                 <td>{center.location}</td>

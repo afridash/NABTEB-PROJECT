@@ -31,7 +31,6 @@ export default class AdminCenters extends Component {
   }
   retrieveCenters () {
     fetch("http://localhost:8080/centers").then(response => response.json()).then(centers => {
-      console.log(centers)
       var pending = []
       var approved = []
       centers.forEach((center)=> {
@@ -146,7 +145,7 @@ export default class AdminCenters extends Component {
   showPageContent(){
       return (
         <div className="col-sm-10 col-sm-offset-1">
-          <h3 className='text-info text-center'>Examinations Centers</h3>
+          <h3 className='text-info text-center'>Centers</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
               <div className='panel-heading'>

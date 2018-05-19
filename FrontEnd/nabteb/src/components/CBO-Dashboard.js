@@ -10,12 +10,14 @@ export default class CBODashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      userId:''
+      userId:'',
+      email:''
     }
   }
   async componentWillMount () {
     var userId = await localStorage.getItem('userId')
-    this.setState({userId})
+    var email = await localStorage.getItem('email')
+    this.setState({userId, email})
     this.retrieveInfo(userId)
   }
   retrieveInfo (userId) {
@@ -32,7 +34,7 @@ export default class CBODashboard extends Component {
   showPageContent () {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={{padding:10}}>
-        <p className='lead'>Welcome, Susan</p>
+        <p className='lead'>Welcome, {this.state.email}</p>
         <div className='col-sm-12'>
           <div className='col-sm-6'>
               <div className='panel-body'>
@@ -71,7 +73,7 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'>Step 2: <span style={{fontWeight:'600'}}>Examination </span></p>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Examination </span></p>
                           <i className='text-info'>View your examination series, centers and candidates registered. </i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/cbo/examinations'>
@@ -94,7 +96,7 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'>Step 3: <span style={{fontWeight:'600'}}>Centers</span></p>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Centers</span></p>
                           <i className='text-info'>Submit center location. Click on view to begin.</i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/center/status'>
@@ -117,7 +119,7 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'>Step 4: <span style={{fontWeight:'600'}}>Payments</span></p>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Payments</span></p>
                           <i className='text-info'>Make payments for submitted center.Click start to begin </i>
                           <div className='text-center' style={{margin:10}}>
                             <Link to='/user/center/payment'>

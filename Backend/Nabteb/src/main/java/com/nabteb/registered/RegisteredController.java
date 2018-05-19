@@ -28,4 +28,8 @@ public class RegisteredController {
 	public Registered getRegistered(@PathVariable int id) {
 		return service.getRegistered(id);
 	}
+	@GetMapping("/registered/search/{series}/{center}")
+	public List<Registered> searchRegistered (@PathVariable String series, @PathVariable String center){
+		return service.searchRegistered(series, center);
+	}
 }

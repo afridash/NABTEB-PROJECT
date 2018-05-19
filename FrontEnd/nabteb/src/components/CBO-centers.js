@@ -1,13 +1,59 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress'
 import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router-dom'
 export default class CBOCenters extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.seriesId = this.props.match.params.id
+    this.state = {
+      approved:[],
+      userId:'',
+      loading:true,
+    }
+  }
+  async componentWillMount () {
+    var userId = await localStorage.getItem('userId')
+    this.setState({userId})
+    this.retrieveCenters(userId)
+  }
+  retrieveCenters (userId) {
+    fetch("http://localhost:8080/centers/owners/"+userId).then(response => response.json()).then(centers => {
+      var pending = []
+      var approved = []
+      centers.forEach((center)=> {
+        if (center.status === 'approved' && center.centerType === "Examination"){
+          approved.push(center)
+        }
+      })
+      this.setState({approved, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  showSpinner () {
+    return (
+      <div className="row text-center">
+          <br/>
+          <br/>
+          <CircularProgress size={60} thickness={5} />
+      </div>
+    )
+  }
+  showList() {
+    return(
+      <div className='panel-body'>
+        <ul>
+          {this.state.approved.map((center)=>
+              <li><h4><Link to={'/user/candidates/'+this.seriesId+"/"+center.centerName}>{center.centerName}</Link></h4></li>
+          )}
+        </ul>
+      </div>
+    )
   }
   showPageContent(){
       return (
@@ -15,21 +61,11 @@ export default class CBOCenters extends Component {
           <h3 className='text-info text-center'>Examinations Centers</h3>
           <Paper zDepth={1}>
             <div className='panel panel-default'>
-              <div className='panel-heading'>
-                <div className='panel-title' text-center style={{fontSize:18}}>List of Exam Centers</div>
-              </div>
-              <div className='panel-body'>
-                <ul>
-                  <li><h4><Link to='/user/candidates'>Plot 2, Garki estate Near Ammsco platinum resident, No1. Garki, Abuja</Link></h4></li>
-                  <li><h4><Link to='/user/candidates'>No.121, Jaycee plaza, Otitio road, Yengoa, Bayelsa state</Link></h4></li>
-                  <li><h4><Link to='/user/candidates'>No.121, Jaycee plaza, Otitio road, Yengoa, Bayelsa state</Link></h4></li>
-
-                </ul>
-              </div>
+              {this.state.loading ? this.showSpinner() : this.showList()}
             </div>
           </Paper>
           <div className='text-center'>
-            <Link to='/user/cbo'>
+            <Link to='/user/cbo/examinations'>
           <RaisedButton
             labelStyle={{color:'white'}}
             buttonStyle={{backgroundColor:'#b71c1c', borderColor:'white'}}

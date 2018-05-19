@@ -6,14 +6,23 @@ public class Registered {
 	private String registrationDate;
 	private String fullName;
 	private String examType;
+	private String examCenter;
 	public Registered () {}
-	public Registered(int id, String series, String registrationDate, String fullName, String examType) {
+	public Registered(int id, String series, String registrationDate, String fullName, String examType, String examCenter) {
 		super();
 		this.id = id;
 		this.series = series;
 		this.registrationDate = registrationDate;
 		this.fullName = fullName;
 		this.examType = examType;
+		this.examCenter = examCenter;
+	}
+	
+	public String getExamCenter() {
+		return examCenter;
+	}
+	public void setExamCenter(String examCenter) {
+		this.examCenter = examCenter;
 	}
 	public int getId() {
 		return id;

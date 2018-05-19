@@ -60,4 +60,17 @@ public class RegisteredService {
 	public Registered getRegistered (int id) {
 		return users.stream().filter(u->u.getId() == id).findFirst().get();
 	}
+
+	public List<Registered> searchRegistered(String series, String center) {
+		// TODO Auto-generated method stub
+		series = series.replace("-", "/"); 
+		System.out.println(series);
+		List<Registered> reg = new ArrayList<>();
+		for (int i=0; i<users.size(); i++) {
+			if (getAllRegistered().get(i).getSeries().equals(series) && getAllRegistered().get(i).getExamCenter().equals(center) ) {
+				reg.add(getAllRegistered().get(i));
+			}
+		}
+		return reg;
+	}
 }

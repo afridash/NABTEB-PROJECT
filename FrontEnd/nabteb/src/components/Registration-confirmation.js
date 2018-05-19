@@ -7,7 +7,7 @@ import DashboardHeader from './Dashboard-header'
 import RaisedButton from 'material-ui/RaisedButton'
 import getSymbolFromCurrency from 'currency-symbol-map/'
 import CircularProgress from 'material-ui/CircularProgress'
-
+import moment from 'moment'
 export default class RegistrationConfirmation extends Component {
   constructor (props) {
     super(props)
@@ -31,11 +31,7 @@ export default class RegistrationConfirmation extends Component {
     fetch(url).then(response => response.json()).then((user)=>{
         if (!user['status']){
           this.setState(user)
-          var month = new Date(user.dob).getMonth() + 1
-          var year = new Date(user.dob).getFullYear()
-          var day = new Date(user.dob).getDate()
-          var dob = day + "/"+month+"/"+year
-          this.setState({profilePicture:user.passport, dob:dob})
+          this.setState({profilePicture:user.passport, dob:moment(user.dob).format("ll")})
         }
         }).catch(error => {
           this.setState({error:'Encountered an error retrieving information',loading:false})
@@ -46,6 +42,7 @@ export default class RegistrationConfirmation extends Component {
     var url = 'http://localhost:8080/users/exams/'+userId
     fetch(url).then(response => response.json()).then((user)=>{
       this.setState(user)
+      this.setState({examState:user.state})
     })
   }
   retrievePaymentInfo (userId) {
@@ -98,7 +95,7 @@ export default class RegistrationConfirmation extends Component {
             <p className='lead text-center text-info' style={{fontSize:25, fontWeight:400}}>Examination Details</p>
             <div style={{borderBottomStyle:'solid', borderWidth:'1px',margin: 20, padding:10}}>
             <div style={{padding:10, fontSize:20, fontFamily:'Times New Roman'}}>
-              <p><b>State: </b> {this.state.state} </p>
+              <p><b>State: </b> {this.state.examState} </p>
               <p><b>Local government: </b> {this.state.localGovernment}</p>
               <p><b>Exam Center: </b>{this.state.examCenter}</p>
               <p><b>Exam Type: </b>{this.state.examType}</p>

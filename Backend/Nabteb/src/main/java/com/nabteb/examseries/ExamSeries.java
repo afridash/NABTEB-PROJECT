@@ -11,7 +11,7 @@ package com.nabteb.examseries;
  */
 public class ExamSeries {
     private int id;
-    private int userid;
+    private int userId;
     private String createdAt;
     private boolean isOpen;
     private String name;
@@ -22,11 +22,11 @@ public class ExamSeries {
 
     }
     
-    public ExamSeries(int id, int userid, String createdAt, boolean isOpen, String name, String createdBy){
+    public ExamSeries(int id, int userId, String createdAt, boolean isOpen, String name, String createdBy){
         super();
         
         this.id = id;
-        this.userid = userid;
+        this.userId = userId;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.isOpen = isOpen;
@@ -41,10 +41,10 @@ public class ExamSeries {
     }
     
     public int getUserId() {
-	return userid;
+	return userId;
     }
-    public void setUserId(int userid) {
-	this.userid = userid;
+    public void setUserId(int userId) {
+	this.userId = userId;
     }
     
     public String getCreatedBy() {

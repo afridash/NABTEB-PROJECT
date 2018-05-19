@@ -19,18 +19,14 @@ export default class ExaminationDetails extends Component {
       states:[],
       locals:[],
       default:'',
-      centers:[
-        {name:"Ada Technical College", lga:"Ogbia", key:1},
-        {name:"Ada  College, Ekeremor", lga:"Ekeremor", key:2},
-        {name:"John Boys Technical College, Nembe", lga:"Nembe", key:3},
-        {name:"Girls Technical College", lga:"Ogbia", key:4},
-        {name:"Businia  College, Brass", lga:"Brass", key:5} ],
-        centerValue:'',
-        examValue:'',
-        tradeValue:'',
-        userId:'',
+      centers:[],
+      centerValue:'',
+      examValue:'',
+      tradeValue:'',
+      userId:'',
+      series:[],
     }
-    this.centers = this.state.centers
+    this.centers = []
   }
   async componentWillMount () {
     var userId = await localStorage.getItem('userId')
@@ -38,6 +34,8 @@ export default class ExaminationDetails extends Component {
     nigeria.forEach((st)=>{states.push(st.state.name)})
     this.setState({states, userId})
     this.retrieveInfo(userId)
+    this.retrieveSeries ()
+    this.retrieveCenters ()
   }
   retrieveInfo (userId) {
     var url = 'http://localhost:8080/users/exams/'+userId
@@ -65,12 +63,38 @@ export default class ExaminationDetails extends Component {
 
         })
   }
+  retrieveSeries () {
+    fetch("http://localhost:8080/examseries").then(response => response.json()).then(series => {
+      var temp = []
+      series.forEach((s)=>{
+        if (s.isOpen)
+        temp.unshift(s)
+      })
+      this.setState({series:temp, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
+  retrieveCenters () {
+    fetch("http://localhost:8080/centers").then(response => response.json()).then(centers => {
+      centers.forEach((center)=> {
+        if (center.status === 'approved' && center.centerType === "Examination"){
+          this.centers.push(center)
+        }
+      })
+      this.setState({centers:this.centers, loading:false})
+    }).catch(error => {
+      alert(error)
+      this.setState({loading:false})
+    })
+  }
   handleSelectState = (event, index, value) => {
     var state = nigeria.filter((current)=> current.state.id === index)
     this.setState({stateValue:value, stateIndex:index, locals:state[0].state.locals})
   }
   handleSelectLGA = (event, index, value) => {
-    var centers = this.centers.filter((center)=>center.lga.toLowerCase() === value.toLowerCase())
+    var centers = this.centers.filter((center)=>center.localGovernment.toLowerCase() === value.toLowerCase())
     this.setState({lgaValue:value, centers})
   }
   handleSelectCenter = (event, index, value) => {
@@ -198,8 +222,9 @@ export default class ExaminationDetails extends Component {
                       fullWidth
                       >
                       <MenuItem value={''} primaryText="Choose Exam Series" />
-                      <MenuItem value={"May/June" + new Date().getFullYear()} primaryText={"May/June " + new Date().getFullYear()} />
-                      <MenuItem value={"Nov/Dec" + new  Date().getFullYear()} primaryText={"Nov/Dec " + new  Date().getFullYear()} />
+                      {this.state.series.map((s)=>
+                        <MenuItem value={s.name} primaryText={s.name} />
+                      )}
                     </SelectField>
                     <SelectField
                       value={this.state.centerValue}
@@ -209,7 +234,7 @@ export default class ExaminationDetails extends Component {
                       >
                       <MenuItem value={''} primaryText="Choose Exam Center" />
                       {this.state.centers.map((center, key)=>
-                        <MenuItem value={center.name} primaryText={center.name} />
+                        <MenuItem value={center.centerName} primaryText={center.centerName} />
                       )}
                     </SelectField>
                     <SelectField

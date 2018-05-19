@@ -92,7 +92,7 @@ export default class CBOPayment extends Component {
             var hash = SHA512(merchantId+serviceTypeId+orderId+total+responseUrl+apiKey).toString()
             return (
               <tr key={key}>
-                <td>1</td>
+                <td>{key+1}</td>
                 <td>{center.ownerName}</td>
                 <td>{center.centerName}</td>
                 <td>{center.location}</td>

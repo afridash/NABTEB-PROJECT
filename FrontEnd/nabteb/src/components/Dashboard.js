@@ -39,9 +39,9 @@ export default class Dashboard extends Component {
         if (!user['status']){
           this.setState({
             examValue:user.examType,
-            seriesValue:user.series
-        })
-        this.retrieveData()
+            seriesValue:user.series,
+            examCenter:user.examCenter
+        }, this.retrieveData() )
         }
         }).catch(error => {
           this.setState({error:'Network error, could not retrieve info',loading:false})
@@ -65,7 +65,8 @@ export default class Dashboard extends Component {
       series:this.state.seriesValue,
       registrationDate:Date.now(),
       fullName:this.state.fullName,
-      examType:this.state.examValue
+      examType:this.state.examValue,
+      examCenter:this.state.examCenter
     }
     var url = 'http://localhost:8080/registered/'
     fetch(url, {

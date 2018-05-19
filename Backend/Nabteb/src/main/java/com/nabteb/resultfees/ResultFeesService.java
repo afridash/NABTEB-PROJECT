@@ -21,4 +21,13 @@ public class ResultFeesService {
 	public ResultFees getResultFees(int id) {
 		return fees.stream().filter(user->user.getId() == id).findFirst().get();
 	}
+
+	public void updateViews(int id, int count) {
+		ResultFees fee =  fees.stream().filter(user->user.getId() == id).findFirst().get();
+		int index = fees.indexOf(fee);
+		fees.remove(index);
+		fee.setViews(count);
+		fees.add(index, fee);
+		
+	}
 }

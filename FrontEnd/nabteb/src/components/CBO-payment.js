@@ -193,7 +193,7 @@ export default class CBOPayment extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user="cbo" materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

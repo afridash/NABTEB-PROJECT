@@ -39,7 +39,8 @@ export default class Person extends Component {
       states:[],
       locals:[],
       default:'',
-      url:''
+      url:'',
+      user:''
     }
   }
   async componentWillMount () {
@@ -49,12 +50,15 @@ export default class Person extends Component {
     this.setState({userId, states})
     this.retrieveInfo(userId)
     var url = ""
-    if (this.props.owner)
+    var user = ''
+    if (this.props.owner){
       url="/user/cbo"
-    else
+    }else
+    {
       url="/dashboard"
-
-      this.setState({url:url})
+      user='candidate'
+    }
+      this.setState({url})
   }
   retrieveInfo (userId) {
     var url = 'http://localhost:8080/users/'+userId
@@ -373,7 +377,7 @@ export default class Person extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user={this.props.owner ? 'cbo' : 'candidate'} materials={this.props.owner} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

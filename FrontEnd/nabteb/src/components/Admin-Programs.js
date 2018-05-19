@@ -63,7 +63,7 @@ export default class AdminPrograms extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user='admin' materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

@@ -126,7 +126,7 @@ export default class RegistrationConfirmation extends Component {
                 <Link to='/dashboard'>
                 <RaisedButton
                   labelStyle={{color:'white'}}
-                  buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                  buttonStyle={{backgroundColor:'#e74c3c', borderColor:'white'}}
                   label="Close"
                 />
               </Link>&nbsp;&nbsp;

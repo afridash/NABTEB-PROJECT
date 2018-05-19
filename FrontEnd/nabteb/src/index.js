@@ -81,7 +81,7 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path ={"/user/admin/dashboard"} component={AdminDashboard}/>
       <Route exact path ={"/user/admin/series"} component={AdminSeries}/>
       <Route exact path ={"/user/admin/candidate/:series/:center"} component={AdminCandidate}/>
-      <Route exact path ={"/user/admin/details"} component={AdminDetails}/>
+      <Route exact path ={"/user/admin/details/:series/:center/:id"} component={AdminDetails}/>
       <Route exact path ={"/user/admin/centers"} component={AdminCenters}/>
       <Route exact path ={"/user/admin/centers/:id"} component={AdminResultCenters}/>
       <Route exact path ={"/user/admin/centerinfo/:id"} component={AdminCenterInfo}/>

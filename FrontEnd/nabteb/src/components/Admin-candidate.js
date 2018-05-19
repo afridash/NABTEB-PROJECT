@@ -13,7 +13,8 @@ export default class AdminCandidate extends Component {
     this.centersId = this.props.match.params.center
     this.state = {
       loading:true,
-      users:[]
+      users:[],
+      tempSeries:this.seriesId
     }
     this.users = []
   }
@@ -29,12 +30,13 @@ export default class AdminCandidate extends Component {
         fetch("http://localhost:8080/users/exams/"+user.id)
         .then(response => response.json())
          .then(exams => {
-           this.users.push({fullName:user.fullName, registrationDate:user.registrationDate, examCenter:user.examCenter, examType:user.examType, examTitle:exams.examTitle })
+           this.users.push({fullName:user.fullName, registrationDate:user.registrationDate, examCenter:user.examCenter, examType:user.examType, examTitle:exams.examTitle, userId:user.id})
            this.setState({users:this.users, loading:false})
          }).catch(error => {
            alert(error)
          })
       })
+      if (users.length === 0) this.setState({loading:false})
     }).catch(err => {
       alert(err)
       this.setState({loading:false})
@@ -67,7 +69,7 @@ export default class AdminCandidate extends Component {
             {this.state.users.map((user, key)=>
               <tr key={key}>
                 <td>{key+1}</td>
-                <td ><Link to='/user/admin/details' style={{color:'black'}}>{user.fullName}</Link></td>
+                <td ><Link to={'/user/admin/details/'+this.state.tempSeries+"/"+this.centersId+"/"+user.userId} >{user.fullName}</Link></td>
                 <td>{user.examType}</td>
                 <td>{user.examCenter}</td>
                 <td>{user.examTitle}</td>
@@ -120,7 +122,7 @@ export default class AdminCandidate extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user='admin' materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

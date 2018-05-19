@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +28,9 @@ public class ResultFeesController {
 	@GetMapping("/result/fees/{id}")
 	public ResultFees getResultFees (@PathVariable int id) {
 		return service.getResultFees(id);
+	}
+	@PutMapping("/result/fees/update/{id}/{count}")
+	public void updateViews(@PathVariable int id, @PathVariable int count) {
+		service.updateViews(id, count);
 	}
 }

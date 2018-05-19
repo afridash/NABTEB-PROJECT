@@ -75,7 +75,7 @@ export default class CBODashboard extends Component {
                       <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Examination </span></p>
                           <i className='text-info'>View your examination series, centers and candidates registered. </i>
-                          <div className='text-center' style={{margin:10}}>
+                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
                             <Link to='/user/cbo/examinations'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -83,7 +83,7 @@ export default class CBODashboard extends Component {
                                 label="View"
                               />
                             </Link>
-                          </div>
+                          </div>}
                       </div>
                     </div>
                   </div>
@@ -98,7 +98,7 @@ export default class CBODashboard extends Component {
                       <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Centers</span></p>
                           <i className='text-info'>Submit center location. Click on view to begin.</i>
-                          <div className='text-center' style={{margin:10}}>
+                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
                             <Link to='/user/center/status'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -106,7 +106,7 @@ export default class CBODashboard extends Component {
                                 label="View"
                               />
                             </Link>
-                          </div>
+                          </div>}
                       </div>
                     </div>
                   </div>
@@ -121,7 +121,7 @@ export default class CBODashboard extends Component {
                       <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Payments</span></p>
                           <i className='text-info'>Make payments for submitted center.Click start to begin </i>
-                          <div className='text-center' style={{margin:10}}>
+                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
                             <Link to='/user/center/payment'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
@@ -129,7 +129,7 @@ export default class CBODashboard extends Component {
                                 label="Start"
                               />
                             </Link>
-                          </div>
+                          </div>}
                       </div>
                     </div>
                   </div>
@@ -144,7 +144,7 @@ export default class CBODashboard extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user="cbo" materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

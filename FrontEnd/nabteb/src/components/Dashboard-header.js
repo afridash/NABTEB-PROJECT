@@ -17,7 +17,8 @@ export default class DashboardHeader extends Component {
       email:'',
       oldPassword:'',
       newPassword:'',
-      userId:''
+      userId:'',
+      url:''
     }
   }
   async componentWillMount () {
@@ -29,8 +30,16 @@ export default class DashboardHeader extends Component {
       if (!this.props.materials) {
         this.retrieveData(userId)
       }
-
     }
+  }
+  componentDidMount () {
+    var url = ''
+    if (this.props.user === 'cbo')
+    url = '/user/cbo'
+    else if (this.props.user === 'admin')
+    url = '/user/admin/dashboard'
+    else url = '/dashboard'
+    this.setState({url})
   }
   retrieveData (userId) {
     var url = 'http://localhost:8080/users/'+userId
@@ -152,7 +161,7 @@ export default class DashboardHeader extends Component {
             <div style={{backgroundColor:'#16a085'}}>
               <div className='panel-body'>
                 <div className='col-sm-7'>
-                  <Link style={{textDecoration:'none'}} to='/dashboard'>
+                  <Link style={{textDecoration:'none'}} to={this.state.url}>
                     <h5 className='lead' style={{color:'white'}}>Dashboard</h5>
                   </Link>
                 </div>

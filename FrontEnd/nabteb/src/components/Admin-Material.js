@@ -111,7 +111,7 @@ export default class AdminMaterial extends Component {
                               buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
                               label="View"
                             />
-                          </Link> 
+                          </Link>
                         </td>
                       </tr>
                     </tbody>
@@ -167,7 +167,7 @@ export default class AdminMaterial extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader materials={true} children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user='admin' materials={true} children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

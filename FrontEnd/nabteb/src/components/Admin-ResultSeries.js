@@ -92,7 +92,7 @@ export default class AdminSeries extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider><DashboardHeader children={this.showPageContent()} /></MuiThemeProvider>
+      <MuiThemeProvider><DashboardHeader user='admin' children={this.showPageContent()} /></MuiThemeProvider>
     );
   }
 }

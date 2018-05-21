@@ -43,7 +43,7 @@ export default class CBODashboard extends Component {
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Personal Data</span></p>
-                          <i className='text-info'>Submit personal data such as name, and address. Click on start to begin.</i>
+                          <i className='text-info'>Submit personal data such as name, and address.</i>
                           <div className='text-center' style={{margin:10}}>
                             {this.state.finishedPersonal ? <Link to='/user/cbo/details'>
                             <RaisedButton
@@ -73,40 +73,24 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
-                        <p className='text-center'><span style={{fontWeight:'600'}}>Examination </span></p>
-                          <i className='text-info'>View your examination series, centers and candidates registered. </i>
-                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
-                            <Link to='/user/cbo/examinations'>
-                            <RaisedButton
-                              labelStyle={{color:'white'}}
-                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
-                                label="View"
-                              />
-                            </Link>
-                          </div>}
-                      </div>
-                    </div>
-                  </div>
-                </Paper>
-            </div>
-          </div>
-          <div className='col-sm-6'>
-              <div className='panel-body'>
-                <Paper zDepth={3} rounded>
-                  <div className='row'>
-                    <div className='col-sm-12'>
-                      <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Centers</span></p>
-                          <i className='text-info'>Submit center location. Click on view to begin.</i>
-                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
+                          <i className='text-info'>View approved centers. Add new centers.</i>
+                            <div className='text-center' style={{margin:10}}>
+                             {this.state.finishedPersonal ?
                             <Link to='/user/center/status'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
                                 buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
                                 label="View"
                               />
-                            </Link>
-                          </div>}
+                            </Link> :
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="Not Started"
+                              />
+                          }
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -119,17 +103,54 @@ export default class CBODashboard extends Component {
                   <div className='row'>
                     <div className='col-sm-12'>
                       <div style={{padding:10}}>
+                        <p className='text-center'><span style={{fontWeight:'600'}}>Examination </span></p>
+                          <i className='text-info'>View your examination series, centers and candidates registered.</i>
+                            <div className='text-center' style={{margin:10}}>
+                            {this.state.finishedPersonal ?
+                              <Link to='/user/cbo/examinations'>
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="View"
+                              />
+                            </Link> :
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="Not Started"
+                              />
+                            }
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </Paper>
+            </div>
+          </div>
+          <div className='col-sm-6'>
+              <div className='panel-body'>
+                <Paper zDepth={3} rounded>
+                  <div className='row'>
+                    <div className='col-sm-12'>
+                      <div style={{padding:10}}>
                         <p className='text-center'><span style={{fontWeight:'600'}}>Payments</span></p>
-                          <i className='text-info'>Make payments for submitted center.Click start to begin </i>
-                          {this.state.finishedPersonal && <div className='text-center' style={{margin:10}}>
+                          <i className='text-info'>View submitted centers,make payments for centers.Click start to begin </i>
+                         <div className='text-center' style={{margin:10}}>
+                             {this.state.finishedPersonal ?
                             <Link to='/user/center/payment'>
                             <RaisedButton
                               labelStyle={{color:'white'}}
                                 buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
                                 label="Start"
                               />
-                            </Link>
-                          </div>}
+                            </Link> :
+                            <RaisedButton
+                              labelStyle={{color:'white'}}
+                                buttonStyle={{backgroundColor:'#2980b9', borderColor:'white'}}
+                                label="Not Started"
+                              />
+                          }
+                          </div>
                       </div>
                     </div>
                   </div>

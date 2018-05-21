@@ -109,8 +109,7 @@ export default class ExaminationDetails extends Component {
   handleSelectSeries = (event, index, value) => {
     this.setState({seriesValue:value})
   }
-  handleSubmit = (event) => {
-    event.preventDefault()
+  createRecord () {
     var data = {
       id:Number(this.state.userId),
       state:this.state.stateValue,
@@ -133,8 +132,7 @@ export default class ExaminationDetails extends Component {
           this.setState({error:'Examination details could not be saved',loading:false})
       })
   }
-  handleUpdate = (event) => {
-    event.preventDefault()
+  updateRecord () {
     var data = {
       id:Number(this.state.userId),
       state:this.state.stateValue,
@@ -156,6 +154,26 @@ export default class ExaminationDetails extends Component {
         }).catch(error => {
           this.setState({error:'Examination details could not be saved',loading:false})
       })
+  }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    if (this.authenticateData()) {
+      this.createRecord()
+    }else{
+      this.setState({error:'All fields must be filled. Check, and try again',loading:false})
+    }
+  }
+  handleUpdate = (event) => {
+    event.preventDefault()
+    if (this.authenticateData()) {
+      this.updateRecord()
+    }else{
+      this.setState({error:'All fields must be filled. Check, and try again',loading:false})
+    }
+  }
+  authenticateData () {
+    return this.state.stateValue !== '' && this.state.seriesValue !== '' && this.state.lgaValue !== ''
+    && this.state.centerValue !=='' && this.state.examValue !=='' && this.state.tradeValue !== ''
   }
   updateProgress () {
     var data = {
@@ -266,6 +284,7 @@ export default class ExaminationDetails extends Component {
                     </SelectField>
                   </div>
                   <div className='col-sm-12'>
+                    <p className='text-center text-danger'>{this.state.error}</p>
                     <div className='text-center' style={{margin:10}}>
                       {this.state.uploaded ?
                       <RaisedButton

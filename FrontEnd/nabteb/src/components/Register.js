@@ -91,14 +91,21 @@ export default class Register extends Component {
     event.preventDefault()
     this.setState({loading:true})
     if (this.verifyInputs()) {
-      if (this.verifyPasswords()){
-        this.createUser()
+      if (this.verifyPasswordLength()){
+        if (this.verifyPasswords()){
+          this.createUser()
+        }else {
+          this.setState({error:'Passwords do not match',loading:false})
+        }
       }else{
-        this.setState({error:'Passwords do not match',loading:false})
+        this.setState({error:'Passwords must be 8 characters long',loading:false})
       }
     }else{
       this.setState({error:'All fields are required',loading:false})
     }
+  }
+  verifyPasswordLength () {
+    return this.state.password.length >= 8 && this.state.passwordConfirm.length >= 8
   }
   verifyInputs () {
     return this.state.email !== '' && this.state.password !== '' && this.passwordConfirm !=='' && this.state.selected !== ''

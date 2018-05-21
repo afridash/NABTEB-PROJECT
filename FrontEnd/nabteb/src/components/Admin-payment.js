@@ -36,6 +36,7 @@ export default class AdminPayment extends Component {
           alert(error)
         })
       })
+      if (fees.length === 0) this.setState({loading:false})
     })
   }
   showSpinner () {

@@ -39,6 +39,7 @@ export default class Person extends Component {
       states:[],
       locals:[],
       default:'',
+      middleName:'',
       url:'',
       user:''
     }
@@ -103,7 +104,19 @@ export default class Person extends Component {
   }
   handleSubmit (event) {
     event.preventDefault()
-    this.createUser()
+    if (this.authenticateData()){
+        this.createUser()
+    }else{
+      this.setState({error:'All fields are required. Check, and try again',loading:false})
+    }
+
+  }
+  authenticateData () {
+    return this.state.userId !== null && this.state.firstName !== null  && this.state.kinFullName !== null
+    && this.state.middleName !== null && this.state.lastName !== null && this.state.kinAddress !== null
+    && this.state.phoneNumber !== null && this.state.gender !== null && this.state.lgaValue !== null
+    && this.state.dob !== null &&  this.state.address !== null && this.state.stateValue !== null
+    && this.state.kinPhoneNumber !== null && this.state.profilePicture !== null
   }
   createUser () {
     var data={
@@ -160,8 +173,7 @@ export default class Person extends Component {
     })
 
   }
-  handleUpdate (event) {
-    event.preventDefault()
+  updateUser () {
     var data={
       id:this.state.userId,
       firstName:this.state.firstName,
@@ -190,6 +202,14 @@ export default class Person extends Component {
         }).catch(error => {
           this.setState({error:'Information could not be saved',loading:false})
       })
+  }
+  handleUpdate (event) {
+    event.preventDefault()
+    if (this.authenticateData()){
+        this.updateUser()
+    }else{
+      this.setState({error:'All fields are required. Check, and try again',loading:false})
+    }
   }
   showPageContent () {
     return (

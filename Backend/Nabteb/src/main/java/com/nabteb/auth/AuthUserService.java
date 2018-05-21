@@ -74,7 +74,7 @@ public class AuthUserService {
 		//Create a random pin. Send it via email to the user
 	    String pin = generateRandomString();
 		user.setPin(pin);
-		sendUserEmail("Nabteb@localhost", "user@localhost", "Verification Pin",pin, "verification.ftl");
+		sendUserEmail("Nabteb@localhost", user.getEmail(), "Verification Pin",pin, "verification.ftl");
 		//Save user
 		users.add(user);
 		//Add user
@@ -86,7 +86,7 @@ public class AuthUserService {
 	    secureRandom.nextBytes(token);
 	    return  new BigInteger(1, token).toString(16);
 	}
-	private void sendUserEmail(String from, String to, String subject, String pin, String template) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+	public void sendUserEmail(String from, String to, String subject, String pin, String template) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
 		 Map<String, Object> model = new HashMap();
 	        model.put("user", to);
 	        model.put("pin", pin);
@@ -110,7 +110,7 @@ public class AuthUserService {
 		//change user password to a random string, email string to user
 		user.setPassword(password);
 		try {
-			sendUserEmail("Nabteb@localhost", "user@localhost", "Password Reset", password, "reset.ftl");
+			sendUserEmail("Nabteb@localhost", user.getEmail(), "Password Reset", password, "reset.ftl");
 		} catch (IOException | TemplateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,5 +132,10 @@ public class AuthUserService {
 		}else {
 			return false;
 		}
+	}
+	public AuthUser getUserEmail (int id) {
+		AuthUser user = users.stream().filter(temp->temp.getId() == id).findFirst().get();
+		return user;
+		
 	}
 }

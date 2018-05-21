@@ -81,7 +81,15 @@ export default class CBOAddNew extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     this.setState({loading:true})
-    this.createCenter('submit')
+    if (this.authenticateData()){
+      this.createCenter('submit')
+    }else {
+      this.setState({loading:false, error:"All fields must be filled. Check, and try again"})
+    }
+  }
+  authenticateData () {
+    return this.state.value !== '' && this.state.stateValue !== '' && this.state.lgaValue !== '' && this.state.centerValue !== ''
+    && this.state.centerOwner !== null && this.state.centerName !== null && this.state.address !== null && this.state.postalAddress !== ''
   }
   createCenter (caller) {
     var center = {
@@ -220,6 +228,7 @@ export default class CBOAddNew extends Component {
             </div>
           </Paper>
           <div className='text-center' style={{margin:20}}>
+            <p className='text-danger text-center'>{this.state.error}</p>
             {this.state.loading ? <RaisedButton
                 labelStyle={{color:'white'}}
                 buttonStyle={{backgroundColor:'#16a085', borderColor:'white'}}

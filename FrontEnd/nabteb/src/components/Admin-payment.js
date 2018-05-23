@@ -72,7 +72,7 @@ export default class AdminPayment extends Component {
                 <td>{fee.centerName}</td>
                 <td>{fee.address}</td>
                 <td>{fee.referenceNumber}</td>
-                <td>{moment(fee.transactionTime).format('LL')}</td>
+                <td>{fee.transactionTime}</td>
                 <td>{this.state.currency}{fee.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
               </tr>
             )}

@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
  */
 
 public class ExamSeriesService {
-    private final List<ExamSeries> examseries = new ArrayList <> (Arrays.asList(
-			new ExamSeries(1, 2, "3", false, "May-June 2018", "mabel")
-			)); 
+    private final List<ExamSeries> examseries = new ArrayList <> (); 
 	
 	public List<ExamSeries> getAllExams () {
 		return examseries;

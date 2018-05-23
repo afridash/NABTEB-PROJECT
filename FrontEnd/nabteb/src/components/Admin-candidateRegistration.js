@@ -64,8 +64,8 @@ export default class AdminCandidateRegistration extends Component {
                 <td>{key+1}</td>
                 <td>{fee.name}</td>
                 <td>{fee.phoneNumber}</td>
-                <td>{moment(fee.transactionTime).format('LL')}</td>
                 <td>{fee.referenceNumber}</td>
+                <td>{fee.transactionTime}</td>
                 <td>{this.state.currency}{fee.amount.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</td>
               </tr>
             )}

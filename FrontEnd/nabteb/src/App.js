@@ -71,14 +71,13 @@ class App extends Component {
           <h3 className='text-center' style={{color:'#16a085'}}>Quick Links</h3>
           <div style={{border:'1px solid black', borderRadius:4, textAlign:'left', fontFamily:"Times New Roman, Times, serif"}}>
             <ul>
-              <li><h4><Link to='#'>Entry Guide</Link></h4></li>
-              <li><h4><Link to='#'>Management Team</Link></h4></li>
-              <li><h4><Link to='#'>Research activities</Link></h4></li>
-              <li><h4><Link to='#'>Department</Link></h4></li>
-              <li><h4><Link to='#'>Examination Fees</Link></h4></li>
+              <li><h4><Link to='/entryguide'>Entry Guide</Link></h4></li>
+              <li><h4><Link to='/management'>Management Team</Link></h4></li>
+              <li><h4><Link to='/research'>Research activities</Link></h4></li>
+              <li><h4><Link to='/examfees'>Examination Fees</Link></h4></li>
               <li><h4><Link to='#'>NABTEB Centers</Link></h4></li>
-              <li><h4><Link to='#'>Federal Science Technical College</Link></h4></li>
-              <li><h4><Link to='#'> About NABTEB</Link></h4></li>
+              <li><h4><Link to='/technical-college'>Federal Science Technical College</Link></h4></li>
+              <li><h4><Link to='/overview'> About NABTEB</Link></h4></li>
 
 
             </ul>

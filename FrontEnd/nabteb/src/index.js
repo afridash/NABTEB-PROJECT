@@ -20,12 +20,18 @@ import ExaminationDetails from './components/Examinations-details'
 import BiometricsVerification from './components/Biometrics-verification'
 import ExamPayments from './components/Payments-exams'
 import Materials from './components/Materials'
+import TechnicalCollege from './components/technical-college'
+import Research from './components/Research'
+import Management from './components/Management'
 import Results from './components/Results'
 import RegistrationConfirmation from './components/Registration-confirmation'
 import AccountConfirmation from './components/Account-confirmation'
 import RegistrationReceipt from './components/remita/Registration-receipts'
 import ResultReceipt from './components/remita/Results-receipts'
 import MaterialsReceipt from './components/remita/Materials-receipts'
+import EntryGuide from './components/entryGuide'
+import ExamFees from './components/examFees'
+import Overview from './components/overview'
 import CBODashboard from './components/CBO-Dashboard'
 import CBOPerson from './components/CBO-person'
 import CBOExaminations from './components/CBO-examinations'
@@ -65,9 +71,15 @@ ReactDOM.render(<BrowserRouter >
       <Route exact path={"/user/biometrics"} component={BiometricsVerification} />
       <Route exact path={"/user/exams/details"} component={ExaminationDetails} />
       <Route exact path={"/user/exams/payments"} component={ExamPayments} />
+      <Route exact path={"/entryguide"} component={EntryGuide} />
+      <Route exact path={"/technical-college"} component={TechnicalCollege} />
+      <Route exact path={"/management"} component={Management} />
+      <Route exact path={"/research"} component={Research} />
+      <Route exact path={"/examfees"} component={ExamFees} />
       <Route exact path={"/user/registration/confirmation"} component={RegistrationConfirmation} />
       <Route exact path={"/receipts/registration/:id"} component={RegistrationReceipt} />
       <Route exact path={"/receipts/results/:id"} component={ResultReceipt} />
+      <Route exact path={"/overview"} component={Overview} />
       <Route exact path={"/receipts/materials/:id"} component={MaterialsReceipt} />
       <Route exact path ={"/user/cbo"} component={CBODashboard}/>
       <Route exact path ={"/user/cbo/details"} component={CBOPerson}/>

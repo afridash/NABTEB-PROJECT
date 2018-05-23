@@ -16,11 +16,11 @@ public class CentersController {
 	 @Autowired
 		private CentersService service;
 		
-		@GetMapping("/registration/fees")
+		@GetMapping("/centers")
 		public List<Centers> getAllCenters () {
 			return service.getAllCenters();
 		}
-		@PostMapping("/registration/fees")
+		@PostMapping("/centers")
 		public void saveFees(@RequestBody Centers centers) {
 			service.addCenters(centers);
 		}

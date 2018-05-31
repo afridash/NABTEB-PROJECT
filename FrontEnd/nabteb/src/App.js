@@ -14,30 +14,28 @@ class App extends Component {
       <div className="carousel-inner">
 
         <div className="item active">
-          <img src="http://placehold.it/1200x400/cccccc/ffffff" style={{width:'100%', height:'50%'}} />
+          <img src={require('./images/test.jpg')} style={{width:'100%', height:'50%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
+            {/* <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button> */}
           </div>
         </div>
 
          <div className="item">
-          <img src="http://placehold.it/1200x400/999999/cccccc" style={{width:'100%', height:'50%'}} />
+          <img src={require('./images/voc.jpg')} style={{width:'100%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
           </div>
         </div>
 
         <div className="item">
-          <img src="http://placehold.it/1200x400/dddddd/333333" style={{width:'100%'}}/>
+          <img src={require('./images/lab.jpg')} style={{width:'100%'}}/>
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
           </div>
         </div>
 
         <div className="item">
-          <img src="http://placehold.it/1200x400/999999/cccccc" style={{width:'100%'}} />
+          <img src={require('./images/award.png')} style={{width:'100%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
+
           </div>
         </div>
 
@@ -71,14 +69,13 @@ class App extends Component {
           <h3 className='text-center' style={{color:'#16a085'}}>Quick Links</h3>
           <div style={{border:'1px solid black', borderRadius:4, textAlign:'left', fontFamily:"Times New Roman, Times, serif"}}>
             <ul>
-              <li><h4><Link to='#'>Entry Guide</Link></h4></li>
-              <li><h4><Link to='#'>Management Team</Link></h4></li>
-              <li><h4><Link to='#'>Research activities</Link></h4></li>
-              <li><h4><Link to='#'>Department</Link></h4></li>
-              <li><h4><Link to='#'>Examination Fees</Link></h4></li>
+              <li><h4><Link to='/entryguide'>Entry Guide</Link></h4></li>
+              <li><h4><Link to='/management'>Management Team</Link></h4></li>
+              <li><h4><Link to='/research'>Research activities</Link></h4></li>
+              <li><h4><Link to='/examfees'>Examination Fees</Link></h4></li>
               <li><h4><Link to='#'>NABTEB Centers</Link></h4></li>
-              <li><h4><Link to='#'>Federal Science Technical College</Link></h4></li>
-              <li><h4><Link to='#'> About NABTEB</Link></h4></li>
+              <li><h4><Link to='/technical-college'>Federal Science Technical College</Link></h4></li>
+              <li><h4><Link to='/overview'> About NABTEB</Link></h4></li>
 
 
             </ul>

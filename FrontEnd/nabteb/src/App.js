@@ -14,30 +14,28 @@ class App extends Component {
       <div className="carousel-inner">
 
         <div className="item active">
-          <img src="http://placehold.it/1200x400/cccccc/ffffff" style={{width:'100%', height:'50%'}} />
+          <img src={require('./images/test.jpg')} style={{width:'100%', height:'50%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
+            {/* <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button> */}
           </div>
         </div>
 
          <div className="item">
-          <img src="http://placehold.it/1200x400/999999/cccccc" style={{width:'100%', height:'50%'}} />
+          <img src={require('./images/voc.jpg')} style={{width:'100%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
           </div>
         </div>
 
         <div className="item">
-          <img src="http://placehold.it/1200x400/dddddd/333333" style={{width:'100%'}}/>
+          <img src={require('./images/lab.jpg')} style={{width:'100%'}}/>
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
           </div>
         </div>
 
         <div className="item">
-          <img src="http://placehold.it/1200x400/999999/cccccc" style={{width:'100%'}} />
+          <img src={require('./images/award.png')} style={{width:'100%'}} />
            <div className="carousel-caption">
-            <button className='btn btn-primary' style={{backgroundColor:'#16a085', borderColor:'transparent'}}>Read More</button>
+
           </div>
         </div>
 

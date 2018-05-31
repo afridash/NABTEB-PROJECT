@@ -19,7 +19,18 @@
 }
 
 .App-intro {
-  font-size: large;
+  font-size: larger;
+}
+
+.location{
+background-color: #16a085;
+color: white;
+padding-top: 5px;
+font-size: large;
+}
+
+div.news-block{
+  padding-top: 15px;
 }
 
 @keyframes App-logo-spin {

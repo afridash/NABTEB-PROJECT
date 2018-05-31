@@ -7,6 +7,7 @@ import { BrowserRouter, Route ,Switch } from 'react-router-dom'
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
 import News from './components/News'
+import NewsItem from './components/News-item'
 import About from './components/About'
 import Contact from './components/Contact'
 import Centers from './components/Centers'
@@ -117,6 +118,7 @@ ReactDOM.render(<BrowserRouter >
     <Header >
     <Route exact path={"/"} component={App} />
     <Route exact path={"/news"} component={News} />
+    <Route exact path={"/news/{id}"} component={NewsItem} />
     <Route exact path={"/about"} component={About} />
     <Route exact path={"/contact"} component={Contact} />
     <Route exact path={"/examinations"} component={Examinations} />
